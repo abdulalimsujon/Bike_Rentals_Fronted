@@ -1,16 +1,30 @@
-import { useState } from "react";
 import { Collapse, CollapseProps } from "antd";
+import { useDispatch } from "react-redux";
+import {
+  setBrand,
+  setFilter,
+  setModel,
+} from "../../redux/features/bikes/bikeSlice";
+import { useState } from "react";
 
 interface AcordionProps {
   names: string[];
   accordianFor: string;
+  filterKey: "model" | "brand"; // Accepts either "model" or "brand"
 }
 
-const Acordion = ({ names, accordianFor }: AcordionProps) => {
+const Acordion = ({ names, accordianFor, filterKey }: AcordionProps) => {
+  const dispatch = useDispatch();
   const [selectedName, setSelectedName] = useState<string | null>(null);
 
   const handleNameClick = (name: string) => {
     setSelectedName(name);
+    if (filterKey === "model") {
+      dispatch(setModel(name));
+    }
+    if (filterKey === "brand") {
+      dispatch(setBrand(name));
+    }
   };
 
   const items: CollapseProps["items"] = [
@@ -26,10 +40,10 @@ const Acordion = ({ names, accordianFor }: AcordionProps) => {
           {names?.map((name) => (
             <div
               key={name}
-              className="text-green-700 text-lg dark:bg-slate-100 bg-slate-300 "
+              className="text-green-700 text-lg dark:bg-slate-100 bg-slate-300"
             >
               <p
-                className={`cursor-pointer py-2 px-4 my-2 rounded transition ease-in-out   ${
+                className={`cursor-pointer py-2 px-4 my-2 rounded transition ease-in-out ${
                   selectedName === name
                     ? "font-bold text-blue-600"
                     : "hover:bg-gray-200"

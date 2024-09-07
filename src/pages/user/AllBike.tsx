@@ -2,13 +2,33 @@ import Acordion from "../../components/form/Acordion";
 import { useState } from "react";
 import { Button, Drawer } from "antd";
 import { useGetAllBikeQuery } from "../../redux/api/baseApi";
-import { useGetBikebyModelQuery } from "../../redux/features/bikeApi";
+
 import CustomCard from "../../components/layouts/CustomCard";
+import { useAppSelector } from "../../redux/hooks";
+import { useAllBikeQuery } from "../../redux/features/bikes/bikeApi";
 
 const AllBike = () => {
   const { data, error, isLoading } = useGetAllBikeQuery(undefined);
-  const { data: bikeData } = useGetBikebyModelQuery("R1");
-  console.log("bbb", bikeData);
+  const item = useAppSelector((state) => state.bikesInfo.item);
+
+  console.log(item);
+
+  let filterItem;
+  if (item?.brand) {
+    filterItem = { name: "brand", value: item.brand };
+  }
+  if (item?.model) {
+    filterItem = { name: "model", value: item.model };
+  }
+
+  const { data: modelData } = useAllBikeQuery([filterItem]);
+
+  let bikeData;
+  if (modelData) {
+    bikeData = modelData;
+  } else {
+    bikeData = data;
+  }
 
   const [open, setOpen] = useState(false);
 
@@ -30,8 +50,8 @@ const AllBike = () => {
           {/* Accordions visible on large screens (md and above) */}
           <div className="col-span-4 hidden md:block ">
             <div className="relative">
-              <Acordion names={brands} accordianFor="Brand" />
-              <Acordion names={models} accordianFor="Model" />
+              <Acordion names={brands} filterKey="brand" accordianFor="Brand" />
+              <Acordion names={models} filterKey="model" accordianFor="Model" />
             </div>
           </div>
 
