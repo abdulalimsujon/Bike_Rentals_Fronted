@@ -1,10 +1,6 @@
 import { Collapse, CollapseProps } from "antd";
 import { useDispatch } from "react-redux";
-import {
-  setBrand,
-  setFilter,
-  setModel,
-} from "../../redux/features/bikes/bikeSlice";
+import { setBrand, setModel } from "../../redux/features/bikes/bikeSlice";
 import { useState } from "react";
 
 interface AcordionProps {
@@ -43,11 +39,7 @@ const Acordion = ({ names, accordianFor, filterKey }: AcordionProps) => {
               className="text-green-700 text-lg dark:bg-slate-100 bg-slate-300"
             >
               <p
-                className={`cursor-pointer py-2 px-4 my-2 rounded transition ease-in-out ${
-                  selectedName === name
-                    ? "font-bold text-blue-600"
-                    : "hover:bg-gray-200"
-                }`}
+                className="cursor-pointer py-2 px-4 my-2 rounded transition ease-in-out hover:bg-gray-200"
                 onClick={() => handleNameClick(name)}
               >
                 {name}
@@ -59,13 +51,9 @@ const Acordion = ({ names, accordianFor, filterKey }: AcordionProps) => {
     },
   ];
 
-  const onChange = (key: string | string[]) => {
-    console.log("Active Panel Key:", key);
-  };
-
   return (
     <div className="w-full my-3">
-      <Collapse items={items} defaultActiveKey={["1"]} onChange={onChange} />
+      <Collapse items={items} />
     </div>
   );
 };

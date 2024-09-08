@@ -1,6 +1,5 @@
 import AdminDashboard from "../pages/admin/AdminDashboard";
 import AllBike from "../pages/user/AllBike";
-//import AllAvailableBike from "../pages/admin/bikeManagement/AllAvailableBike";
 
 export const adminPaths = [
   {

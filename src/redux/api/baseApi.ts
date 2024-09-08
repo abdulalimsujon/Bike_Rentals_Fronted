@@ -6,7 +6,7 @@ export const baseApi = createApi({
   endpoints: (builder) => ({
     getAllBike: builder.query({
       query: () => ({
-        url: "/bikes",
+        url: "/bikes/getBike",
         method: "GET",
       }),
     }),

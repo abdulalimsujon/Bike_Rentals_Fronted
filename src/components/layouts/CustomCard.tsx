@@ -1,6 +1,7 @@
-import { Card, Col, Row } from "antd";
+import { Button, Card, Col, Row } from "antd";
+import CustomButton from "../form/CustomButton";
 
-const CustomCard = ({ data }) => {
+const CustomCard = ({ data, buttonName, handleClick }) => {
   const { name, image, cc, description } = data;
 
   return (
@@ -36,6 +37,11 @@ const CustomCard = ({ data }) => {
               <p className="text-base text-gray-300 dark:text-gray-700">
                 {description}
               </p>
+              <div className="mt-5">
+                <CustomButton onClick={handleClick} className="btn btn-primary">
+                  {buttonName}
+                </CustomButton>
+              </div>
             </Col>
           </Row>
         </Card>

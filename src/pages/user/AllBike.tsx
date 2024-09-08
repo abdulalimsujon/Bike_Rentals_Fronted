@@ -1,62 +1,103 @@
 import Acordion from "../../components/form/Acordion";
 import { useState } from "react";
-import { Button, Drawer } from "antd";
+import { Button, Drawer, Spin, Alert } from "antd";
 import { useGetAllBikeQuery } from "../../redux/api/baseApi";
-
 import CustomCard from "../../components/layouts/CustomCard";
 import { useAppSelector } from "../../redux/hooks";
 import { useAllBikeQuery } from "../../redux/features/bikes/bikeApi";
+import { useNavigate } from "react-router-dom";
 
 const AllBike = () => {
-  const { data, error, isLoading } = useGetAllBikeQuery(undefined);
-  const item = useAppSelector((state) => state.bikesInfo.item);
+  // Fetching all bikes
+  const {
+    data: allBikesData,
+    error: allBikesError,
+    isLoading: allBikesLoading,
+  } = useGetAllBikeQuery(undefined);
+  const selectedItem = useAppSelector((state) => state.bikesInfo.item);
 
-  console.log(item);
+  const navigate = useNavigate();
+
+  const handleClick = (id: string) => {
+    console.log("ui", id);
+    navigate(`/user/bike-details/${id}`);
+  };
 
   let filterItem;
-  if (item?.brand) {
-    filterItem = { name: "brand", value: item.brand };
-  }
-  if (item?.model) {
-    filterItem = { name: "model", value: item.model };
-  }
-
-  const { data: modelData } = useAllBikeQuery([filterItem]);
-
-  let bikeData;
-  if (modelData) {
-    bikeData = modelData;
-  } else {
-    bikeData = data;
+  if (selectedItem?.brand) {
+    filterItem = { name: "brand", value: selectedItem.brand };
+  } else if (selectedItem?.model) {
+    filterItem = { name: "model", value: selectedItem.model };
   }
 
+  // Fetching filtered bikes
+  const { data: filteredData, isLoading: filteredLoading } = useAllBikeQuery(
+    filterItem ? [filterItem] : []
+  );
+
+  console.log(allBikesData?.data.result);
+
+  // Determine which data to use (filtered or all bikes)
+  const bikeData =
+    filteredData?.data?.result || allBikesData?.data?.result || [];
+
+  // Managing the drawer visibility for small screens
   const [open, setOpen] = useState(false);
+  const showDrawer = () => setOpen(true);
+  const onClose = () => setOpen(false);
 
-  const brands = [...new Set(data?.data?.map((el) => el.brand as string))];
-  const models = [...new Set(data?.data?.map((el) => el.model as string))];
+  // Extract unique brands and models for filtering
+  const brands = [
+    ...new Set(allBikesData?.data?.result?.map((el) => el.brand as string)),
+  ];
+  const models = [
+    ...new Set(allBikesData?.data?.result?.map((el) => el.model as string)),
+  ];
 
-  const showDrawer = () => {
-    setOpen(true);
-  };
+  // Handling loading and error states
+  if (allBikesLoading || filteredLoading) {
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <Spin tip="Loading bikes..." />
+      </div>
+    );
+  }
 
-  const onClose = () => {
-    setOpen(false);
-  };
+  if (allBikesError) {
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <Alert
+          message="Error"
+          description="Failed to fetch bike data."
+          type="error"
+        />
+      </div>
+    );
+  }
 
   return (
-    <div className="mx-40">
-      <div className="container mt-16 ">
-        <div className="grid grid-cols-12 h-screen gap-3">
+    <div className="mx-4 md:mx-40">
+      <div className="mt-16">
+        {/* Flexbox grid container */}
+        <div className="flex flex-col md:flex-row gap-3">
           {/* Accordions visible on large screens (md and above) */}
-          <div className="col-span-4 hidden md:block ">
-            <div className="relative">
-              <Acordion names={brands} filterKey="brand" accordianFor="Brand" />
-              <Acordion names={models} filterKey="model" accordianFor="Model" />
-            </div>
+          <div className="md:w-1/4 hidden md:block">
+            <Acordion
+              names={brands}
+              filterKey="brand"
+              accordianFor="Brand"
+              key="brand-accordion"
+            />
+            <Acordion
+              names={models}
+              filterKey="model"
+              accordianFor="Model"
+              key="model-accordion"
+            />
           </div>
 
           {/* Drawer and Button for small screens (below md) */}
-          <div className="col-span-12 md:hidden mb-4">
+          <div className="md:hidden mb-4">
             <Button type="primary" onClick={showDrawer} className="mb-4 w-full">
               Filter Bikes
             </Button>
@@ -65,17 +106,38 @@ const AllBike = () => {
               placement="left"
               onClose={onClose}
               open={open}
+              bodyStyle={{ overflowY: "auto" }} // Ensures scrolling inside the drawer
             >
-              <Acordion names={brands} accordianFor="Brand" />
-              <Acordion names={models} accordianFor="Model" />
+              <Acordion
+                names={brands}
+                filterKey="brand"
+                accordianFor="Brand"
+                key="drawer-brand-accordion"
+              />
+              <Acordion
+                names={models}
+                filterKey="model"
+                accordianFor="Model"
+                key="drawer-model-accordion"
+              />
             </Drawer>
           </div>
 
-          {/* Content Section */}
-          <div className="col-span-12 md:col-span-8">
-            {bikeData?.data?.map((item) => (
-              <CustomCard key={item.id} data={item}></CustomCard>
-            ))}
+          {/* Content Section (Always full width on small screens, 3/4 width on large) */}
+          <div className="flex-1">
+            <div className="grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-1 gap-4 mt-3">
+              <h1 className="mr-6 ml-6 p-3 text-center text-xl bg-slate-300">
+                Total Items: {bikeData.length}
+              </h1>
+              {bikeData?.map((bike) => (
+                <CustomCard
+                  key={bike.id}
+                  handleClick={() => handleClick(bike._id)}
+                  buttonName="View Details"
+                  data={bike}
+                />
+              ))}
+            </div>
           </div>
         </div>
       </div>

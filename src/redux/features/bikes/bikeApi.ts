@@ -4,7 +4,6 @@ const bikeApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     allBike: builder.query({
       query: (args) => {
-        console.log("here are the args", args);
         const params = new URLSearchParams();
 
         if (args) {
@@ -19,7 +18,17 @@ const bikeApi = baseApi.injectEndpoints({
         };
       },
     }),
+
+    singleBike: builder.query({
+      query: (bikeId) => {
+        console.log("inside the api", bikeId);
+        return {
+          url: `/bikes/single-bike/${bikeId}`,
+          method: "GET",
+        };
+      },
+    }),
   }),
 });
 
-export const { useAllBikeQuery } = bikeApi;
+export const { useAllBikeQuery, useSingleBikeQuery } = bikeApi;
