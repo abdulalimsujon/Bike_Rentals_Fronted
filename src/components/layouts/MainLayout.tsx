@@ -1,21 +1,23 @@
 import { Layout } from "antd";
 import { Outlet } from "react-router-dom";
 import CustomHeader from "./Header";
-// import Sidebar from "./Sidebar";
+import { useAppSelector } from "../../redux/hooks";
+import { selectCurrentUser } from "../../redux/features/authSlice";
+import Sidebar from "./Sidebar";
 
 const { Content } = Layout;
 
 const MainLayout = () => {
+  const user = useAppSelector(selectCurrentUser);
+
   return (
-    <Layout className="min-h-screen h-full dark:bg-gray-50 bg-slate-700">
-      {/* <Sidebar /> */}
+    <Layout className="min-h-screen dark:bg-gray-50 bg-slate-700">
+      {user?.role === "admin" && <Sidebar />}
+
       <Layout className="min-h-screen">
         <CustomHeader />
-        <Content
-          className="flex-grow dark:bg-slate-50 bg-slate-700"
-          // style={{ margin: "24px 16px 0" }}
-        >
-          <div className="min-h-screen py-4">
+        <Content className="flex-grow dark:bg-slate-50 bg-slate-700">
+          <div className="min-h-screen">
             <Outlet />
           </div>
         </Content>

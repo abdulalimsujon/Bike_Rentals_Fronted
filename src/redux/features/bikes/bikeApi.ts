@@ -28,7 +28,14 @@ const bikeApi = baseApi.injectEndpoints({
         };
       },
     }),
+    getAllBike: builder.query({
+      query: () => ({
+        url: "/bikes/getBike",
+        method: "GET",
+      }),
+    }),
   }),
 });
 
-export const { useAllBikeQuery, useSingleBikeQuery } = bikeApi;
+export const { useAllBikeQuery, useSingleBikeQuery, useGetAllBikeQuery } =
+  bikeApi;

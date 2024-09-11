@@ -1,6 +1,6 @@
 const UserDashboard = () => {
   return (
-    <div>
+    <div className="mt-16">
       <h1>this is user dashboard</h1>
     </div>
   );

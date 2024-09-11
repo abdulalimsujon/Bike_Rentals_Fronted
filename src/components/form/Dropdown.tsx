@@ -1,5 +1,4 @@
 import { Dropdown, MenuProps } from "antd";
-import MenuItem from "antd/es/menu/MenuItem";
 import { ReactNode } from "react";
 type MenuItem = Required<MenuProps>["items"][number];
 
@@ -16,6 +15,9 @@ const ReusableDropdown = ({ items, label }: dropDownProps) => {
       }}
       placement="bottom"
       arrow
+      dropdownRender={(menu) => (
+        <div className="w-64 p-2 shadow-lg rounded-md bg-white"> {menu}</div>
+      )}
     >
       <span>{label}</span>
     </Dropdown>

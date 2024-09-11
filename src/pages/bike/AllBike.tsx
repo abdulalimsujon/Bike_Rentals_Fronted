@@ -1,11 +1,15 @@
 import Acordion from "../../components/form/Acordion";
 import { useState } from "react";
 import { Button, Drawer, Spin, Alert } from "antd";
-import { useGetAllBikeQuery } from "../../redux/api/baseApi";
+
 import CustomCard from "../../components/layouts/CustomCard";
 import { useAppSelector } from "../../redux/hooks";
-import { useAllBikeQuery } from "../../redux/features/bikes/bikeApi";
+import {
+  useAllBikeQuery,
+  useGetAllBikeQuery,
+} from "../../redux/features/bikes/bikeApi";
 import { useNavigate } from "react-router-dom";
+import { selectCurrentUser } from "../../redux/features/authSlice";
 
 const AllBike = () => {
   // Fetching all bikes
@@ -16,11 +20,12 @@ const AllBike = () => {
   } = useGetAllBikeQuery(undefined);
   const selectedItem = useAppSelector((state) => state.bikesInfo.item);
 
+  const user = useAppSelector(selectCurrentUser);
+
   const navigate = useNavigate();
 
   const handleClick = (id: string) => {
-    console.log("ui", id);
-    navigate(`/user/bike-details/${id}`);
+    navigate(`/${user?.role}/bike-details/${id}`);
   };
 
   let filterItem;
@@ -34,8 +39,6 @@ const AllBike = () => {
   const { data: filteredData, isLoading: filteredLoading } = useAllBikeQuery(
     filterItem ? [filterItem] : []
   );
-
-  console.log(allBikesData?.data.result);
 
   // Determine which data to use (filtered or all bikes)
   const bikeData =

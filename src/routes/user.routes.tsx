@@ -1,6 +1,8 @@
-import AllBike from "../pages/user/AllBike";
-import BikeDetails from "../pages/user/BikeDetails";
-import UserDashboard from "../pages/user/UserDashboard";
+import AllBike from "../pages/bike/AllBike";
+import BikeDetails from "../pages/bike/BikeDetails";
+import RentalBike from "../pages/bike/RentalBike";
+import UserDashboard from "../pages/bike/UserDashboard";
+import Profile from "../pages/user/Profile";
 
 export const userPaths = [
   {
@@ -18,6 +20,15 @@ export const userPaths = [
       {
         path: "bike-details/:bikeId",
         element: <BikeDetails></BikeDetails>,
+      },
+
+      {
+        path: "rental",
+        element: <RentalBike></RentalBike>,
+      },
+      {
+        path: "profile",
+        element: <Profile></Profile>,
       },
     ],
   },

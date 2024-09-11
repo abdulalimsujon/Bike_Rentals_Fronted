@@ -1,5 +1,7 @@
 import AdminDashboard from "../pages/admin/AdminDashboard";
-import AllBike from "../pages/user/AllBike";
+import AllBike from "../pages/bike/AllBike";
+import RentalBike from "../pages/bike/RentalBike";
+import ProfilePage from "../pages/user/Profile";
 
 export const adminPaths = [
   {
@@ -13,6 +15,14 @@ export const adminPaths = [
         name: "Available Bike",
         path: "all-bike",
         element: <AllBike></AllBike>,
+      },
+      {
+        path: "rental",
+        element: <RentalBike></RentalBike>,
+      },
+      {
+        path: "profile",
+        element: <ProfilePage></ProfilePage>,
       },
     ],
   },
