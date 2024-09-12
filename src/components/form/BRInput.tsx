@@ -7,6 +7,7 @@ interface BRInputProps {
   label: string;
   className?: string;
   disabled?: boolean;
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 const BRInput: React.FC<BRInputProps> = ({
@@ -15,6 +16,7 @@ const BRInput: React.FC<BRInputProps> = ({
   label,
   className,
   disabled,
+  onChange,
 }) => {
   return (
     <div style={{ marginBottom: "20px" }}>
@@ -22,14 +24,29 @@ const BRInput: React.FC<BRInputProps> = ({
         name={name}
         render={({ field }) => (
           <Form.Item label={label}>
-            <Input
-              className={className}
-              disabled={disabled}
-              {...field}
-              type={type}
-              id={name}
-              size="large"
-            />
+            {type === "file" ? (
+              // Special handling for file input
+              <input
+                className={className}
+                disabled={disabled}
+                type="file"
+                id={name}
+                onChange={(e) => {
+                  field.onChange(e); // Notify react-hook-form
+                  if (onChange) onChange(e); // Call external onChange handler if provided
+                }}
+              />
+            ) : (
+              // Default Input for other types
+              <Input
+                className={className}
+                disabled={disabled}
+                {...field}
+                type={type}
+                id={name}
+                size="large"
+              />
+            )}
           </Form.Item>
         )}
       />

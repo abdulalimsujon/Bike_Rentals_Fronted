@@ -87,8 +87,8 @@ const BikeDetails = () => {
   };
 
   return (
-    <div className="h-screen flex justify-center items-center dark:bg-gray-100 bg-slate-700">
-      <div className="container mx-auto p-4">
+    <div className="h-screen flex justify-center items-center dark:bg-gray-50 bg-slate-700 mx-40 ">
+      <div className="container p-4 ">
         <div className="grid grid-cols-12 gap-4">
           <div className="col-span-12 md:col-span-8 bg-white  shadow-lg rounded-lg p-6">
             <div className="flex flex-col">

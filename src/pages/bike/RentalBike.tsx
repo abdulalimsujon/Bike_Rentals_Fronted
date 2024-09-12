@@ -57,22 +57,24 @@ const RentalBike = () => {
   ];
 
   return (
-    <Tabs defaultActiveKey="1" type="card">
-      <TabPane tab="Unpaid" key="1">
-        <Table
-          columns={columns}
-          dataSource={unpaidRentals}
-          pagination={false}
-        />
-      </TabPane>
-      <TabPane tab="Paid" key="2">
-        <Table
-          columns={columns.filter((col) => col.key !== "action")} // Remove action column for paid rentals
-          dataSource={paidRentals}
-          pagination={false}
-        />
-      </TabPane>
-    </Tabs>
+    <div className="mx-40">
+      <Tabs defaultActiveKey="1" type="card">
+        <TabPane tab="Unpaid" key="1">
+          <Table
+            columns={columns}
+            dataSource={unpaidRentals}
+            pagination={false}
+          />
+        </TabPane>
+        <TabPane tab="Paid" key="2">
+          <Table
+            columns={columns.filter((col) => col.key !== "action")} // Remove action column for paid rentals
+            dataSource={paidRentals}
+            pagination={false}
+          />
+        </TabPane>
+      </Tabs>
+    </div>
   );
 };
 
