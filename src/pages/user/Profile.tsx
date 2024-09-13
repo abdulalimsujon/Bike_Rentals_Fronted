@@ -16,8 +16,6 @@ const ProfilePage = () => {
   const { data, isLoading, refetch } = useGetMeQuery(undefined);
   const [updateUserProfile] = useUpdateUserProfileMutation();
 
-  console.log(data);
-
   if (isLoading) {
     <Spin>...loading</Spin>;
   }

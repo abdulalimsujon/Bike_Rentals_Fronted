@@ -34,8 +34,22 @@ const bikeApi = baseApi.injectEndpoints({
         method: "GET",
       }),
     }),
+    createBike: builder.mutation({
+      query: (data) => {
+        console.log("from the api", data);
+        return {
+          url: "/bikes",
+          method: "POST",
+          body: data,
+        };
+      },
+    }),
   }),
 });
 
-export const { useAllBikeQuery, useSingleBikeQuery, useGetAllBikeQuery } =
-  bikeApi;
+export const {
+  useAllBikeQuery,
+  useSingleBikeQuery,
+  useGetAllBikeQuery,
+  useCreateBikeMutation,
+} = bikeApi;

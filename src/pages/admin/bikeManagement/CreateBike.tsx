@@ -1,66 +1,70 @@
-import { Layout, Card, Typography, Button, Input } from "antd";
-import { useState } from "react";
+import { Layout, Card, Typography, Button, Spin } from "antd";
 import BRInput from "../../../components/form/BRInput"; // Assuming you have this custom component
 import BrForm from "../../../components/form/BrForm";
 import BRTextArea from "../../../components/form/BrTextArea";
+import { useState } from "react";
+import { useCreateBikeMutation } from "../../../redux/features/bikes/bikeApi";
 
 const { Content } = Layout;
 const { Title } = Typography;
-const { TextArea } = Input;
 
 const CreateBike = () => {
-  const [formData, setFormData] = useState(new FormData());
-
-  const handleFileChange = (event) => {
-    const file = event.target.files[0];
+  const [imageFile, setImageFile] = useState<File | null>(null);
+  // Handle file input changes
+  const [createBike, { error, isLoading }] = useCreateBikeMutation();
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
     if (file) {
-      setFormData((prevFormData) => {
-        const newFormData = new FormData(prevFormData);
-        newFormData.append("image", file);
-        return newFormData;
-      });
+      setImageFile(file);
     }
   };
 
-  const onsubmit = (values) => {
-    const newFormData = new FormData();
+  if (error) {
+    console.log(error);
+  }
 
-    // Append all form values
-    Object.keys(values).forEach((key) => {
-      newFormData.append(key, values[key]);
-    });
+  if (isLoading) {
+    <p>loading</p>;
+  }
 
-    // Append the image file if it exists
-    const imageFile = formData.get("image");
+  // Handle form submission
+  const onSubmit = async (data) => {
+    const formData = new FormData();
+
+    // Append form fields to FormData
+    formData.append("brand", data?.brand);
+    formData.append("pricePerHour", data?.pricePerHour);
+    formData.append("name", data?.name);
+    formData.append("cc", data?.cc);
+    formData.append("description", data?.description);
+    formData.append("year", data?.year);
+    formData.append("model", data?.model);
+    // Append the image file to FormData
     if (imageFile) {
-      newFormData.append("image", imageFile);
+      formData.append("image", imageFile);
     }
 
-    // Logging the FormData for inspection
-    for (let pair of newFormData.entries()) {
-      console.log(`${pair[0]}: ${pair[1]}`);
-    }
+    await createBike(formData);
   };
 
   return (
-    <div className="pt-16 overflow-hidden bg-fuchsia-400 h-screen">
+    <div className="pt-16  bg-gray-100 h-screen overflow-hidden">
       <Layout className="min-h-screen flex justify-center items-center">
-        <Content style={{ padding: "20px", maxWidth: "600px", width: "100%" }}>
-          <Card className="shadow-lg rounded-lg p-6 bg-white">
-            <Title level={2} className="text-center mb-6">
+        <Content style={{ padding: "16px", maxWidth: "500px", width: "100%" }}>
+          <Card className="shadow-lg rounded-lg p-4 bg-white">
+            <Title level={3} className="text-center mb-4">
               Create a New Bike
             </Title>
 
-            <BrForm onSubmit={onsubmit}>
-              {/* Container for Flex Rows */}
-              <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+            <BrForm onSubmit={onSubmit}>
+              <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
                 {/* Bike Name */}
                 <div className="flex flex-col">
                   <BRInput
                     type="text"
                     name="name"
-                    label="bike name"
-                    className="w-full border-gray-300 border rounded-lg p-2"
+                    label="Bike Name"
+                    className="w-full border-gray-300 border rounded-lg p-1"
                   />
                 </div>
 
@@ -69,8 +73,8 @@ const CreateBike = () => {
                   <BRInput
                     type="number"
                     name="pricePerHour"
-                    label="price per hour"
-                    className="w-full border-gray-300 border rounded-lg p-2"
+                    label="Price per Hour"
+                    className="w-full border-gray-300 border rounded-lg p-1"
                   />
                 </div>
 
@@ -80,7 +84,7 @@ const CreateBike = () => {
                     type="number"
                     name="cc"
                     label="CC"
-                    className="w-full border-gray-300 border rounded-lg p-2"
+                    className="w-full border-gray-300 border rounded-lg p-1"
                   />
                 </div>
 
@@ -88,9 +92,9 @@ const CreateBike = () => {
                 <div className="flex flex-col">
                   <BRInput
                     type="number"
-                    label="year"
                     name="year"
-                    className="w-full border-gray-300 border rounded-lg p-2"
+                    label="Year"
+                    className="w-full border-gray-300 border rounded-lg p-1"
                   />
                 </div>
 
@@ -99,8 +103,8 @@ const CreateBike = () => {
                   <BRInput
                     type="text"
                     name="model"
-                    label="model"
-                    className="w-full border-gray-300 border rounded-lg p-2"
+                    label="Model"
+                    className="w-full border-gray-300 border rounded-lg p-1"
                   />
                 </div>
 
@@ -109,41 +113,39 @@ const CreateBike = () => {
                   <BRInput
                     type="text"
                     name="brand"
-                    label="brand"
-                    className="w-full border-gray-300 border rounded-lg p-2"
+                    label="Brand"
+                    className="w-full border-gray-300 border rounded-lg p-1"
                   />
                 </div>
 
+                {/* Description */}
                 <div className="flex flex-col sm:col-span-2">
-                  <label className="mb-1 text-sm font-medium">
-                    Description
-                  </label>
                   <BRTextArea
                     name="description"
-                    label="description"
-                    rows={4}
-                    className="w-full border-gray-300 border rounded-lg p-2"
+                    label="Description"
+                    rows={3}
+                    className="w-full border-gray-300 border rounded-lg p-1"
                   />
                 </div>
 
-                {/* Image URL */}
+                {/* Image */}
                 <div className="flex flex-col w-full">
                   <BRInput
                     type="file"
                     name="image"
                     label="Image"
-                    className="w-full border-gray-300 border rounded-lg p-2"
+                    className="w-96"
                     onChange={handleFileChange} // Handle file input changes
                   />
                 </div>
               </div>
 
               {/* Submit Button */}
-              <div className="text-center mt-6">
+              <div className="text-center mt-4">
                 <Button
                   type="primary"
                   htmlType="submit"
-                  className="w-full bg-blue-500 hover:bg-blue-600 text-white rounded-lg p-2"
+                  className="w-full bg-blue-500 hover:bg-blue-600 text-white rounded-lg py-2"
                 >
                   Create Bike
                 </Button>
