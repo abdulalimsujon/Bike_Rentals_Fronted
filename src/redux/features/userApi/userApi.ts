@@ -8,7 +8,7 @@ const userApi = baseApi.injectEndpoints({
         return {
           url: `/users/me`,
           method: "PUT",
-          data: args,
+          body: args, // Correct key for request body
         };
       },
     }),

@@ -1,10 +1,11 @@
 import { Button, Spin } from "antd";
 import BrForm from "../../components/form/BrForm";
 import BRInput from "../../components/form/BRInput";
-import { useRegistrationMutation } from "../../redux/features/authApi/authApi";
+
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
+import { useRegistrationMutation } from "../../redux/features/authApi/authApi";
 
 const Registration = () => {
   const [registration, { isLoading, isSuccess }] = useRegistrationMutation();

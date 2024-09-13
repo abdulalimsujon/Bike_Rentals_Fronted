@@ -5,6 +5,7 @@ import { useGetMeQuery } from "../../redux/features/authApi/authApi";
 import BrForm from "../../components/form/BrForm";
 import BRInput from "../../components/form/BRInput";
 import { useUpdateUserProfileMutation } from "../../redux/features/userApi/userApi";
+import Toast from "../../utils/Toast";
 
 const { Content } = Layout;
 const { Title } = Typography;
@@ -12,7 +13,7 @@ const { Title } = Typography;
 const ProfilePage = () => {
   const [isEditing, setIsEditing] = useState(false);
 
-  const { data, isLoading } = useGetMeQuery(undefined);
+  const { data, isLoading, refetch } = useGetMeQuery(undefined);
   const [updateUserProfile] = useUpdateUserProfileMutation();
 
   console.log(data);
@@ -33,8 +34,17 @@ const ProfilePage = () => {
   const handleEdit = () => {
     setIsEditing(!isEditing);
   };
-  const onsubmit = (data) => {
-    updateUserProfile(data);
+  const onsubmit = async (data) => {
+    if (
+      data.name !== user.name ||
+      data.email !== user.email ||
+      data.phone !== user.phone ||
+      data.address !== user.address
+    ) {
+      await updateUserProfile(data);
+      refetch();
+      Toast({ message: "Profile update successfully", status: "success" });
+    }
   };
 
   if (!user?.image) {
