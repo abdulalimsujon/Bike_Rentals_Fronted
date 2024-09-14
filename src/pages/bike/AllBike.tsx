@@ -4,10 +4,7 @@ import { Button, Drawer, Spin, Alert } from "antd";
 
 import CustomCard from "../../components/layouts/CustomCard";
 import { useAppSelector } from "../../redux/hooks";
-import {
-  useAllBikeQuery,
-  useGetAllBikeQuery,
-} from "../../redux/features/bikes/bikeApi";
+import { useAllBikeQuery } from "../../redux/features/bikes/bikeApi";
 import { useNavigate } from "react-router-dom";
 import { selectCurrentUser } from "../../redux/features/authSlice";
 
@@ -17,10 +14,12 @@ const AllBike = () => {
     data: allBikesData,
     error: allBikesError,
     isLoading: allBikesLoading,
-  } = useGetAllBikeQuery(undefined);
+  } = useAllBikeQuery([]);
   const selectedItem = useAppSelector((state) => state.bikesInfo.item);
 
   const user = useAppSelector(selectCurrentUser);
+
+  console.log(allBikesData);
 
   const navigate = useNavigate();
 

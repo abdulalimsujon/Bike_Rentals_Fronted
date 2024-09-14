@@ -1,5 +1,6 @@
 import AdminDashboard from "../pages/admin/AdminDashboard";
 import CreateBike from "../pages/admin/bikeManagement/CreateBike";
+import ManageBike from "../pages/admin/bikeManagement/ManageBike";
 import AllBike from "../pages/bike/AllBike";
 import BikeDetails from "../pages/bike/BikeDetails";
 import RentalBike from "../pages/bike/RentalBike";
@@ -14,15 +15,16 @@ export const adminPaths = [
     name: "Bike Management",
     children: [
       {
-        name: "Available Bike",
-        path: "all-bike",
-        element: <AllBike></AllBike>,
-      },
-      {
         name: "create bike",
         path: "create-bike",
         element: <CreateBike></CreateBike>,
       },
+      {
+        name: "Manage Bike",
+        path: "manage-bike",
+        element: <ManageBike></ManageBike>,
+      },
+
       {
         path: "rental",
         element: <RentalBike></RentalBike>,
@@ -34,6 +36,10 @@ export const adminPaths = [
       {
         path: "bike-details/:bikeId",
         element: <BikeDetails></BikeDetails>,
+      },
+      {
+        path: "all-bike",
+        element: <AllBike></AllBike>,
       },
     ],
   },

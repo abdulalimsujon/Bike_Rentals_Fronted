@@ -4,6 +4,8 @@ import BrForm from "../../../components/form/BrForm";
 import BRTextArea from "../../../components/form/BrTextArea";
 import { useState } from "react";
 import { useCreateBikeMutation } from "../../../redux/features/bikes/bikeApi";
+import Toast from "../../../utils/Toast";
+import { useNavigate } from "react-router-dom";
 
 const { Content } = Layout;
 const { Title } = Typography;
@@ -12,6 +14,11 @@ const CreateBike = () => {
   const [imageFile, setImageFile] = useState<File | null>(null);
   // Handle file input changes
   const [createBike, { error, isLoading }] = useCreateBikeMutation();
+  const navigate = useNavigate();
+
+  if (isLoading) {
+    <Spin>Loading...</Spin>;
+  }
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
@@ -45,13 +52,15 @@ const CreateBike = () => {
     }
 
     await createBike(formData);
+    Toast({ message: "bike successfully created", status: "success" });
+    navigate(`/admin/manage-bike`);
   };
 
   return (
-    <div className="pt-16  bg-gray-100 h-screen overflow-hidden">
-      <Layout className="min-h-screen flex justify-center items-center">
+    <div className="pt-16  dark:bg-gray-100 bg-slate-700 h-screen overflow-hidden ">
+      <Layout className="min-h-screen flex justify-center items-center dark:bg-gray-100 bg-slate-700">
         <Content style={{ padding: "16px", maxWidth: "500px", width: "100%" }}>
-          <Card className="shadow-lg rounded-lg p-4 bg-white">
+          <Card className="shadow-lg rounded-lg p-4 dark:bg-gray-100 bg-gray-300 ">
             <Title level={3} className="text-center mb-4">
               Create a New Bike
             </Title>
