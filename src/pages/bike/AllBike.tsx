@@ -19,8 +19,6 @@ const AllBike = () => {
 
   const user = useAppSelector(selectCurrentUser);
 
-  console.log(allBikesData);
-
   const navigate = useNavigate();
 
   const handleClick = (id: string) => {

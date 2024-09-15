@@ -5,7 +5,7 @@ const bikeApi = baseApi.injectEndpoints({
     allBike: builder.query({
       query: (args) => {
         const params = new URLSearchParams();
-        args.forEach((item) => {
+        args.forEach((item: { name: string; value: string }) => {
           params.append(item.name, item.value);
         });
 
@@ -14,6 +14,7 @@ const bikeApi = baseApi.injectEndpoints({
           method: "GET",
         };
       },
+      providesTags: ["Bike"],
     }),
 
     singleBike: builder.query({
@@ -36,12 +37,21 @@ const bikeApi = baseApi.injectEndpoints({
     }),
     deleteBike: builder.mutation({
       query: (bikeId) => {
-        console.log("form the api", bikeId);
         return {
           url: `/bikes/${bikeId}`,
           method: "DELETE",
         };
       },
+    }),
+    updateBike: builder.mutation({
+      query: ({ data, bikeId }) => {
+        return {
+          url: `/bikes/${bikeId}`,
+          method: "PUT",
+          body: data,
+        };
+      },
+      invalidatesTags: ["Bike"],
     }),
   }),
 });
@@ -51,4 +61,5 @@ export const {
   useSingleBikeQuery,
   useCreateBikeMutation,
   useDeleteBikeMutation,
+  useUpdateBikeMutation,
 } = bikeApi;

@@ -6,6 +6,7 @@ import BrForm from "../../components/form/BrForm";
 import BRInput from "../../components/form/BRInput";
 import { useUpdateUserProfileMutation } from "../../redux/features/userApi/userApi";
 import Toast from "../../utils/Toast";
+import { userType } from "../../Type/UserType";
 
 const { Content } = Layout;
 const { Title } = Typography;
@@ -32,7 +33,7 @@ const ProfilePage = () => {
   const handleEdit = () => {
     setIsEditing(!isEditing);
   };
-  const onsubmit = async (data) => {
+  const onsubmit = async (data: userType) => {
     if (
       data.name !== user.name ||
       data.email !== user.email ||

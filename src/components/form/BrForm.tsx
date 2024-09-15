@@ -7,8 +7,8 @@ import {
   useForm,
 } from "react-hook-form";
 
-type TFormConfig = {
-  defaultValues?: Record<string, any>;
+type TFormConfig<T> = {
+  defaultValues?: T;
   resolver?: any;
 };
 

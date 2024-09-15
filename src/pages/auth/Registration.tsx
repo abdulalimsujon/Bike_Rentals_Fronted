@@ -6,6 +6,7 @@ import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { useRegistrationMutation } from "../../redux/features/authApi/authApi";
+import { userType } from "../../Type/UserType";
 
 const Registration = () => {
   const [registration, { isLoading, isSuccess }] = useRegistrationMutation();
@@ -14,7 +15,7 @@ const Registration = () => {
   // State for handling the image file
   const [imageFile, setImageFile] = useState<File | null>(null);
 
-  const onSubmit = async (data: any) => {
+  const onSubmit = async (data: userType) => {
     const formData = new FormData();
 
     // Append form fields to FormData
