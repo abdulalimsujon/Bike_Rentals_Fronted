@@ -372,7 +372,7 @@ const ManageBike = () => {
                   htmlType="submit"
                   className="w-full bg-blue-500 hover:bg-blue-600 text-white rounded-lg py-2"
                 >
-                  Create Bike
+                  Edit Bike
                 </Button>
               </div>
             </BrForm>

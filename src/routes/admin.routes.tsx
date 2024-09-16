@@ -1,6 +1,7 @@
 import AdminDashboard from "../pages/admin/AdminDashboard";
 import CreateBike from "../pages/admin/bikeManagement/CreateBike";
 import ManageBike from "../pages/admin/bikeManagement/ManageBike";
+import Users from "../pages/admin/userManagement/Users";
 import AllBike from "../pages/bike/AllBike";
 import BikeDetails from "../pages/bike/BikeDetails";
 import RentalBike from "../pages/bike/RentalBike";
@@ -40,6 +41,16 @@ export const adminPaths = [
       {
         path: "all-bike",
         element: <AllBike></AllBike>,
+      },
+    ],
+  },
+  {
+    name: "User Management",
+    children: [
+      {
+        name: "Manage User",
+        path: "all-user",
+        element: <Users></Users>,
       },
     ],
   },

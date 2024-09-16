@@ -7,6 +7,7 @@ import { useAppSelector } from "../../redux/hooks";
 import { useAllBikeQuery } from "../../redux/features/bikes/bikeApi";
 import { useNavigate } from "react-router-dom";
 import { selectCurrentUser } from "../../redux/features/authSlice";
+import { TBike } from "../../Type/BikeType";
 
 const AllBike = () => {
   // Fetching all bikes
@@ -48,11 +49,15 @@ const AllBike = () => {
 
   // Extract unique brands and models for filtering
   const brands = [
-    ...new Set(allBikesData?.data?.result?.map((el) => el.brand as string)),
-  ];
+    ...new Set(
+      allBikesData?.data?.result?.map((el: TBike) => el.brand as string)
+    ),
+  ] as string[];
   const models = [
-    ...new Set(allBikesData?.data?.result?.map((el) => el.model as string)),
-  ];
+    ...new Set(
+      allBikesData?.data?.result?.map((el: TBike) => el.model as string)
+    ),
+  ] as string[];
 
   // Handling loading and error states
   if (allBikesLoading || filteredLoading) {
@@ -129,9 +134,9 @@ const AllBike = () => {
               <h1 className="mr-6 ml-6 p-3 text-center text-xl bg-slate-300">
                 Total Items: {bikeData.length}
               </h1>
-              {bikeData?.map((bike) => (
+              {bikeData?.map((bike: TBike) => (
                 <CustomCard
-                  key={bike.id}
+                  key={bike._id}
                   handleClick={() => handleClick(bike._id)}
                   buttonName="View Details"
                   data={bike}
