@@ -5,6 +5,7 @@ import Users from "../pages/admin/userManagement/Users";
 import AllBike from "../pages/bike/AllBike";
 import BikeDetails from "../pages/bike/BikeDetails";
 import RentalBike from "../pages/bike/RentalBike";
+import Payment from "../pages/payment/Payment";
 import ProfilePage from "../pages/user/Profile";
 
 export const adminPaths = [
@@ -41,6 +42,11 @@ export const adminPaths = [
       {
         path: "all-bike",
         element: <AllBike></AllBike>,
+      },
+
+      {
+        path: "payment",
+        element: <Payment></Payment>,
       },
     ],
   },

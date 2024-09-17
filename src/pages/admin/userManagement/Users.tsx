@@ -251,8 +251,14 @@ const Users = () => {
   ];
 
   return (
-    <>
-      <Table className="pt-28 mx-40" columns={columns} dataSource={data2} />
+    <div className="">
+      <div className="overflow-auto mx-0">
+        <Table
+          className="pt-28 lg:mx-40 "
+          columns={columns}
+          dataSource={data2}
+        />
+      </div>
 
       <Modal
         title="Delete User"
@@ -265,7 +271,7 @@ const Users = () => {
       >
         <p>Are you sure you want to delete this user?</p>
       </Modal>
-    </>
+    </div>
   );
 };
 

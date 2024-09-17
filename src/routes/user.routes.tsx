@@ -2,6 +2,7 @@ import AllBike from "../pages/bike/AllBike";
 import BikeDetails from "../pages/bike/BikeDetails";
 import RentalBike from "../pages/bike/RentalBike";
 import UserDashboard from "../pages/bike/UserDashboard";
+import Payment from "../pages/payment/Payment";
 import Profile from "../pages/user/Profile";
 
 export const userPaths = [
@@ -29,6 +30,10 @@ export const userPaths = [
       {
         path: "profile",
         element: <Profile></Profile>,
+      },
+      {
+        path: "payment",
+        element: <Payment></Payment>,
       },
     ],
   },

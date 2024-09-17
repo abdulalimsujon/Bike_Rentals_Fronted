@@ -59,7 +59,7 @@ const Registration = () => {
 
   return (
     <div className="flex justify-center items-center mt-16">
-      <div className="p-6 border bg-slate-100">
+      <div className="p-6 border bg-green-200">
         <h1 className="text-center">Registration</h1>
         <BrForm onSubmit={onSubmit}>
           <BRInput type="text" name="name" label="User Name" className="w-96" />
@@ -90,6 +90,12 @@ const Registration = () => {
             </Button>
           </div>
         </BrForm>
+        <div className="pr-5 text-center">
+          <span>Already have an account ? </span>
+          <a className="text-red-700" href="/login">
+            login
+          </a>
+        </div>
       </div>
     </div>
   );

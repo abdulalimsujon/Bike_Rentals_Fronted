@@ -72,17 +72,18 @@ const CustomHeader = () => {
   return (
     <Header className="fixed top-0 left-0 w-full z-50 dark:bg-gray-200 dark:text-green-700 bg-gray-800 text-white">
       <div className="container mx-auto">
-        <div className="flex items-center justify-between">
-          <span className="text-xl font-semibold dark:text-green-700">
+        <div className="flex items-center justify-between ">
+          <h1 className="text-xl font-semibold dark:text-green-700 flex-shrink-0 lg:pl-12  pr-8 ">
             Sk Bike Rentals
-          </span>
-          <div className="flex items-center space-x-4 md:space-x-6">
-            <NavLink to="all-bike" className="hidden md:inline">
-              All Bikes
-            </NavLink>
-            <NavLink to="all-bike" className="hidden md:inline">
-              Rental
-            </NavLink>
+          </h1>
+          <div className="flex items-center space-x-4  md:space-x-6">
+            <div className="flex flex-shrink-0">
+              <NavLink className="mr-5" to="all-bike">
+                All Bikes
+              </NavLink>
+              <NavLink to="all-bike">Rental</NavLink>
+            </div>
+
             <div className="flex items-center space-x-2">
               <span onClick={handleThemeSwitch}>
                 {theme === "dark" ? (

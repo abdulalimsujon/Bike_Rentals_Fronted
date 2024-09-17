@@ -4,7 +4,12 @@ import dayjs from "dayjs"; // Import dayjs for formatting
 import utc from "dayjs/plugin/utc"; // Plugin for handling UTC
 dayjs.extend(utc); // Extend dayjs with UTC plugin
 
-const CustomDatePicker = ({ label, name }) => {
+type datePickerProps = {
+  label: string;
+  name: string;
+};
+
+const CustomDatePicker = ({ label, name }: datePickerProps) => {
   return (
     <div style={{ marginBottom: "20px" }}>
       <Controller

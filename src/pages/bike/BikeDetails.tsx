@@ -82,7 +82,7 @@ const BikeDetails = () => {
 
     // After successful form submission, navigate to the role-based rental page
     if (user?.role) {
-      navigate(`/${user.role}/rental`);
+      navigate(`/${user.role}/payment`);
     }
   };
 

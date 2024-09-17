@@ -1,7 +1,6 @@
 import { Collapse, CollapseProps } from "antd";
 import { useDispatch } from "react-redux";
 import { setBrand, setModel } from "../../redux/features/bikes/bikeSlice";
-import { useState } from "react";
 
 interface AcordionProps {
   names: string[];
@@ -11,10 +10,8 @@ interface AcordionProps {
 
 const Acordion = ({ names, accordianFor, filterKey }: AcordionProps) => {
   const dispatch = useDispatch();
-  const [selectedName, setSelectedName] = useState<string | null>(null);
 
   const handleNameClick = (name: string) => {
-    setSelectedName(name);
     if (filterKey === "model") {
       dispatch(setModel(name));
     }
