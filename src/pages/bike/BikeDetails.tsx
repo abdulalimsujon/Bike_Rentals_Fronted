@@ -1,5 +1,4 @@
 import { useNavigate, useParams } from "react-router-dom";
-import { useSingleBikeQuery } from "../../redux/features/bikes/bikeApi";
 import { Spin, Alert, Button } from "antd";
 import { CiCalendar } from "react-icons/ci";
 import { RiEBikeLine } from "react-icons/ri";
@@ -10,6 +9,9 @@ import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
 import { useAppSelector } from "../../redux/hooks";
 import { selectCurrentUser } from "../../redux/features/authSlice";
+import { useSingleBikeQuery } from "../../redux/api/bikes/bikeApi";
+import { useDispatch } from "react-redux";
+import { rentPeriodWithBike } from "../../redux/features/rentSlice";
 
 dayjs.extend(utc);
 
@@ -17,6 +19,7 @@ const BikeDetails = () => {
   const { bikeId } = useParams();
   const navigate = useNavigate();
   const user = useAppSelector(selectCurrentUser);
+  const dispatch = useDispatch();
 
   // Fetch the bike details using the bikeId
   const { data, error, isLoading } = useSingleBikeQuery(bikeId);
@@ -54,7 +57,6 @@ const BikeDetails = () => {
     name,
     description,
     pricePerHour,
-    image,
     brand,
     cc,
     model,
@@ -63,21 +65,25 @@ const BikeDetails = () => {
   } = data?.data || {};
 
   // Handle form submission and format the startTime and endTime
-  const onSubmit = (formData) => {
-    const { startTime, endTime } = formData;
+  const onSubmit = (formData: { startTime: string }) => {
+    const { startTime } = formData;
+
+    // Add bikeId to the formData
+    const dataWithBikeId = {
+      ...formData,
+      bikeId, // Add bikeId to the form data
+    };
+
+    dispatch(rentPeriodWithBike(dataWithBikeId));
 
     // Format startTime and endTime to "YYYY-MM-DDTHH:mm:ssZ" format
     const formattedStartTime = startTime
       ? dayjs(startTime).utc().format("YYYY-MM-DDTHH:mm:ss[Z]")
       : null;
 
-    const formattedEndTime = endTime
-      ? dayjs(endTime).utc().format("YYYY-MM-DDTHH:mm:ss[Z]")
-      : null;
-
     console.log({
       startTime: formattedStartTime,
-      endTime: formattedEndTime,
+      bikeId, // log the bikeId for debugging
     });
 
     // After successful form submission, navigate to the role-based rental page
@@ -143,7 +149,6 @@ const BikeDetails = () => {
               <BrForm onSubmit={onSubmit}>
                 <div className="flex flex-col gap-4">
                   <CustomDatePicker name="startTime" label="Start Time" />
-                  <CustomDatePicker name="endTime" label="End Time" />
                   <Button
                     type="primary"
                     htmlType="submit"

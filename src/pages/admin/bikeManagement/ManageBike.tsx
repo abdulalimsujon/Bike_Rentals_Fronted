@@ -2,17 +2,18 @@ import React, { useState } from "react";
 import { Button, Popconfirm, Spin, Table } from "antd";
 import type { TableColumnsType, TableProps } from "antd";
 import { ColumnFilterItem } from "antd/es/table/interface";
-import {
-  useAllBikeQuery,
-  useDeleteBikeMutation,
-  useUpdateBikeMutation,
-} from "../../../redux/features/bikes/bikeApi";
+
 import Toast from "../../../utils/Toast";
 import ReuseableModal from "../../../utils/ReuseableModal";
 import BRInput from "../../../components/form/BRInput";
 import BrForm from "../../../components/form/BrForm";
 import BRTextArea from "../../../components/form/BrTextArea";
 import { TBike } from "../../../Type/BikeType";
+import {
+  useAllBikeQuery,
+  useDeleteBikeMutation,
+  useUpdateBikeMutation,
+} from "../../../redux/api/bikes/bikeApi";
 
 const ManageBike = () => {
   interface QueryParam {
@@ -263,9 +264,9 @@ const ManageBike = () => {
   };
 
   return (
-    <div className="bg-slate-600 dark:bg-slate-50 p-8 ">
+    <div className="bg-slate-600 dark:bg-slate-50 p-8  h-screen ">
       <Table
-        className="mt-20 "
+        className="mt-20 overflow-auto "
         columns={columns}
         dataSource={data2}
         onChange={onChange}

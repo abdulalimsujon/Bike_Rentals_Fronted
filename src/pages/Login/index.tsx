@@ -3,7 +3,7 @@ import { Button, Spin } from "antd";
 import BrForm from "../../components/form/BrForm";
 import BRInput from "../../components/form/BRInput";
 import { useNavigate } from "react-router-dom";
-import { useLoginMutation } from "../../redux/features/authApi/authApi";
+import { useLoginMutation } from "../../redux/api/authApi/authApi";
 import { useDispatch } from "react-redux";
 import { setUser } from "../../redux/features/authSlice";
 import { verifyToken } from "../../utils/verifyToken";

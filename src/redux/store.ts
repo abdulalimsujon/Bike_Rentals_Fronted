@@ -1,6 +1,6 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { baseApi } from "./api/baseApi";
-import bikeSlice from "./features/bikes/bikeSlice";
+
 import authSlice from "./features/authSlice";
 import {
   persistStore,
@@ -13,6 +13,8 @@ import {
   REGISTER,
 } from "redux-persist";
 import storage from "redux-persist/lib/storage";
+import bikeSlice from "./api/bikes/bikeSlice";
+import rentSlice from "./features/rentSlice";
 
 const persistConfig = {
   key: "auth",
@@ -26,6 +28,7 @@ export const store = configureStore({
     [baseApi.reducerPath]: baseApi.reducer,
     bikesInfo: bikeSlice,
     auth: persistedAuthReducer,
+    rent: rentSlice,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

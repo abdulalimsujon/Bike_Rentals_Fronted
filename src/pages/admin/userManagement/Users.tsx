@@ -2,7 +2,7 @@ import {
   useDeleteUserMutation,
   useGetAllUsersQuery,
   useUpdateUserRoleMutation,
-} from "../../../redux/features/userApi/userApi";
+} from "../../../redux/api/userApi/userApi";
 import { useRef, useState } from "react";
 import { SearchOutlined } from "@ant-design/icons";
 import type { InputRef, TableColumnsType, TableColumnType } from "antd";

@@ -1,10 +1,10 @@
 import { Layout, Card, Typography, Button, Spin, Image } from "antd";
 import { useState } from "react";
-import { useGetMeQuery } from "../../redux/features/authApi/authApi";
+import { useGetMeQuery } from "../../redux/api/authApi/authApi";
 
 import BrForm from "../../components/form/BrForm";
 import BRInput from "../../components/form/BRInput";
-import { useUpdateUserProfileMutation } from "../../redux/features/userApi/userApi";
+import { useUpdateUserProfileMutation } from "../../redux/api/userApi/userApi";
 import Toast from "../../utils/Toast";
 import { userType } from "../../Type/UserType";
 

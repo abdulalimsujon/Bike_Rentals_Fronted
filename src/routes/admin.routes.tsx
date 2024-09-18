@@ -4,7 +4,6 @@ import ManageBike from "../pages/admin/bikeManagement/ManageBike";
 import Users from "../pages/admin/userManagement/Users";
 import AllBike from "../pages/bike/AllBike";
 import BikeDetails from "../pages/bike/BikeDetails";
-import RentalBike from "../pages/bike/RentalBike";
 import Payment from "../pages/payment/Payment";
 import ProfilePage from "../pages/user/Profile";
 
@@ -25,11 +24,6 @@ export const adminPaths = [
         name: "Manage Bike",
         path: "manage-bike",
         element: <ManageBike></ManageBike>,
-      },
-
-      {
-        path: "rental",
-        element: <RentalBike></RentalBike>,
       },
       {
         path: "profile",

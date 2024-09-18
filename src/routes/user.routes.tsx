@@ -1,6 +1,6 @@
 import AllBike from "../pages/bike/AllBike";
 import BikeDetails from "../pages/bike/BikeDetails";
-import RentalBike from "../pages/bike/RentalBike";
+
 import UserDashboard from "../pages/bike/UserDashboard";
 import Payment from "../pages/payment/Payment";
 import Profile from "../pages/user/Profile";
@@ -23,10 +23,6 @@ export const userPaths = [
         element: <BikeDetails></BikeDetails>,
       },
 
-      {
-        path: "rental",
-        element: <RentalBike></RentalBike>,
-      },
       {
         path: "profile",
         element: <Profile></Profile>,

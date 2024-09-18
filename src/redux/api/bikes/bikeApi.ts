@@ -43,6 +43,15 @@ const bikeApi = baseApi.injectEndpoints({
         };
       },
     }),
+    rentalBike: builder.mutation({
+      query: (args) => {
+        return {
+          url: `/rentals`,
+          method: "PUT",
+          body: args,
+        };
+      },
+    }),
     updateBike: builder.mutation({
       query: ({ data, bikeId }) => {
         return {
@@ -62,4 +71,5 @@ export const {
   useCreateBikeMutation,
   useDeleteBikeMutation,
   useUpdateBikeMutation,
+  useRentalBikeMutation,
 } = bikeApi;

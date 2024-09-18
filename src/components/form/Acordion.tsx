@@ -1,6 +1,6 @@
 import { Collapse, CollapseProps } from "antd";
 import { useDispatch } from "react-redux";
-import { setBrand, setModel } from "../../redux/features/bikes/bikeSlice";
+import { setBrand, setModel } from "../../redux/api/bikes/bikeSlice";
 
 interface AcordionProps {
   names: string[];

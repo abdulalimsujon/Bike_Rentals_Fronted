@@ -3,9 +3,9 @@ import BRInput from "../../../components/form/BRInput"; // Assuming you have thi
 import BrForm from "../../../components/form/BrForm";
 import BRTextArea from "../../../components/form/BrTextArea";
 import { useState } from "react";
-import { useCreateBikeMutation } from "../../../redux/features/bikes/bikeApi";
 import Toast from "../../../utils/Toast";
 import { useNavigate } from "react-router-dom";
+import { useCreateBikeMutation } from "../../../redux/api/bikes/bikeApi";
 
 const { Content } = Layout;
 const { Title } = Typography;

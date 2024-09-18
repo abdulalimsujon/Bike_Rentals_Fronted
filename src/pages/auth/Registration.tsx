@@ -5,7 +5,7 @@ import BRInput from "../../components/form/BRInput";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
-import { useRegistrationMutation } from "../../redux/features/authApi/authApi";
+import { useRegistrationMutation } from "../../redux/api/authApi/authApi";
 import { userType } from "../../Type/UserType";
 
 const Registration = () => {
