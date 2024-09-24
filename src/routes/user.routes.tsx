@@ -3,6 +3,7 @@ import BikeDetails from "../pages/bike/BikeDetails";
 
 import UserDashboard from "../pages/bike/UserDashboard";
 import Payment from "../pages/payment/Payment";
+import MyRental from "../pages/rental/MyRental";
 import Profile from "../pages/user/Profile";
 
 export const userPaths = [
@@ -30,6 +31,10 @@ export const userPaths = [
       {
         path: "payment",
         element: <Payment></Payment>,
+      },
+      {
+        path: "my-rental",
+        element: <MyRental></MyRental>,
       },
     ],
   },

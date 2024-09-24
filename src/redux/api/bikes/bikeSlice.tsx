@@ -1,33 +1,56 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+
+export interface Bike {
+  _id: string;
+  brand: string;
+  pricePerHour: number | string;
+  isAvailable: boolean;
+  name: string;
+  cc: number | string;
+  description: string;
+  year: number | string;
+  model: string;
+  image?: File | string;
+}
 
 interface BikeState {
-  item: {
-    model: string;
-    brand: string;
-  };
+  item: Bike; // This should be a single bike object
+  selectItem: Bike[]; // This should be an array of Bike objects
 }
 
 const initialState: BikeState = {
   item: {
+    _id: "",
     model: "",
     brand: "",
+    name: "",
+    pricePerHour: "",
+    description: "",
+    isAvailable: true,
+    year: 0,
+    cc: 0,
+    image: "",
   },
+  selectItem: [], // Initialize selectItem as an empty array
 };
 
 export const bikeSlice = createSlice({
   name: "bikesInfo",
   initialState,
   reducers: {
-    setModel: (state, action) => {
+    setModel: (state, action: PayloadAction<string>) => {
       state.item.model = action.payload;
-      state.item.brand = "";
+      state.item.brand = ""; // Clear brand when model is set
     },
-    setBrand: (state, action) => {
+    setBrand: (state, action: PayloadAction<string>) => {
       state.item.brand = action.payload;
-      state.item.model = "";
+      state.item.model = ""; // Clear model when brand is set
+    },
+    setItem: (state, action: PayloadAction<Bike>) => {
+      state.selectItem.push(action.payload); // Push the new item into the array
     },
   },
 });
 
-export const { setModel, setBrand } = bikeSlice.actions;
+export const { setModel, setBrand, setItem } = bikeSlice.actions;
 export default bikeSlice.reducer;

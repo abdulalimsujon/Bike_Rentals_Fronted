@@ -43,14 +43,24 @@ const bikeApi = baseApi.injectEndpoints({
         };
       },
     }),
-    rentalBike: builder.mutation({
+    CreateRentalBike: builder.mutation({
       query: (args) => {
         return {
           url: `/rentals`,
-          method: "PUT",
+          method: "POST",
           body: args,
         };
       },
+      invalidatesTags: ["Bike"],
+    }),
+    getAllRentalBike: builder.query({
+      query: () => {
+        return {
+          url: `/rentals`,
+          method: "GET",
+        };
+      },
+      providesTags: ["rental"],
     }),
     updateBike: builder.mutation({
       query: ({ data, bikeId }) => {
@@ -62,6 +72,32 @@ const bikeApi = baseApi.injectEndpoints({
       },
       invalidatesTags: ["Bike"],
     }),
+    returnBike: builder.mutation({
+      query: (args) => {
+        return {
+          url: `/rentals/return-bike`,
+          method: "PUT",
+          body: args,
+        };
+      },
+    }),
+    getRentalByUserId: builder.query({
+      query: (userId) => {
+        console.log(userId);
+        return {
+          url: `/rentals/${userId}`,
+          method: "GET",
+        };
+      },
+    }),
+    getAvailableBike: builder.query({
+      query: () => {
+        return {
+          url: `/bikes/available-bike`,
+          method: "GET",
+        };
+      },
+    }),
   }),
 });
 
@@ -71,5 +107,9 @@ export const {
   useCreateBikeMutation,
   useDeleteBikeMutation,
   useUpdateBikeMutation,
-  useRentalBikeMutation,
+  useGetAllRentalBikeQuery,
+  useCreateRentalBikeMutation,
+  useReturnBikeMutation,
+  useGetRentalByUserIdQuery,
+  useGetAvailableBikeQuery,
 } = bikeApi;

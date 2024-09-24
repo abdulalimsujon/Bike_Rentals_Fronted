@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Form } from "antd";
 import { ReactNode } from "react";
 import {
@@ -5,38 +6,42 @@ import {
   FormProvider,
   SubmitHandler,
   useForm,
+  DefaultValues,
 } from "react-hook-form";
 
-type TFormConfig<T> = {
-  defaultValues?: T;
+type TFormConfig<T extends FieldValues> = {
+  defaultValues?: DefaultValues<T>;
   resolver?: any;
 };
 
-type TFormProps = {
-  onSubmit: SubmitHandler<FieldValues>;
+type TFormProps<T extends FieldValues> = {
+  onSubmit: SubmitHandler<T>;
   children: ReactNode;
-} & TFormConfig;
+  getValue?: string | null; // Added getValue prop to the type definition
+} & TFormConfig<T>;
 
-const BrForm = ({
+const BrForm = <T extends FieldValues>({
   onSubmit,
   children,
   defaultValues,
   resolver,
-}: TFormProps) => {
-  const formConfig: TFormConfig = {};
+  getValue, // Added getValue here
+}: TFormProps<T>) => {
+  const formConfig: Partial<TFormConfig<T>> = {};
 
   if (defaultValues) {
-    formConfig["defaultValues"] = defaultValues;
+    formConfig.defaultValues = defaultValues as DefaultValues<T>;
   }
 
   if (resolver) {
-    formConfig["resolver"] = resolver;
+    formConfig.resolver = resolver;
   }
 
-  const methods = useForm(formConfig); //registers ,handleSubmit,errors,reset,watch,setValues,setErrors
+  const methods = useForm<T>(formConfig);
 
-  const submit: SubmitHandler<FieldValues> = (data) => {
-    onSubmit(data);
+  const submit: SubmitHandler<T> = (data) => {
+    console.log("getValue:", getValue); // This will log the getValue prop value
+    onSubmit(data); // Submitting the form data
   };
 
   return (

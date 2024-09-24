@@ -2,6 +2,7 @@ import { Menu } from "antd";
 import Sider from "antd/es/layout/Sider";
 import { adminPaths } from "../../routes/admin.routes";
 import { sidebarItemsGenerator } from "../../routes/sidebarItemGenerator";
+import { ItemType, MenuItemType } from "antd/es/menu/interface";
 
 const items = sidebarItemsGenerator(adminPaths, "admin");
 
@@ -10,7 +11,7 @@ const Sidebar = () => {
     <Sider
       breakpoint="lg"
       collapsedWidth="0"
-      className="bg-gray-100 dark:bg-slate-200" // Default background for light mode, and dark mode bg
+      className="bg-slate-600 dark:bg-slate-300" // Default background for light mode, and dark mode bg
       style={{
         height: "100vh",
         width: "250px",
@@ -24,8 +25,8 @@ const Sidebar = () => {
       <Menu
         mode="inline"
         defaultSelectedKeys={["4"]}
-        items={items}
-        className="bg-white dark:bg-slate-100 text-gray-900 dark:text-gray-50 rounded-lg" // Default light mode background and text color
+        items={items as ItemType<MenuItemType>[]}
+        className="bg-white dark:bg-slate text-gray-900 dark:text-gray-50 rounded-lg" // Default light mode background and text color
       />
     </Sider>
   );

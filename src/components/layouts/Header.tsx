@@ -70,10 +70,10 @@ const CustomHeader = () => {
   ];
 
   return (
-    <Header className="fixed top-0 left-0 w-full z-50 dark:bg-gray-200 dark:text-green-700 bg-gray-800 text-white">
+    <Header className="fixed top-0 left-0 w-full z-50  text-green-300 bg-gray-800 dark:text-white">
       <div className="container mx-auto">
         <div className="flex items-center justify-between ">
-          <h1 className="text-xl font-semibold dark:text-green-700 flex-shrink-0 lg:pl-12  pr-8 ">
+          <h1 className="text-xl font-semibold dark:text-white flex-shrink-0 lg:pl-12  pr-8 text-green-300 ">
             Sk Bike Rentals
           </h1>
           <div className="flex items-center space-x-4  md:space-x-6">
@@ -81,7 +81,7 @@ const CustomHeader = () => {
               <NavLink className="mr-5" to="all-bike">
                 All Bikes
               </NavLink>
-              <NavLink to="all-bike">Rental</NavLink>
+              <NavLink to="my-rental">My Rental</NavLink>
             </div>
 
             <div className="flex items-center space-x-2">

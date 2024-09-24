@@ -14,9 +14,11 @@ import { useCreatePaymentIntentMutation } from "../../redux/api/gatewayApi";
 import Toast from "../../utils/Toast";
 import { useAppSelector } from "../../redux/hooks";
 import {
-  useRentalBikeMutation,
+  useCreateRentalBikeMutation,
   useSingleBikeQuery,
 } from "../../redux/api/bikes/bikeApi";
+import { ErrorTypes } from "../../Type/ErrorTypes";
+import { selectCurrentUser } from "../../redux/features/authSlice";
 
 // Load your Stripe public key (replace with your own)
 const stripePromise = loadStripe(
@@ -34,16 +36,21 @@ const PaymentForm: React.FC = () => {
   const [formData, setFormData] = useState<FormData>({ amount: "100" });
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
+  const user = useAppSelector(selectCurrentUser);
 
   const [createPaymentIntent, { isLoading: createIntentLoading, isError }] =
     useCreatePaymentIntentMutation();
-  const [rentalBike] = useRentalBikeMutation();
+  const [
+    CreateRentalBike,
+    { error: rentalError, isError: isRentalError, isSuccess },
+  ] = useCreateRentalBikeMutation();
   const periodWithRentalBike = useAppSelector((state) => state.rent);
-  const id = periodWithRentalBike[0]?.bikeId;
+  const id = periodWithRentalBike[0]?._id;
   const startTime = periodWithRentalBike[0]?.startTime;
   const formattedStartTime = new Date(startTime).toLocaleString();
 
-  const { data } = useSingleBikeQuery(id);
+  const { data, refetch } = useSingleBikeQuery(id);
+
   const { name, pricePerHour, image } = data?.data || {};
 
   // Handle form input change
@@ -51,6 +58,14 @@ const PaymentForm: React.FC = () => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
+
+  if (isRentalError) {
+    console.log(rentalError);
+    Toast({
+      message: (rentalError as ErrorTypes).data?.message,
+      status: "error",
+    });
+  }
 
   // Handle form submission
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -76,12 +91,6 @@ const PaymentForm: React.FC = () => {
       }).unwrap();
 
       if (response) {
-        Toast({
-          message: "Payment intent created successfully.",
-          status: "success",
-        });
-
-        // Proceed with card payment after getting payment intent
         const cardElement = elements.getElement(CardElement);
 
         if (!cardElement) {
@@ -109,9 +118,13 @@ const PaymentForm: React.FC = () => {
           Toast({ message: "Payment method created.", status: "success" });
 
           // On successful payment, rent the bike
-          await rentalBike(periodWithRentalBike);
-          Toast({ message: "Bike rented successfully.", status: "success" });
+          await CreateRentalBike({
+            payload: periodWithRentalBike,
+            price: Number(formData.amount),
+            userId: user?.userId,
+          });
         }
+        refetch();
       }
     } catch (err) {
       setError("Failed to create payment intent. Please try again.");
@@ -120,8 +133,16 @@ const PaymentForm: React.FC = () => {
     }
   };
 
+  if (isError) {
+    Toast({ message: "something went wrong", status: "error" });
+  }
+
+  if (isSuccess) {
+    Toast({ message: "bike is rented successfully", status: "success" });
+  }
+
   return (
-    <div className="container mx-auto  mt-20 px-4 sm:px-6 lg:px-8 h-screen ">
+    <div className="container mx-auto pt-20  px-4 sm:px-6 lg:px-8 h-screen ">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 ">
         {/* Bike Information */}
         <div className="bg-gradient-to-r bg-green-200 dark:bg-slate-50  shadow-xl p-6 flex flex-col items-center">

@@ -71,8 +71,10 @@ const BikeDetails = () => {
     // Add bikeId to the formData
     const dataWithBikeId = {
       ...formData,
-      bikeId, // Add bikeId to the form data
+      _id: bikeId, // Add bikeId to the form data
     };
+
+
 
     dispatch(rentPeriodWithBike(dataWithBikeId));
 

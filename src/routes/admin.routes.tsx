@@ -1,10 +1,12 @@
 import AdminDashboard from "../pages/admin/AdminDashboard";
 import CreateBike from "../pages/admin/bikeManagement/CreateBike";
 import ManageBike from "../pages/admin/bikeManagement/ManageBike";
+import ReturnBike from "../pages/admin/bikeManagement/ReturnBike";
 import Users from "../pages/admin/userManagement/Users";
 import AllBike from "../pages/bike/AllBike";
 import BikeDetails from "../pages/bike/BikeDetails";
 import Payment from "../pages/payment/Payment";
+import MyRental from "../pages/rental/MyRental";
 import ProfilePage from "../pages/user/Profile";
 
 export const adminPaths = [
@@ -14,6 +16,7 @@ export const adminPaths = [
   },
   {
     name: "Bike Management",
+
     children: [
       {
         name: "create bike",
@@ -41,6 +44,15 @@ export const adminPaths = [
       {
         path: "payment",
         element: <Payment></Payment>,
+      },
+      {
+        path: "my-rental",
+        element: <MyRental></MyRental>,
+      },
+      {
+        name: "Return Bike",
+        path: "return-bike",
+        element: <ReturnBike></ReturnBike>,
       },
     ],
   },

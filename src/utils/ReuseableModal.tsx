@@ -4,6 +4,7 @@ import { Modal } from "antd";
 interface ReusableModalProps {
   isOpen: boolean;
   title: string;
+
   content: React.ReactNode;
   handleCancel: () => void;
 }

@@ -6,6 +6,8 @@ import { useState } from "react";
 import Toast from "../../../utils/Toast";
 import { useNavigate } from "react-router-dom";
 import { useCreateBikeMutation } from "../../../redux/api/bikes/bikeApi";
+import { TBike } from "../../../Type/BikeType";
+import { SubmitHandler } from "react-hook-form";
 
 const { Content } = Layout;
 const { Title } = Typography;
@@ -35,16 +37,16 @@ const CreateBike = () => {
   }
 
   // Handle form submission
-  const onSubmit = async (data) => {
+  const onSubmit: SubmitHandler<TBike> = async (data) => {
     const formData = new FormData();
 
     // Append form fields to FormData
     formData.append("brand", data?.brand);
-    formData.append("pricePerHour", data?.pricePerHour);
+    formData.append("pricePerHour", data?.pricePerHour.toString());
     formData.append("name", data?.name);
-    formData.append("cc", data?.cc);
+    formData.append("cc", data?.cc.toString());
     formData.append("description", data?.description);
-    formData.append("year", data?.year);
+    formData.append("year", data?.year.toString());
     formData.append("model", data?.model);
     // Append the image file to FormData
     if (imageFile) {

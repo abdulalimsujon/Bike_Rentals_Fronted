@@ -5,12 +5,10 @@ import { adminPaths } from "./admin.routes";
 import { userPaths } from "./user.routes";
 import Registration from "../pages/auth/Registration";
 import Login from "../pages/Login";
+import Home from "../pages/home";
+import AllBike from "../pages/bike/AllBike";
 
 const router = createBrowserRouter([
-  {
-    path: "/",
-    element: <App />,
-  },
   {
     path: "/admin",
     element: <App />,
@@ -28,6 +26,15 @@ const router = createBrowserRouter([
   {
     path: "/login",
     element: <Login></Login>,
+  },
+
+  {
+    path: "/",
+    element: <Home></Home>,
+  },
+  {
+    path: "all-bike",
+    element: <AllBike></AllBike>,
   },
 ]);
 

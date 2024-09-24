@@ -1,8 +1,19 @@
-import { Button, Card, Col, Row } from "antd";
+import { Card, Col, Row } from "antd";
 import CustomButton from "../form/CustomButton";
+import { TBike } from "../../Type/BikeType";
 
-const CustomCard = ({ data, buttonName, handleClick }) => {
+const CustomCard = ({
+  data,
+  buttonName,
+  handleClick,
+}: {
+  data: TBike;
+  buttonName: string;
+  handleClick: () => void;
+}) => {
   const { name, image, cc, description } = data;
+  const imageUrl =
+    typeof image === "string" ? image : URL.createObjectURL(image as File);
 
   return (
     <Row gutter={24} className="dark:text-green-700 text-green-300  ">
@@ -20,7 +31,7 @@ const CustomCard = ({ data, buttonName, handleClick }) => {
             {/* Image Section (On the left side) */}
             <Col span={14} className="flex justify-center items-center p-2">
               <img
-                src={image}
+                src={imageUrl}
                 alt={name}
                 className="object-cover rounded-md max-h-[280px]"
                 style={{ width: "100%", objectFit: "cover" }}

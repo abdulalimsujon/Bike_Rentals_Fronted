@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { Button, Popconfirm, Spin, Table } from "antd";
 import type { TableColumnsType, TableProps } from "antd";
 import { ColumnFilterItem } from "antd/es/table/interface";
-
 import Toast from "../../../utils/Toast";
 import ReuseableModal from "../../../utils/ReuseableModal";
 import BRInput from "../../../components/form/BRInput";
@@ -14,29 +13,13 @@ import {
   useDeleteBikeMutation,
   useUpdateBikeMutation,
 } from "../../../redux/api/bikes/bikeApi";
+import { SubmitHandler } from "react-hook-form";
 
 const ManageBike = () => {
   interface QueryParam {
     name: string;
-    value: string | number | boolean; // Adjust based on your actual values
+    value: string | number | boolean;
   }
-  interface DataType {
-    key: React.Key;
-    name: string;
-    model: string;
-    pricePerHour: number;
-    CC: number;
-    year: number;
-    brand: string;
-    availability: boolean;
-    description: string;
-  }
-  // type FormDataType = Omit<DataType, "key">;
-  const [params, setParams] = useState<QueryParam[]>([]);
-  const { data: allBikesData, isLoading: allBikesLoading } =
-    useAllBikeQuery(params);
-  const [deleteBike, { isError, error }] = useDeleteBikeMutation();
-  const [updateBike, { isLoading: editLoading }] = useUpdateBikeMutation();
 
   interface DataType {
     key: React.Key;
@@ -47,9 +30,16 @@ const ManageBike = () => {
     year: number;
     brand: string;
     availability: boolean;
-    image?: File; // Use the File type for image
     description: string;
+    image?: File;
   }
+
+  const [params, setParams] = useState<QueryParam[]>([]);
+  const { data: allBikesData, isLoading: allBikesLoading } =
+    useAllBikeQuery(params);
+  const [deleteBike, { isError, error, isLoading: deleteLoading }] =
+    useDeleteBikeMutation();
+  const [updateBike, { isLoading: editLoading }] = useUpdateBikeMutation();
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [imageFile, setImageFile] = useState<File | null>(null);
@@ -58,8 +48,8 @@ const ManageBike = () => {
   const handleCancel = () => {
     setIsModalOpen(false);
   };
-  const onSubmit = async (data: DataType) => {
-    // Use existing bikeInfo values if available, otherwise use form input data
+
+  const onSubmit: SubmitHandler<DataType> = async (data: DataType) => {
     const brand = data?.brand || bikeInfo?.brand;
     const pricePerHour =
       data?.pricePerHour?.toString() || bikeInfo?.pricePerHour?.toString();
@@ -69,10 +59,7 @@ const ManageBike = () => {
     const year = data?.year?.toString() || bikeInfo?.year?.toString();
     const model = data?.model || bikeInfo?.model;
 
-    // Create FormData instance
     const formData = new FormData();
-
-    // Append form fields to FormData if they exist
     if (brand) formData.append("brand", brand);
     if (pricePerHour) formData.append("pricePerHour", pricePerHour);
     if (name) formData.append("name", name);
@@ -81,23 +68,22 @@ const ManageBike = () => {
     if (year) formData.append("year", year);
     if (model) formData.append("model", model);
 
-    // Append the image file if it exists
     if (imageFile) {
       formData.append("image", imageFile);
     } else if (bikeInfo?.image) {
-      // If there's no new image file but bikeInfo already has an image URL, append the existing image URL
       formData.append("image", bikeInfo.image);
     }
 
     await updateBike({ data: formData, bikeId: data.key });
     setIsModalOpen(false);
+    Toast({ message: "bike is updated successfully", status: "success" });
   };
 
   if (isError) {
     Toast({ message: error as string, status: "error" });
   }
 
-  if (allBikesLoading || editLoading) {
+  if (allBikesLoading || editLoading || deleteLoading) {
     return <Spin>Loading...</Spin>;
   }
 
@@ -110,7 +96,6 @@ const ManageBike = () => {
     value: brand as string,
   }));
 
-  // Unique model filters
   const models: ColumnFilterItem[] = [
     ...new Set(
       allBikesData?.data?.result?.map((el: { model: string }) => el.model)
@@ -127,18 +112,15 @@ const ManageBike = () => {
     }
   };
 
-  // Handle edit functionality
   const handleEdit = (record: DataType) => {
     setBikeInfo(record);
     setIsModalOpen(true);
   };
 
-  // Handle delete functionality
   const handleDelete = async (key: React.Key) => {
     await deleteBike(key);
   };
 
-  // Table columns
   const columns: TableColumnsType<DataType> = [
     {
       title: "Name",
@@ -167,9 +149,8 @@ const ManageBike = () => {
       dataIndex: "pricePerHour",
       sorter: (a, b) => a.pricePerHour - b.pricePerHour,
     },
-
     {
-      title: "year",
+      title: "Year",
       dataIndex: "year",
       sorter: (a, b) => a.year - b.year,
     },
@@ -199,7 +180,7 @@ const ManageBike = () => {
         <span className="space-x-2">
           <Button
             onClick={() => handleEdit(record)}
-            className="bg-blue-500 text-white hover:bg-blue-600 "
+            className="bg-blue-500 text-white hover:bg-blue-600"
             type="primary"
           >
             Edit
@@ -219,7 +200,6 @@ const ManageBike = () => {
     },
   ];
 
-  // Data for the table
   const data2 = allBikesData?.data?.result?.map((bike: TBike) => ({
     key: bike._id,
     name: bike.name,
@@ -229,34 +209,28 @@ const ManageBike = () => {
     availability: bike.isAvailable,
     cc: bike.cc,
     year: bike.year,
-    description: bike.description, // Add description to the record
-    image: bike.image, // Add image to the record
+    description: bike.description,
+    image: bike.image,
   }));
 
-  // Handle filters and sorting
-  const onChange: TableProps<DataType>["onChange"] = (
-    pagination,
-    filters,
-    sorter,
-    extra
-  ) => {
-    const queryParams = [];
+  const onChange: TableProps<DataType>["onChange"] = (pagination, filters) => {
+    const queryParams: QueryParam[] = [];
 
     if (filters.brand) {
-      filters.brand.forEach((element) => {
-        queryParams.push({ name: "brand", value: element });
+      (filters.brand as string[]).forEach((brand) => {
+        queryParams.push({ name: "brand", value: brand });
       });
     }
 
     if (filters.model) {
-      filters.model.forEach((element) => {
-        queryParams.push({ name: "model", value: element });
+      (filters.model as string[]).forEach((model) => {
+        queryParams.push({ name: "model", value: model });
       });
     }
 
     if (filters.availability) {
-      filters.availability.forEach((element) => {
-        queryParams.push({ name: "availability", value: element });
+      (filters.availability as boolean[]).forEach((availability) => {
+        queryParams.push({ name: "availability", value: availability });
       });
     }
 
@@ -264,25 +238,40 @@ const ManageBike = () => {
   };
 
   return (
-    <div className="bg-slate-600 dark:bg-slate-50 p-8  h-screen ">
+    <div className="bg-slate-600 dark:bg-slate-50 p-8 h-screen">
       <Table
-        className="mt-20 overflow-auto "
+        className="mt-20 overflow-auto"
         columns={columns}
         dataSource={data2}
         onChange={onChange}
         rowClassName={() =>
-          "bg-slate-700  dark:bg-slate-50 dark:text-black text-green-300 "
+          "bg-slate-700 dark:bg-slate-50 dark:text-black text-green-300"
         }
         pagination={{
           className: "bg-slate-700 dark:bg-slate-50",
         }}
       />
+
       <ReuseableModal
         isOpen={isModalOpen}
         title="Edit Bike"
         content={
           <>
-            <BrForm defaultValues={bikeInfo} onSubmit={onSubmit}>
+            <BrForm
+              defaultValues={
+                bikeInfo as Partial<{
+                  name: string;
+                  pricePerHour: number;
+                  cc: number;
+                  year: number;
+                  brand: string;
+                  model: string;
+                  description: string;
+                  image?: File;
+                }>
+              }
+              onSubmit={onSubmit}
+            >
               <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
                 {/* Bike Name */}
                 <div className="flex flex-col">
@@ -380,7 +369,7 @@ const ManageBike = () => {
           </>
         }
         handleCancel={handleCancel}
-      ></ReuseableModal>
+      />
     </div>
   );
 };

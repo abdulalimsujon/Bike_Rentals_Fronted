@@ -24,7 +24,6 @@ const ProtectedRoute = ({
 
   if (token) {
     user = verifyToken(token);
-    console.log(user);
   }
 
   if (role !== undefined && role !== user?.role) {

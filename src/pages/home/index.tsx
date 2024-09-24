@@ -1,7 +1,56 @@
+import CustomHeader from "../../components/layouts/Header";
+import video from "../../assets/v2.webm";
+import CustomButton from "../../components/form/CustomButton";
+import { useNavigate } from "react-router-dom";
+import AvailableBikeSection from "./AvailableBikeSection";
+
 const Home = () => {
+  const navigate = useNavigate();
+
+  const onClickHandler = () => {
+    navigate("/all-bike");
+  };
   return (
-    <div>
-      <h1>this is home page</h1>
+    <div className="overflow-hidden">
+      <div className="relative h-screen overflow-hidden">
+        {/* Header */}
+        <CustomHeader />
+
+        {/* Video Background */}
+        <div className="absolute top-0 left-0 w-full h-full -z-10">
+          <video
+            autoPlay
+            loop
+            muted
+            playsInline
+            className="w-full h-full object-cover"
+          >
+            <source src={video} type="video/mp4" />
+            Your browser does not support the video tag.
+          </video>
+          {/* Overlay for a darkened effect */}
+          <div className="absolute inset-0 bg-black opacity-50"></div>
+        </div>
+
+        {/* Content Overlay */}
+        <div className="flex flex-col items-center justify-center h-full text-center text-green-300 dark:text-white">
+          <h1 className="text-5xl md:text-7xl font-bold">
+            Welcome to Sk Bike Rentals
+          </h1>
+          <p className="mt-4 text-xl md:text-2xl">
+            "Ride the Freedom, Rent with Ease."
+          </p>
+          <div className="py-20">
+            <CustomButton
+              onClick={onClickHandler}
+              className="mt-8 px-6 py-3 text-white font-semibold rounded"
+            >
+              Explore Now
+            </CustomButton>
+          </div>
+        </div>
+      </div>
+      <AvailableBikeSection></AvailableBikeSection>
     </div>
   );
 };

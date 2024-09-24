@@ -257,6 +257,9 @@ const Users = () => {
           className="pt-28 lg:mx-40 "
           columns={columns}
           dataSource={data2}
+          rowClassName={() =>
+            "bg-slate-700 dark:bg-slate-50 dark:text-black text-green-300"
+          }
         />
       </div>
 

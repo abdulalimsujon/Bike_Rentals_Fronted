@@ -4,6 +4,7 @@ import CustomHeader from "./Header";
 import { useAppSelector } from "../../redux/hooks";
 import { selectCurrentUser } from "../../redux/features/authSlice";
 import Sidebar from "./Sidebar";
+import Footer from "./Footer";
 
 const { Content } = Layout;
 
@@ -19,6 +20,7 @@ const MainLayout = () => {
         <Content className="flex-grow dark:bg-slate-50 bg-slate-700">
           <div className="min-h-screen">
             <Outlet />
+            <Footer></Footer>
           </div>
         </Content>
       </Layout>
