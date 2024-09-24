@@ -17,7 +17,7 @@ const AvailableBikeSection = () => {
   return (
     <div className="pt-20 min-h-screen dark:bg-base-100 bg-gray-700 ">
       <div className="container mx-auto ">
-        <h1 className="text-4xl font-bold text-center mb-8 text-green-300 dark:text-gray-500">
+        <h1 className="text-4xl font-bold text-center mb-8 text-green-300 dark:text-slate-800">
           Available Bikes
         </h1>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -29,7 +29,7 @@ const AvailableBikeSection = () => {
             return (
               <div
                 key={name}
-                className="dark:bg-gray-300 bg-gray-50  shadow-lg rounded-lg overflow-hidden transform transition duration-300 hover:shadow-xl hover:scale-105"
+                className=" bg-gray-50  shadow-lg rounded-lg overflow-hidden transform transition duration-300 hover:shadow-xl hover:scale-105"
               >
                 {/* Adjust image styling for proper display */}
                 <div className="w-full h-48 wrap-centent">

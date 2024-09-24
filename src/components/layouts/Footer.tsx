@@ -1,6 +1,6 @@
 const Footer = () => {
   return (
-    <footer className="bg-slate-600 dark:bg-slate-200 footer text-green-300  dark:text-base-content p-10 z-[999] mt-48 flex flex-col md:flex-row justify-between items-start pb-0 mb-0">
+    <footer className="bg-slate-600 dark:bg-slate-200 footer text-green-300  dark:text-base-content p-10 z-[999]  flex flex-col md:flex-row justify-between items-start pb-0 mb-0">
       <aside className="flex items-start mb-6 md:mb-0">
         <svg
           width="50"

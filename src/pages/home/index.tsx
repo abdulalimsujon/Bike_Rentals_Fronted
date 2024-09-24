@@ -1,15 +1,26 @@
 import CustomHeader from "../../components/layouts/Header";
 import video from "../../assets/v2.webm";
 import CustomButton from "../../components/form/CustomButton";
-import { useNavigate } from "react-router-dom";
+
 import AvailableBikeSection from "./AvailableBikeSection";
+import Testimonials from "./Testimonials";
+import { useRef } from "react";
+import WhyChooseUs from "./WhyChooseUs";
+import ContactUs from "./ContractUs";
+import CouponAndDiscount from "./CouponAndDiscount";
+import Footer from "../../components/layouts/Footer";
 
 const Home = () => {
-  const navigate = useNavigate();
+  // Create a ref to target the AvailableBikeSection
+  const bikeSectionRef = useRef<HTMLDivElement>(null);
 
   const onClickHandler = () => {
-    navigate("/all-bike");
+    if (bikeSectionRef.current) {
+      // Scroll to the AvailableBikeSection when the button is clicked
+      bikeSectionRef.current.scrollIntoView({ behavior: "smooth" });
+    }
   };
+
   return (
     <div className="overflow-hidden">
       <div className="relative h-screen overflow-hidden">
@@ -50,7 +61,17 @@ const Home = () => {
           </div>
         </div>
       </div>
-      <AvailableBikeSection></AvailableBikeSection>
+
+      {/* Reference AvailableBikeSection */}
+      <div ref={bikeSectionRef}>
+        <AvailableBikeSection />
+      </div>
+
+      <Testimonials />
+      <WhyChooseUs></WhyChooseUs>
+      <ContactUs></ContactUs>
+      <CouponAndDiscount></CouponAndDiscount>
+      <Footer></Footer>
     </div>
   );
 };

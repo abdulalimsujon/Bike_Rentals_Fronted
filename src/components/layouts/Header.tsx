@@ -5,7 +5,6 @@ import { CiDark, CiLight } from "react-icons/ci";
 import { useEffect, useState } from "react";
 
 import ReusableDropdown from "../form/Dropdown";
-
 import { logout, selectCurrentUser } from "../../redux/features/authSlice";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import CustomButton from "../form/CustomButton";
@@ -18,12 +17,16 @@ const CustomHeader = () => {
   const user = useAppSelector(selectCurrentUser);
   const dispatch = useAppDispatch();
 
+  // Add theme to localStorage and update on reload
   useEffect(() => {
-    if (theme === "dark") {
-      document.documentElement.classList.add("dark");
-    } else {
-      document.documentElement.classList.remove("dark");
-    }
+    const savedTheme = localStorage.getItem("theme") || "dark";
+    setTheme(savedTheme);
+    document.documentElement.classList.toggle("dark", savedTheme === "dark");
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem("theme", theme);
+    document.documentElement.classList.toggle("dark", theme === "dark");
   }, [theme]);
 
   const handleLogout = () => {
@@ -38,7 +41,7 @@ const CustomHeader = () => {
     setTheme(theme === "dark" ? "light" : "dark");
   };
 
-  // Dropdown menu items for the profile
+  // Profile menu items
   const profileMenuItems = [
     {
       key: "1",
@@ -47,7 +50,7 @@ const CustomHeader = () => {
           className="text-green-700 text-lg dark:bg-slate-100 bg-slate-300 cursor-pointer"
           onClick={handleClick}
         >
-          <h1>Profile</h1>
+          Profile
         </div>
       ),
     },
@@ -62,30 +65,46 @@ const CustomHeader = () => {
     {
       key: "3",
       label: (
-        <div className="text-green-700 text-lg dark:bg-slate-100 bg-slate-300">
-          <span onClick={handleLogout}>Logout</span>
+        <div
+          className="text-green-700 text-lg dark:bg-slate-100 bg-slate-300 cursor-pointer"
+          onClick={handleLogout}
+        >
+          Logout
         </div>
       ),
     },
   ];
 
+  const handleMyRentalClick = () => {
+    if (user) {
+      navigate("/my-rental");
+    } else {
+      navigate("/login"); // Redirect to login if not authenticated
+    }
+  };
+
   return (
-    <Header className="fixed top-0 left-0 w-full z-50  text-green-300 bg-gray-800 dark:text-white">
+    <Header className="fixed top-0 left-0 w-full z-50 text-green-300 bg-gray-800 dark:bg-gray-900 dark:text-white">
       <div className="container mx-auto">
-        <div className="flex items-center justify-between ">
-          <h1 className="text-xl font-semibold dark:text-white flex-shrink-0 lg:pl-12  pr-8 text-green-300 ">
+        <div className="flex items-center justify-between">
+          <h1 className="text-xl font-semibold dark:text-white flex-shrink-0 lg:pl-12 pr-8 text-green-300">
             Sk Bike Rentals
           </h1>
-          <div className="flex items-center space-x-4  md:space-x-6">
-            <div className="flex flex-shrink-0">
-              <NavLink className="mr-5" to="all-bike">
+          <div className="flex items-center space-x-4 md:space-x-6">
+            <div className="flex-shrink-0 space-x-5">
+              <NavLink className="mr-5" to="/all-bike">
                 All Bikes
               </NavLink>
-              <NavLink to="my-rental">My Rental</NavLink>
+              {/* My Rental link with authentication check */}
+              <span
+                className="cursor-pointer text-green-300"
+                onClick={handleMyRentalClick}
+              >
+                My Rental
+              </span>
             </div>
-
             <div className="flex items-center space-x-2">
-              <span onClick={handleThemeSwitch}>
+              <span onClick={handleThemeSwitch} className="cursor-pointer">
                 {theme === "dark" ? (
                   <CiLight size={30} title="Switch to light mode" />
                 ) : (
@@ -98,6 +117,7 @@ const CustomHeader = () => {
                   label={<FaUserCircle size={30} />}
                 />
               </div>
+
               {user ? (
                 <CustomButton
                   onClick={handleLogout}
