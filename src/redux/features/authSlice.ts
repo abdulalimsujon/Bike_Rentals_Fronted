@@ -11,11 +11,17 @@ export type TUser = {
 type TAuthState = {
   user: null | TUser;
   token: null | string;
+  redirectpath: {
+    path: string;
+  };
 };
 
 const initialState: TAuthState = {
   user: null,
   token: null,
+  redirectpath: {
+    path: "",
+  },
 };
 
 const authSlice = createSlice({
@@ -30,6 +36,9 @@ const authSlice = createSlice({
     logout: (state) => {
       state.user = null;
       state.token = null;
+    },
+    setPath: (state, action) => {
+      state.redirectpath.path = action.payload;
     },
   },
 });

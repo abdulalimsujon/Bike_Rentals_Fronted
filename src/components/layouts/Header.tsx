@@ -20,6 +20,7 @@ const CustomHeader = () => {
   // Add theme to localStorage and update on reload
   useEffect(() => {
     const savedTheme = localStorage.getItem("theme") || "dark";
+
     setTheme(savedTheme);
     document.documentElement.classList.toggle("dark", savedTheme === "dark");
   }, []);
@@ -30,10 +31,18 @@ const CustomHeader = () => {
   }, [theme]);
 
   const handleLogout = () => {
-    dispatch(logout());
+    if (user) {
+      dispatch(logout());
+    } else {
+      navigate("/login"); // Redirect to login if not authenticated
+    }
   };
 
-  const handleClick = () => {
+  const handleEditProfile = () => {
+    navigate(`/${user?.role}/edit-profile`);
+  };
+
+  const handleProfileClick = () => {
     navigate(`/${user?.role}/profile`);
   };
 
@@ -48,7 +57,7 @@ const CustomHeader = () => {
       label: (
         <div
           className="text-green-700 text-lg dark:bg-slate-100 bg-slate-300 cursor-pointer"
-          onClick={handleClick}
+          onClick={handleProfileClick}
         >
           Profile
         </div>
@@ -57,8 +66,11 @@ const CustomHeader = () => {
     {
       key: "2",
       label: (
-        <div className="text-green-700 text-lg dark:bg-slate-100 bg-slate-300">
-          <NavLink to="/settings">Settings</NavLink>
+        <div
+          className="text-green-700 text-lg dark:bg-slate-100 bg-slate-300 cursor-pointer"
+          onClick={handleEditProfile}
+        >
+          Edit Profile
         </div>
       ),
     },
@@ -77,7 +89,7 @@ const CustomHeader = () => {
 
   const handleMyRentalClick = () => {
     if (user) {
-      navigate("/my-rental");
+      navigate(`/${user?.role}/my-rental`);
     } else {
       navigate("/login"); // Redirect to login if not authenticated
     }
@@ -91,18 +103,26 @@ const CustomHeader = () => {
             Sk Bike Rentals
           </h1>
           <div className="flex items-center space-x-4 md:space-x-6">
-            <div className="flex-shrink-0 space-x-5">
-              <NavLink className="mr-5" to="/all-bike">
-                All Bikes
-              </NavLink>
-              {/* My Rental link with authentication check */}
-              <span
-                className="cursor-pointer text-green-300"
-                onClick={handleMyRentalClick}
-              >
-                My Rental
-              </span>
-            </div>
+            {/* Placeholder div to maintain spacing if user is not logged in */}
+            {user ? (
+              <div className="flex-shrink-0 space-x-5">
+                <NavLink className="mr-5" to={`/${user.role}/all-bike`}>
+                  All Bikes
+                </NavLink>
+                <span
+                  className="cursor-pointer text-green-300"
+                  onClick={handleMyRentalClick}
+                >
+                  My Rental
+                </span>
+              </div>
+            ) : (
+              <div className="flex-shrink-0 space-x-5 opacity-0">
+                <span>Placeholder</span>
+                <span>Placeholder</span>
+              </div>
+            )}
+
             <div className="flex items-center space-x-2">
               <span onClick={handleThemeSwitch} className="cursor-pointer">
                 {theme === "dark" ? (
@@ -118,21 +138,10 @@ const CustomHeader = () => {
                 />
               </div>
 
-              {user ? (
-                <CustomButton
-                  onClick={handleLogout}
-                  className="hidden md:inline"
-                >
-                  Logout
-                </CustomButton>
-              ) : (
-                <CustomButton
-                  onClick={() => navigate("/registration")}
-                  className="hidden md:inline"
-                >
-                  Register
-                </CustomButton>
-              )}
+              {/* Logout/Register Button */}
+              <CustomButton onClick={handleLogout} className="hidden md:inline">
+                {user ? "Logout" : "Login"}
+              </CustomButton>
             </div>
           </div>
         </div>

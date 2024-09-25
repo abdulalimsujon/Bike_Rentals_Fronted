@@ -40,19 +40,14 @@ const Login = () => {
 
       // Dispatch user and token to Redux store
       dispatch(setUser({ user, token }));
-      console.log(item);
 
-      if (item) {
-        navigate(`/${user.role}/bike-details/${item[0]?._id}`);
-      } else {
-        // Navigate based on the user's role
-        navigate(`/${user.role}/dashboard`);
-      }
+      //  Navigate based on the user's role
+      navigate(`/${user.role}/dashboard`);
 
       Toast({ message: "User successfully logged in", status: "success" });
     } catch (error: any) {
       const errorResponse = error as ErrorResponse;
-      console.log(error);
+
       const errorMessages = errorResponse?.data?.errorSources
         ?.map((err) => `${err.path}: ${err.message}`)
         .join(", ");

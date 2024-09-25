@@ -16,7 +16,6 @@ export const adminPaths = [
   },
   {
     name: "Bike Management",
-
     children: [
       {
         name: "create bike",
