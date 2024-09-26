@@ -6,6 +6,7 @@ import SinglePayment from "../pages/payment/SinglePayment";
 import MyRental from "../pages/rental/MyRental";
 import EditProfile from "../pages/user/EditProfile";
 import Profile from "../pages/user/Profile";
+import About from "../pages/About";
 
 export const userPaths = [
   {
@@ -50,6 +51,11 @@ export const userPaths = [
       {
         path: "edit-profile",
         element: <EditProfile></EditProfile>,
+      },
+
+      {
+        path: "about",
+        element: <About></About>,
       },
     ],
   },

@@ -10,6 +10,7 @@ import MyRental from "../pages/rental/MyRental";
 import ProfilePage from "../pages/user/Profile";
 import SinglePayment from "../pages/payment/SinglePayment";
 import EditProfile from "../pages/user/EditProfile";
+import About from "../pages/About";
 
 export const adminPaths = [
   {
@@ -67,6 +68,11 @@ export const adminPaths = [
       {
         path: "dashboard",
         element: <Dashboard></Dashboard>,
+      },
+
+      {
+        path: "about",
+        element: <About></About>,
       },
     ],
   },

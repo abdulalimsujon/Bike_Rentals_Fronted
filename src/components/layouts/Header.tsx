@@ -57,6 +57,9 @@ const CustomHeader = () => {
       navigate("/login");
     }
   };
+  const handleAboutClick = () => {
+    navigate(`/${user?.role}/about`);
+  };
 
   const profileMenuItems = [
     {
@@ -131,6 +134,12 @@ const CustomHeader = () => {
                 onClick={handleMyRentalClick}
               >
                 My Rental
+              </span>
+              <span
+                className="cursor-pointer text-sm md:text-lg text-green-300 hover:text-white transition"
+                onClick={handleAboutClick}
+              >
+                About
               </span>
             </div>
 
