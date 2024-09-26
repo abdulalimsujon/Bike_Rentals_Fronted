@@ -159,12 +159,14 @@ const ReturnBike = () => {
     <div>
       <div className="overflow-auto mx-0 bg-slate-600 dark:bg-slate-50 p-8 ">
         <Table
-          className="pt-28 lg:mx-40"
+          className="w-full border border-gray-300" // Add a border around the table
           columns={columns}
           dataSource={data2}
-          rowClassName={() =>
-            "bg-slate-700 dark:bg-slate-50 dark:text-black text-green-300"
+          rowClassName={
+            () =>
+              "bg-slate-700 dark:bg-slate-50 dark:text-black text-green-300 border-b border-gray-300" // Add a bottom border to each row
           }
+          scroll={{ x: 500 }} // Make table scrollable horizontally on small screens
         />
       </div>
 

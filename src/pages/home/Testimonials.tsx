@@ -31,7 +31,7 @@ const testimonials: Testimonial[] = [
 
 const Testimonials = () => {
   return (
-    <div className="dark:bg-gray-100 py-16 bg-slate-700">
+    <div className="dark:bg-gray-100 py-16 bg-slate-700 px-10">
       <div className="container mx-auto ">
         <h2 className="text-4xl font-bold text-center dark:text-slate-800 mb-12 text-green-300">
           What Our Customers Say

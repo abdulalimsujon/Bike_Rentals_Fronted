@@ -34,6 +34,7 @@ const bikeApi = baseApi.injectEndpoints({
           body: data,
         };
       },
+      invalidatesTags: ["Bike"],
     }),
     deleteBike: builder.mutation({
       query: (bikeId) => {
@@ -42,6 +43,7 @@ const bikeApi = baseApi.injectEndpoints({
           method: "DELETE",
         };
       },
+      invalidatesTags: ["Bike"],
     }),
     CreateRentalBike: builder.mutation({
       query: (args) => {
@@ -83,7 +85,6 @@ const bikeApi = baseApi.injectEndpoints({
     }),
     getRentalByUserId: builder.query({
       query: (userId) => {
-        console.log(userId);
         return {
           url: `/rentals/${userId}`,
           method: "GET",

@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Button, Spin } from "antd";
+import { Spin } from "antd";
 import BrForm from "../../components/form/BrForm";
 import BRInput from "../../components/form/BRInput";
 import { useNavigate } from "react-router-dom";
@@ -9,7 +9,7 @@ import { setUser } from "../../redux/features/authSlice";
 import { verifyToken } from "../../utils/verifyToken";
 import { SubmitHandler } from "react-hook-form";
 import Toast from "../../utils/Toast";
-import { useAppSelector } from "../../redux/hooks";
+import CustomButton from "../../components/form/CustomButton";
 
 interface LoginFormValues {
   email: string;
@@ -26,8 +26,6 @@ const Login = () => {
   const [login, { isLoading }] = useLoginMutation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
-
-  const item = useAppSelector((state) => state.bikesInfo.selectItem);
 
   const onSubmit: SubmitHandler<LoginFormValues> = async (formData) => {
     try {
@@ -61,33 +59,45 @@ const Login = () => {
   };
 
   return (
-    <div className="h-screen w-screen flex justify-center items-center bg-slate-100 overflow-hidden">
-      <div className="p-6 border bg-green-200 shadow-lg rounded">
-        <h1 className="text-center mb-4">Login</h1>
+    <div className="h-screen flex justify-center items-center bg-slate-100 overflow-hidden px-4">
+      <div className="p-6 border bg-green-200 shadow-lg rounded-lg mx-auto w-full max-w-xs sm:max-w-sm md:max-w-md">
+        <h1 className="text-center mb-4 text-xl md:text-2xl font-semibold">
+          Login
+        </h1>
         {isLoading ? (
           <div className="flex justify-center items-center">
             <Spin size="large" />
           </div>
         ) : (
           <BrForm onSubmit={onSubmit}>
-            <BRInput type="text" name="email" label="Email" className="w-96" />
+            <BRInput
+              type="text"
+              name="email"
+              label="Email"
+              className="w-full"
+            />
             <BRInput
               type="password"
               name="password"
               label="Password"
-              className="w-96"
+              className="w-full"
             />
-            <div className="flex justify-center items-center mt-4">
-              <div className="pr-5">
+            <div className="flex flex-col sm:flex-row justify-center items-center mt-4">
+              <div className="pr-0 sm:pr-5 mb-2 sm:mb-0">
                 <span>New to Bike Rentals? </span>
                 <a className="text-red-700" href="/registration">
                   Registration
                 </a>
               </div>
 
-              <Button htmlType="submit" type="primary" loading={isLoading}>
+              <CustomButton
+                htmlType="submit"
+                type="primary"
+                loading={isLoading}
+                className="w-full sm:w-auto"
+              >
                 Login
-              </Button>
+              </CustomButton>
             </div>
           </BrForm>
         )}

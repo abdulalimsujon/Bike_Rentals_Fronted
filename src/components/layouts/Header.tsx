@@ -1,8 +1,9 @@
-import { Layout } from "antd/es";
+import { Layout, Drawer } from "antd/es";
 import { NavLink, useNavigate } from "react-router-dom";
 import { FaUserCircle } from "react-icons/fa";
 import { CiDark, CiLight } from "react-icons/ci";
 import { useEffect, useState } from "react";
+import { MenuOutlined } from "@ant-design/icons";
 
 import ReusableDropdown from "../form/Dropdown";
 import { logout, selectCurrentUser } from "../../redux/features/authSlice";
@@ -13,14 +14,13 @@ const { Header } = Layout;
 
 const CustomHeader = () => {
   const [theme, setTheme] = useState("dark");
+  const [drawerOpen, setDrawerOpen] = useState(false);
   const navigate = useNavigate();
   const user = useAppSelector(selectCurrentUser);
   const dispatch = useAppDispatch();
 
-  // Add theme to localStorage and update on reload
   useEffect(() => {
     const savedTheme = localStorage.getItem("theme") || "dark";
-
     setTheme(savedTheme);
     document.documentElement.classList.toggle("dark", savedTheme === "dark");
   }, []);
@@ -34,7 +34,7 @@ const CustomHeader = () => {
     if (user) {
       dispatch(logout());
     } else {
-      navigate("/login"); // Redirect to login if not authenticated
+      navigate("/login");
     }
   };
 
@@ -50,7 +50,14 @@ const CustomHeader = () => {
     setTheme(theme === "dark" ? "light" : "dark");
   };
 
-  // Profile menu items
+  const handleMyRentalClick = () => {
+    if (user) {
+      navigate(`/${user?.role}/my-rental`);
+    } else {
+      navigate("/login");
+    }
+  };
+
   const profileMenuItems = [
     {
       key: "1",
@@ -87,65 +94,109 @@ const CustomHeader = () => {
     },
   ];
 
-  const handleMyRentalClick = () => {
-    if (user) {
-      navigate(`/${user?.role}/my-rental`);
-    } else {
-      navigate("/login"); // Redirect to login if not authenticated
-    }
-  };
-
   return (
-    <Header className="fixed top-0 left-0 w-full z-50 text-green-300 bg-gray-800 dark:bg-gray-900 dark:text-white">
-      <div className="container mx-auto">
+    <Header className="fixed top-0 left-0 w-full z-50 bg-gray-800 dark:bg-gray-900 text-green-300 dark:text-white">
+      <div className="container mx-auto px-2 py-4">
         <div className="flex items-center justify-between">
-          <h1 className="text-xl font-semibold dark:text-white flex-shrink-0 lg:pl-12 pr-8 text-green-300">
+          {/* Drawer button placed on the left side, vertically centered */}
+          <div className="md:hidden mr-4 flex items-center">
+            <MenuOutlined
+              className="text-xl cursor-pointer"
+              onClick={() => setDrawerOpen(true)}
+            />
+          </div>
+
+          {/* Center the title/logo, vertically aligned */}
+          <h1 className="text-base md:text-xl font-semibold flex-shrink-0 text-green-300 mx-auto flex items-center">
             Sk Bike Rentals
           </h1>
-          <div className="flex items-center space-x-4 md:space-x-6">
-            {/* Placeholder div to maintain spacing if user is not logged in */}
-            {user ? (
-              <div className="flex-shrink-0 space-x-5">
-                <NavLink className="mr-5" to={`/${user.role}/all-bike`}>
-                  All Bikes
-                </NavLink>
-                <span
-                  className="cursor-pointer text-green-300"
-                  onClick={handleMyRentalClick}
-                >
-                  My Rental
-                </span>
-              </div>
-            ) : (
-              <div className="flex-shrink-0 space-x-5 opacity-0">
-                <span>Placeholder</span>
-                <span>Placeholder</span>
-              </div>
-            )}
+
+          {/* Right-side links and actions, vertically aligned */}
+          <div className="flex items-center space-x-2 md:space-x-6">
+            <div className="hidden md:flex items-center space-x-2 md:space-x-4">
+              <NavLink
+                className="text-sm md:text-lg text-green-300 hover:text-white transition"
+                to={`/${user?.role}/all-bike`}
+              >
+                All Bikes
+              </NavLink>
+              <NavLink
+                className="text-sm md:text-lg text-green-300 hover:text-white transition"
+                to={`/${user?.role}/dashboard`}
+              >
+                Dashboard
+              </NavLink>
+              <span
+                className="cursor-pointer text-sm md:text-lg text-green-300 hover:text-white transition"
+                onClick={handleMyRentalClick}
+              >
+                My Rental
+              </span>
+            </div>
 
             <div className="flex items-center space-x-2">
+              {/* Theme Switch */}
               <span onClick={handleThemeSwitch} className="cursor-pointer">
                 {theme === "dark" ? (
-                  <CiLight size={30} title="Switch to light mode" />
+                  <CiLight size={24} title="Switch to light mode" />
                 ) : (
-                  <CiDark size={30} title="Switch to dark mode" />
+                  <CiDark size={24} title="Switch to dark mode" />
                 )}
               </span>
-              <div className="relative">
-                <ReusableDropdown
-                  items={profileMenuItems}
-                  label={<FaUserCircle size={30} />}
-                />
-              </div>
 
-              {/* Logout/Register Button */}
-              <CustomButton onClick={handleLogout} className="hidden md:inline">
+              {/* Profile Dropdown */}
+              <ReusableDropdown
+                items={profileMenuItems}
+                label={<FaUserCircle size={24} />}
+              />
+
+              {/* Login/Logout Button */}
+              <CustomButton
+                onClick={handleLogout}
+                className="hidden md:inline-block"
+              >
                 {user ? "Logout" : "Login"}
               </CustomButton>
             </div>
           </div>
         </div>
       </div>
+
+      {/* Drawer for mobile view */}
+      <Drawer
+        title="Menu"
+        placement="left"
+        onClose={() => setDrawerOpen(false)}
+        open={drawerOpen}
+        width="70%" // Adjusted for smaller screen sizes
+        bodyStyle={{ padding: 0 }}
+      >
+        <div className="p-3 space-y-3">
+          <NavLink
+            to={`/${user?.role}/all-bike`}
+            onClick={() => setDrawerOpen(false)}
+            className="text-base text-green-700 hover:bg-gray-200 transition p-2 block rounded-md"
+          >
+            All Bikes
+          </NavLink>
+          <NavLink
+            to={`/${user?.role}/dashboard`}
+            onClick={() => setDrawerOpen(false)}
+            className="text-base text-green-700 hover:bg-gray-200 transition p-2 block rounded-md"
+          >
+            Dashboard
+          </NavLink>
+          <span
+            onClick={() => {
+              setDrawerOpen(false);
+              handleMyRentalClick();
+            }}
+            className="text-base text-green-700 cursor-pointer hover:bg-gray-200 transition p-2 block rounded-md"
+          >
+            My Rental
+          </span>
+        </div>
+      </Drawer>
     </Header>
   );
 };

@@ -19,7 +19,7 @@ const BRInput: React.FC<BRInputProps> = ({
   onChange,
 }) => {
   return (
-    <div style={{ marginBottom: "10px" }}>
+    <div style={{ marginBottom: "5px" }}>
       <Controller
         name={name}
         render={({ field }) => (

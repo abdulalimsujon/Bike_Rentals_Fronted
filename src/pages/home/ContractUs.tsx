@@ -1,6 +1,6 @@
 const ContactUs = () => {
   return (
-    <div className="bg-slate-700 dark:bg-gray-100 py-16 max-w-full mx-auto px-4 sm:px-6 lg:px-8">
+    <div className="bg-slate-700 dark:bg-gray-100 py-16 max-w-full mx-auto px-4 sm:px-6 lg:px-20">
       <div className="container mx-auto">
         <h2 className="text-4xl font-bold text-center text-green-300 dark:text-slate-800 mb-12">
           Get In Touch

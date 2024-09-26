@@ -1,6 +1,14 @@
+import {
+  FaFacebookF,
+  FaTwitter,
+  FaInstagram,
+  FaLinkedinIn,
+} from "react-icons/fa";
+
 const Footer = () => {
   return (
-    <footer className="bg-slate-600 dark:bg-slate-200 footer text-green-300  dark:text-base-content p-10 z-[999]  flex flex-col md:flex-row justify-between items-start pb-0 mb-0">
+    <footer className="bg-slate-600 dark:bg-slate-200 footer text-green-300 dark:text-base-content p-10 z-[999] flex flex-col md:flex-row justify-between items-start">
+      {/* Company Info */}
       <aside className="flex items-start mb-6 md:mb-0">
         <svg
           width="50"
@@ -19,6 +27,8 @@ const Footer = () => {
           Providing reliable tech since 1992
         </p>
       </aside>
+
+      {/* Services */}
       <nav className="mb-6 md:mb-0">
         <h6 className="footer-title">Services</h6>
         <a className="link link-hover">Branding</a>
@@ -26,6 +36,8 @@ const Footer = () => {
         <a className="link link-hover">Marketing</a>
         <a className="link link-hover">Advertisement</a>
       </nav>
+
+      {/* Company */}
       <nav className="mb-6 md:mb-0">
         <h6 className="footer-title">Company</h6>
         <a className="link link-hover">About us</a>
@@ -33,12 +45,53 @@ const Footer = () => {
         <a className="link link-hover">Jobs</a>
         <a className="link link-hover">Press kit</a>
       </nav>
+
+      {/* Legal */}
       <nav>
         <h6 className="footer-title">Legal</h6>
         <a className="link link-hover">Terms of use</a>
         <a className="link link-hover">Privacy policy</a>
         <a className="link link-hover">Cookie policy</a>
       </nav>
+
+      {/* Social Media Links */}
+      <div className="mt-6 md:mt-0">
+        <h6 className="footer-title">Follow Us</h6>
+        <div className="flex space-x-4 mt-2">
+          <a
+            href="https://www.facebook.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hover:text-blue-500"
+          >
+            <FaFacebookF size={24} />
+          </a>
+          <a
+            href="https://www.twitter.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hover:text-blue-400"
+          >
+            <FaTwitter size={24} />
+          </a>
+          <a
+            href="https://www.instagram.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hover:text-pink-600"
+          >
+            <FaInstagram size={24} />
+          </a>
+          <a
+            href="https://www.linkedin.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hover:text-blue-700"
+          >
+            <FaLinkedinIn size={24} />
+          </a>
+        </div>
+      </div>
     </footer>
   );
 };

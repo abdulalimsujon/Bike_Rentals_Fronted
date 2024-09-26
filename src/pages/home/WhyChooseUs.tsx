@@ -2,7 +2,7 @@ import { FaDollarSign, FaBicycle, FaHeadset } from "react-icons/fa";
 
 const WhyChooseUs = () => {
   return (
-    <div className="py-16  dark:bg-gray-100  bg-slate-700">
+    <div className="py-16  dark:bg-gray-100  bg-slate-700 px-10">
       <div className="container mx-auto text-center ">
         <h2 className="text-4xl font-bold mb-8 dark:text-slate-800  text-green-300">
           Why Choose Us?

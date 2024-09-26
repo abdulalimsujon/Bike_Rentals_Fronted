@@ -15,7 +15,7 @@ const AvailableBikeSection = () => {
   };
 
   return (
-    <div className="pt-20 min-h-screen dark:bg-base-100 bg-gray-700 ">
+    <div className="pt-20 min-h-screen dark:bg-base-100 bg-gray-700 px-20 ">
       <div className="container mx-auto ">
         <h1 className="text-4xl font-bold text-center mb-8 text-green-300 dark:text-slate-800">
           Available Bikes

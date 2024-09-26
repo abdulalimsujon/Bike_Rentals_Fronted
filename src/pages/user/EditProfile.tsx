@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import {
   Layout,
   Card,
@@ -19,7 +20,8 @@ const { Title } = Typography;
 
 const EditProfile = () => {
   const { data, isLoading, refetch } = useGetMeQuery(undefined);
-  const [updateUserProfile] = useUpdateUserProfileMutation();
+  const [updateUserProfile, { isLoading: updating }] =
+    useUpdateUserProfileMutation();
   const [form] = Form.useForm();
 
   useEffect(() => {
@@ -34,12 +36,19 @@ const EditProfile = () => {
   }, [data, form]);
 
   const onFinish = async (values: userType) => {
-    await updateUserProfile(values);
-    refetch();
-    Toast({ message: "Profile updated successfully", status: "success" });
+    try {
+      await updateUserProfile(values).unwrap(); // unwrap for error handling
+      refetch();
+      Toast({ message: "Profile updated successfully", status: "success" });
+    } catch (error: any) {
+      Toast({
+        message: error.data.message || "Update failed",
+        status: "error",
+      });
+    }
   };
 
-  if (isLoading) {
+  if (isLoading || updating) {
     return <Spin>Loading...</Spin>;
   }
 

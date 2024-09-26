@@ -1,9 +1,11 @@
-import { Tabs, Table, Button } from "antd";
+/* eslint-disable @typescript-eslint/no-unused-vars */
+import { Tabs, Table } from "antd";
 import { selectCurrentUser } from "../../redux/features/authSlice";
 import { useAppSelector } from "../../redux/hooks";
 import { useGetRentalByUserIdQuery } from "../../redux/api/bikes/bikeApi";
 import { useNavigate } from "react-router-dom";
 import { ColumnsType } from "antd/es/table";
+import CustomButton from "../../components/form/CustomButton";
 
 interface Bike {
   name: string;
@@ -38,14 +40,16 @@ const MyRental = () => {
     }
   });
 
-  // Table columns configuration
-  const columns: ColumnsType<TRental> = [
+  // Table columns for unpaid tab (with Pay button)
+  const unpaidColumns: ColumnsType<TRental> = [
     {
       title: "Bike Name",
       dataIndex: "bikeName",
       key: "bikeName",
-      render: (text: string, record: TRental) => (
-        <span>{record.bikeId?.name || "Unknown Bike"}</span>
+      render: (text: string, record: TRental, index: number) => (
+        <span className="text-xs md:text-sm">
+          {record.bikeId?.name || "Unknown Bike"}
+        </span>
       ),
       align: "center",
     },
@@ -53,15 +57,21 @@ const MyRental = () => {
       title: "Start Time",
       dataIndex: "startTime",
       key: "startTime",
-      render: (text: string) => <span>{new Date(text).toLocaleString()}</span>,
+      render: (text: string, record: TRental, index: number) => (
+        <span className="text-xs md:text-sm">
+          {new Date(text).toLocaleString()}
+        </span>
+      ),
       align: "center",
     },
     {
       title: "Return Time",
       dataIndex: "returnTime",
       key: "returnTime",
-      render: (text: string) => (
-        <span>{text ? new Date(text).toLocaleString() : "Ongoing"}</span>
+      render: (text: string, record: TRental, index: number) => (
+        <span className="text-xs md:text-sm">
+          {text ? new Date(text).toLocaleString() : "Ongoing"}
+        </span>
       ),
       align: "center",
     },
@@ -69,14 +79,29 @@ const MyRental = () => {
       title: "Total Cost",
       dataIndex: "totalCost",
       key: "totalCost",
-      render: (text: string) => <span>{text}</span>,
+      render: (text: string, record: TRental, index: number) => (
+        <span className="text-xs md:text-sm">{text}</span>
+      ),
+      align: "center",
+    },
+    {
+      title: "Action",
+      key: "action",
+      render: (text: string, record: TRental, index: number) => (
+        <CustomButton onClick={() => handlePayment(record)}>Pay</CustomButton>
+      ),
       align: "center",
     },
   ];
 
+  // Table columns for paid tab (no Pay button)
+  const paidColumns: ColumnsType<TRental> = unpaidColumns.filter(
+    (column) => column.key !== "action" // Exclude the Action column
+  );
+
   const handlePayment = (rental: TRental) => {
-    navigate(`/${user?.role}/payment`);
-    console.log("Processing payment for:", rental);
+    const amount = rental.totalCost;
+    navigate(`/${user?.role}/single-payment/${amount}`);
   };
 
   return (
@@ -90,54 +115,65 @@ const MyRental = () => {
           {nonZeroCostItems.length > 0 ? (
             <div className="p-4">
               <Table
+                className="mt-20 overflow-auto"
+                columns={paidColumns} // Use columns without Pay button
                 dataSource={nonZeroCostItems}
-                columns={columns}
-                rowKey="_id"
-                pagination={false}
                 rowClassName={() =>
-                  "bg-slate-700 dark:bg-slate-50 dark:text-black text-green-300 border border-blue-500"
+                  "bg-slate-700 dark:bg-slate-50 dark:text-black text-green-300"
                 }
-                className="border border-gray-400"
+                pagination={{
+                  className: "bg-slate-700 dark:bg-slate-50",
+                }}
               />
             </div>
           ) : (
             <p>No active unpaid rentals.</p>
           )}
         </Tabs.TabPane>
-
         <Tabs.TabPane
           className="flex justify-center items-center p-4 border border-gray-300 rounded-md shadow-md"
           tab={<span className="text-center">Unpaid</span>}
           key="2"
         >
           {zeroCostItems.length > 0 ? (
-            <div>
-              <Table
-                dataSource={zeroCostItems}
-                columns={[
-                  ...columns,
-                  {
-                    title: "Action",
-                    key: "action",
-                    render: (text, record) => (
-                      <Button
-                        type="primary"
-                        onClick={() => handlePayment(record)}
-                      >
-                        Pay
-                      </Button>
-                    ),
-                    align: "center",
-                  },
-                ]}
-                rowKey="_id"
-                pagination={false}
-                rowClassName={() =>
-                  "bg-slate-700 dark:bg-slate-50 dark:text-black text-green-300 border border-blue-500"
-                }
-                className="border border-gray-400"
-              />
-            </div>
+            <Table
+              className="w-full mx-40"
+              columns={unpaidColumns.map((col) => ({
+                ...col,
+                render: (text: string, record: TRental, index: number) => {
+                  if (col.key === "bikeName") {
+                    return (
+                      <div className="flex flex-col sm:flex-row items-center">
+                        <span className="text-xs sm:text-sm">
+                          {record.bikeId?.name || "Unknown Bike"}
+                        </span>
+                      </div>
+                    );
+                  }
+                  if (col.key === "action") {
+                    return (
+                      <div className="flex flex-col sm:flex-row justify-center">
+                        <CustomButton onClick={() => handlePayment(record)}>
+                          Pay
+                        </CustomButton>
+                      </div>
+                    );
+                  }
+                  return col.render ? col.render(text, record, index) : text;
+                },
+              }))}
+              dataSource={zeroCostItems}
+              rowClassName={() =>
+                "bg-slate-700 dark:bg-slate-50 dark:text-black text-green-300"
+              }
+              pagination={{
+                className: "bg-slate-700 dark:bg-slate-50",
+              }}
+              scroll={{
+                x: 400, // Ensure horizontal scrolling for smaller screens
+                y: 300, // Set the height limit for vertical scrolling
+              }}
+            />
           ) : (
             <p>No active zero-cost rentals.</p>
           )}

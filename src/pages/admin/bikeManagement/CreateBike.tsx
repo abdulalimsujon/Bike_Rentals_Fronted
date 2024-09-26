@@ -1,4 +1,4 @@
-import { Layout, Card, Typography, Button, Spin } from "antd";
+import { Layout, Card, Typography, Button } from "antd";
 import BRInput from "../../../components/form/BRInput"; // Assuming you have this custom component
 import BrForm from "../../../components/form/BrForm";
 import BRTextArea from "../../../components/form/BrTextArea";
@@ -14,13 +14,9 @@ const { Title } = Typography;
 
 const CreateBike = () => {
   const [imageFile, setImageFile] = useState<File | null>(null);
-  // Handle file input changes
-  const [createBike, { error, isLoading }] = useCreateBikeMutation();
+  const [createBike, { isLoading }] = useCreateBikeMutation();
   const navigate = useNavigate();
 
-  if (isLoading) {
-    <Spin>Loading...</Spin>;
-  }
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
@@ -28,15 +24,6 @@ const CreateBike = () => {
     }
   };
 
-  if (error) {
-    console.log(error);
-  }
-
-  if (isLoading) {
-    <p>loading</p>;
-  }
-
-  // Handle form submission
   const onSubmit: SubmitHandler<TBike> = async (data) => {
     const formData = new FormData();
 
@@ -48,117 +35,95 @@ const CreateBike = () => {
     formData.append("description", data?.description);
     formData.append("year", data?.year.toString());
     formData.append("model", data?.model);
-    // Append the image file to FormData
+
     if (imageFile) {
       formData.append("image", imageFile);
     }
 
     await createBike(formData);
-    Toast({ message: "bike successfully created", status: "success" });
+    Toast({ message: "Bike successfully created", status: "success" });
     navigate(`/admin/manage-bike`);
   };
 
   return (
-    <div className="pt-16  dark:bg-gray-100 bg-slate-700 h-screen overflow-hidden ">
+    <div className="pt-8 dark:bg-gray-100 bg-slate-700">
       <Layout className="min-h-screen flex justify-center items-center dark:bg-gray-100 bg-slate-700">
-        <Content style={{ padding: "16px", maxWidth: "500px", width: "100%" }}>
-          <Card className="shadow-lg rounded-lg p-4 dark:bg-gray-100 bg-gray-300 ">
-            <Title level={3} className="text-center mb-4">
+        <Content className="p-2 w-full max-w-xs">
+          <Card className="shadow-md rounded-lg p-4 dark:bg-gray-100 bg-gray-300">
+            <Title level={3} className="text-center mb-2 text-base">
               Create a New Bike
             </Title>
 
             <BrForm onSubmit={onSubmit}>
-              <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
-                {/* Bike Name */}
-                <div className="flex flex-col">
-                  <BRInput
-                    type="text"
-                    name="name"
-                    label="Bike Name"
-                    className="w-full border-gray-300 border rounded-lg p-1"
-                  />
-                </div>
-
-                {/* Price per Hour */}
-                <div className="flex flex-col">
-                  <BRInput
-                    type="number"
-                    name="pricePerHour"
-                    label="Price per Hour"
-                    className="w-full border-gray-300 border rounded-lg p-1"
-                  />
-                </div>
-
-                {/* CC */}
-                <div className="flex flex-col">
-                  <BRInput
-                    type="number"
-                    name="cc"
-                    label="CC"
-                    className="w-full border-gray-300 border rounded-lg p-1"
-                  />
-                </div>
-
-                {/* Year */}
-                <div className="flex flex-col">
-                  <BRInput
-                    type="number"
-                    name="year"
-                    label="Year"
-                    className="w-full border-gray-300 border rounded-lg p-1"
-                  />
-                </div>
-
-                {/* Model */}
-                <div className="flex flex-col">
-                  <BRInput
-                    type="text"
-                    name="model"
-                    label="Model"
-                    className="w-full border-gray-300 border rounded-lg p-1"
-                  />
-                </div>
-
-                {/* Brand */}
-                <div className="flex flex-col">
-                  <BRInput
-                    type="text"
-                    name="brand"
-                    label="Brand"
-                    className="w-full border-gray-300 border rounded-lg p-1"
-                  />
-                </div>
-
-                {/* Description */}
-                <div className="flex flex-col sm:col-span-2">
-                  <BRTextArea
-                    name="description"
-                    label="Description"
-                    rows={3}
-                    className="w-full border-gray-300 border rounded-lg p-1"
-                  />
-                </div>
-
-                {/* Image */}
-                <div className="flex flex-col w-full">
-                  <BRInput
-                    type="file"
-                    name="image"
-                    label="Image"
-                    className="w-96"
-                    onChange={handleFileChange} // Handle file input changes
-                  />
-                </div>
+              <div className="grid grid-cols-2 gap-4">
+                {" "}
+                {/* Two columns with gap */}
+                <BRInput
+                  type="text"
+                  name="name"
+                  label="Bike Name"
+                  className="col-span-1 w-full border-gray-300 border rounded-lg p-1 text-sm"
+                />
+                <BRInput
+                  type="number"
+                  name="pricePerHour"
+                  label="Price per Hour"
+                  className="col-span-1 w-full border-gray-300 border rounded-lg p-1 text-sm"
+                />
+                <BRInput
+                  type="number"
+                  name="cc"
+                  label="CC"
+                  className="col-span-1 w-full border-gray-300 border rounded-lg p-1 text-sm"
+                />
+                <BRInput
+                  type="number"
+                  name="year"
+                  label="Year"
+                  className="col-span-1 w-full border-gray-300 border rounded-lg p-1 text-sm"
+                />
+                <BRInput
+                  type="text"
+                  name="model"
+                  label="Model"
+                  className="col-span-1 w-full border-gray-300 border rounded-lg p-1 text-sm"
+                />
+                <BRInput
+                  type="text"
+                  name="brand"
+                  label="Brand"
+                  className="col-span-1 w-full border-gray-300 border rounded-lg p-1 text-sm"
+                />
               </div>
 
-              {/* Submit Button */}
+              <div className="mt-4">
+                {" "}
+                {/* Separate row for description */}
+                <BRTextArea
+                  name="description"
+                  label="Description"
+                  rows={2} // Reduced rows for smaller input area
+                  className="w-full border-gray-300 border rounded-lg p-1 text-sm"
+                />
+              </div>
+
+              <div className="mt-4">
+                <BRInput
+                  type="file"
+                  name="image"
+                  label="Image"
+                  className="w-full"
+                  onChange={handleFileChange} // Handle file input changes
+                />
+              </div>
+
               <div className="text-center mt-4">
                 <Button
                   type="primary"
                   htmlType="submit"
-                  className="w-full bg-blue-500 hover:bg-blue-600 text-white rounded-lg py-2"
+                  className="w-full  hover:bg-green-500 bg-green-700 text-white rounded-lg py-1 text-sm"
                 >
-                  Create Bike
+                  {isLoading ? "Creating..." : "Create Bike"}
                 </Button>
               </div>
             </BrForm>

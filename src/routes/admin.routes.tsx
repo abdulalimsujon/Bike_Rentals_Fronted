@@ -1,18 +1,24 @@
-import AdminDashboard from "../pages/admin/AdminDashboard";
 import CreateBike from "../pages/admin/bikeManagement/CreateBike";
 import ManageBike from "../pages/admin/bikeManagement/ManageBike";
 import ReturnBike from "../pages/admin/bikeManagement/ReturnBike";
 import Users from "../pages/admin/userManagement/Users";
 import AllBike from "../pages/bike/AllBike";
 import BikeDetails from "../pages/bike/BikeDetails";
+import Dashboard from "../pages/Dashboard";
 import Payment from "../pages/payment/Payment";
 import MyRental from "../pages/rental/MyRental";
 import ProfilePage from "../pages/user/Profile";
+import SinglePayment from "../pages/payment/SinglePayment";
+import EditProfile from "../pages/user/EditProfile";
 
 export const adminPaths = [
   {
     path: "dashboard",
-    element: <AdminDashboard />,
+    element: <Dashboard />,
+  },
+  {
+    path: "edit-profile",
+    element: <EditProfile></EditProfile>,
   },
   {
     name: "Bike Management",
@@ -44,6 +50,11 @@ export const adminPaths = [
         path: "payment",
         element: <Payment></Payment>,
       },
+
+      {
+        path: "single-payment/:amount",
+        element: <SinglePayment></SinglePayment>,
+      },
       {
         path: "my-rental",
         element: <MyRental></MyRental>,
@@ -52,6 +63,10 @@ export const adminPaths = [
         name: "Return Bike",
         path: "return-bike",
         element: <ReturnBike></ReturnBike>,
+      },
+      {
+        path: "dashboard",
+        element: <Dashboard></Dashboard>,
       },
     ],
   },

@@ -19,15 +19,15 @@ const Registration = () => {
     const formData = new FormData();
 
     // Append form fields to FormData
-    formData.append("name", data.name);
-    formData.append("email", data.email);
-    formData.append("password", data.password);
-    formData.append("phone", data.phone);
-    formData.append("address", data.address);
+    formData.append("name", data.name || "");
+    formData.append("email", data.email || "");
+    formData.append("password", data.password || "");
+    formData.append("phone", data.phone || "");
+    formData.append("address", data.address || "");
 
-    // Append the image file to FormData
+    // Append the image file to FormData only if it exists
     if (imageFile) {
-      formData.append("image", imageFile);
+      formData.append("image", imageFile); // Append image if it's not null
     }
 
     try {
@@ -53,7 +53,7 @@ const Registration = () => {
 
   if (isSuccess) {
     toast.success("Successfully registered");
-    navigate("/user/dashboard");
+    navigate("/login");
     return null;
   }
 

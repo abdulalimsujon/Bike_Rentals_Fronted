@@ -37,8 +37,10 @@ const ManageBike = () => {
   const [params, setParams] = useState<QueryParam[]>([]);
   const { data: allBikesData, isLoading: allBikesLoading } =
     useAllBikeQuery(params);
-  const [deleteBike, { isError, error, isLoading: deleteLoading }] =
-    useDeleteBikeMutation();
+  const [
+    deleteBike,
+    { isError, error, isLoading: deleteLoading, isSuccess: isDelete },
+  ] = useDeleteBikeMutation();
   const [updateBike, { isLoading: editLoading }] = useUpdateBikeMutation();
 
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -48,6 +50,10 @@ const ManageBike = () => {
   const handleCancel = () => {
     setIsModalOpen(false);
   };
+
+  if (isDelete) {
+    Toast({ message: "bike is deleted successfully", status: "success" });
+  }
 
   const onSubmit: SubmitHandler<DataType> = async (data: DataType) => {
     const brand = data?.brand || bikeInfo?.brand;
@@ -80,6 +86,7 @@ const ManageBike = () => {
   };
 
   if (isError) {
+    console.log(error);
     Toast({ message: error as string, status: "error" });
   }
 
@@ -118,6 +125,7 @@ const ManageBike = () => {
   };
 
   const handleDelete = async (key: React.Key) => {
+    console.log(key);
     await deleteBike(key);
   };
 
@@ -238,14 +246,14 @@ const ManageBike = () => {
   };
 
   return (
-    <div className="bg-slate-600 dark:bg-slate-50 p-8 h-screen">
+    <div className="bg-slate-600 dark:bg-slate-50 p-8 ">
       <Table
-        className="mt-20 overflow-auto"
+        className=" overflow-auto border-gray-500"
         columns={columns}
         dataSource={data2}
         onChange={onChange}
         rowClassName={() =>
-          "bg-slate-700 dark:bg-slate-50 dark:text-black text-green-300"
+          "bg-slate-700 dark:bg-slate-50 dark:text-black text-green-300  border border-gray-300"
         }
         pagination={{
           className: "bg-slate-700 dark:bg-slate-50",
