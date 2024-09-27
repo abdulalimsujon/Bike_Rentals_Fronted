@@ -4,7 +4,6 @@ import { Button, Drawer, Spin, Alert } from "antd";
 import CustomCard from "../../components/layouts/CustomCard";
 import { useAppSelector } from "../../redux/hooks";
 import { useNavigate } from "react-router-dom";
-import { selectCurrentUser } from "../../redux/features/authSlice";
 import { TBike } from "../../Type/BikeType";
 import { useAllBikeQuery } from "../../redux/api/bikes/bikeApi";
 
@@ -17,12 +16,10 @@ const AllBike = () => {
   } = useAllBikeQuery([]);
   const selectedItem = useAppSelector((state) => state.bikesInfo.item);
 
-  const user = useAppSelector(selectCurrentUser);
-
   const navigate = useNavigate();
 
   const handleClick = (id: string) => {
-    navigate(`/${user?.role}/bike-details/${id}`);
+    navigate(`/bike-details/${id}`);
   };
 
   let filterItem;
@@ -102,7 +99,10 @@ const AllBike = () => {
 
           {/* Drawer and Button for small screens (below md) */}
           <div className="md:hidden mb-4">
-            <Button type="primary" onClick={showDrawer} className="mb-4 w-full">
+            <Button
+              onClick={showDrawer}
+              className="mb-4 w-full bg-green-700 text-white"
+            >
               Filter Bikes
             </Button>
             <Drawer

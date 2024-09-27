@@ -1,162 +1,220 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import {
-  CardElement,
-  Elements,
-  useElements,
-  useStripe,
-} from "@stripe/react-stripe-js";
-import { loadStripe } from "@stripe/stripe-js";
 import { useState } from "react";
-import Toast from "../../utils/Toast";
-import { useCreatePaymentIntentMutation } from "../../redux/api/gatewayApi";
+import { loadStripe } from "@stripe/stripe-js";
+import {
+  Elements,
+  CardElement,
+  useStripe,
+  useElements,
+} from "@stripe/react-stripe-js";
 import card1 from "../../assets/card1.png";
 import card2 from "../../assets/card2.png";
+import { useCreatePaymentIntentMutation } from "../../redux/api/gatewayApi";
+import Toast from "../../utils/Toast";
+import { useAppSelector } from "../../redux/hooks";
 import { useParams } from "react-router-dom";
 
-const SinglePayment = () => {
-  const stripePromise = loadStripe(
-    "pk_test_51Ls9jVGslqmvXzFItLmpBXHrEo6T9744iSs0GnDuK92J6daEfjjMPsTYMO7MIwat0J2xARZLaIEUnAvCPzWaMLzU00FQ9kNlVm"
-  );
+// Load your Stripe public key (replace with your own)
+const stripePromise = loadStripe(
+  "pk_test_51Ls9jVGslqmvXzFItLmpBXHrEo6T9744iSs0GnDuK92J6daEfjjMPsTYMO7MIwat0J2xARZLaIEUnAvCPzWaMLzU00FQ9kNlVm"
+);
 
-  const PaymentForm: React.FC = () => {
-    const stripe = useStripe();
-    const elements = useElements();
-    const [error, setError] = useState<string | null>(null);
-    const [createPaymentIntent, { isLoading: createIntentLoading }] =
-      useCreatePaymentIntentMutation();
+// Define the form data structure
+interface FormData {
+  amount: string;
+  bonusCode: string; // Added bonusCode to the form data structure
+}
 
-    // Get 'amount' from URL parameters
-    const { amount } = useParams<{ amount: string }>();
-    const parsedAmount = Number(amount); // Convert to number
+const PaymentForm: React.FC = () => {
+  const stripe = useStripe();
+  const elements = useElements();
+  const { amount: totalCost } = useParams<{ amount: string }>();
+  console.log(totalCost);
+  const [formData, setFormData] = useState<FormData>({
+    amount: "100",
+    bonusCode: "",
+  }); // Initialize bonusCode
+  const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState<boolean>(false);
 
-    if (isNaN(parsedAmount) || parsedAmount <= 0) {
-      setError("Invalid amount provided.");
-    }
+  const bonus = useAppSelector((state) => state.bikesInfo.bonus);
 
-    // Handle form submission
-    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-      e.preventDefault();
-      if (!stripe || !elements || !parsedAmount) {
-        return;
-      }
+  const [createPaymentIntent, { isLoading: createIntentLoading, isError }] =
+    useCreatePaymentIntentMutation();
 
-      // Call createPaymentIntent before proceeding with payment
-      try {
-        const response = await createPaymentIntent({
-          price: parsedAmount,
-        }).unwrap();
-
-        if (response) {
-          const cardElement = elements.getElement(CardElement);
-
-          if (!cardElement) {
-            setError("Card details are required.");
-            Toast({ message: "Card details are missing.", status: "error" });
-            return;
-          }
-
-          const { error: cardError } = await stripe.createPaymentMethod({
-            type: "card",
-            card: cardElement,
-          });
-
-          if (cardError) {
-            setError(
-              cardError.message ||
-                "An error occurred while creating the payment method."
-            );
-            Toast({ message: cardError.message as string, status: "error" });
-          } else {
-            setError(null);
-            Toast({ message: "Payment method created.", status: "success" });
-          }
-        }
-      } catch (err: any) {
-        setError("Failed to create payment intent. Please try again.");
-        Toast({ message: "Failed to create payment intent.", status: "error" });
-      }
-    };
-
-    return (
-      <div className="flex items-center justify-center min-h-screen bg-gray-100 px-4 sm:px-6 lg:px-8">
-        <div className="w-full max-w-lg">
-          <div className="rounded-lg shadow-md p-6 bg-green-200 dark:bg-slate-50">
-            <h3 className="text-2xl font-semibold mb-6 text-green-700">
-              Payment
-            </h3>
-            <form className="space-y-6" onSubmit={handleSubmit}>
-              {/* Accepted Cards */}
-              <div>
-                <p className="text-sm font-medium text-gray-700 mb-2">
-                  Accepted Cards
-                </p>
-                <div className="flex space-x-4">
-                  <img
-                    src={card1}
-                    alt="Card 1"
-                    className="w-20 transition-transform transform hover:scale-110"
-                  />
-                  <img
-                    src={card2}
-                    alt="Card 2"
-                    className="w-16 transition-transform transform hover:scale-110"
-                  />
-                </div>
-              </div>
-              {/* Amount Display */}
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Amount
-                </label>
-                <input
-                  type="text"
-                  name="amount"
-                  value={parsedAmount}
-                  disabled
-                  className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-500 transition"
-                />
-              </div>
-              {/* Card Details */}
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Card Details
-                </label>
-                <CardElement
-                  options={{
-                    style: {
-                      base: {
-                        fontSize: "16px",
-                        color: "#424770",
-                        "::placeholder": {
-                          color: "#aab7c4",
-                        },
-                      },
-                      invalid: {
-                        color: "#9e2146",
-                      },
-                    },
-                  }}
-                  className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-500 transition"
-                />
-              </div>
-              {/* Error Message */}
-              {error && <div className="text-red-500 mt-2">{error}</div>}
-              {/* Submit Button */}
-              <button
-                type="submit"
-                disabled={!stripe || createIntentLoading}
-                className="w-full mt-8 py-3 bg-gray-800 text-white rounded-lg hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-500 transition"
-              >
-                {createIntentLoading ? "Processing..." : "Proceed to Checkout"}
-              </button>
-            </form>
-          </div>
-        </div>
-      </div>
-    );
+  // Handle form input change
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target; // Destructure name and value
+    setFormData({ ...formData, [name]: value }); // Update form data
   };
 
+  if (isError) {
+    Toast({ message: "Something went wrong", status: "error" });
+  }
+
+  // Handle form submission
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    if (!stripe || !elements) {
+      return;
+    }
+
+    setLoading(true);
+
+    // Call createPaymentIntent before proceeding with payment
+    try {
+      const response = await createPaymentIntent({
+        price: Number(formData.amount),
+      }).unwrap();
+
+      if (response) {
+        const cardElement = elements.getElement(CardElement);
+
+        if (!cardElement) {
+          setError("Card details are required.");
+          setLoading(false);
+          Toast({ message: "Card details are missing.", status: "error" });
+          return;
+        }
+
+        const { error: cardError } = await stripe.createPaymentMethod({
+          type: "card",
+          card: cardElement,
+        });
+
+        if (cardError) {
+          setError(
+            cardError.message ||
+              "An error occurred while creating the payment method."
+          );
+          setLoading(false);
+          Toast({ message: cardError.message as string, status: "error" });
+        } else {
+          setError(null);
+          setLoading(false);
+          Toast({ message: "Payment method created.", status: "success" });
+        }
+      }
+    } catch (err: any) {
+      setError("Failed to create payment intent. Please try again.");
+      setLoading(false);
+      Toast({ message: "Failed to create payment intent.", status: "error" });
+    }
+  };
+
+  let amountAfterDiscount;
+
+  if (formData.bonusCode === "DISCOUNT20") {
+    amountAfterDiscount = Number(totalCost) * 0.8; // 20% discount
+  } else if (formData.bonusCode === "DISCOUNT10") {
+    amountAfterDiscount = Number(totalCost) * 0.9; // 10% discount
+  } else if (formData.bonusCode === "DISCOUNT30") {
+    amountAfterDiscount = Number(totalCost) * 0.7; // 30% discount
+  } else {
+    amountAfterDiscount = Number(totalCost);
+  }
+
+  return (
+    <div className="">
+      <div className="flex justify-center items-center min-h-screen bg-gray-100 px-4">
+        <div className="max-w-md w-full bg-white shadow-md rounded-lg p-6">
+          <h3 className="text-2xl font-semibold mb-6 text-green-700 text-center">
+            Payment
+          </h3>
+
+          {/* Bonus Code Section */}
+          {bonus && (
+            <div className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-4">
+              <p className="font-semibold">Bonus Code:</p>
+              <p>{bonus.code}</p>
+            </div>
+          )}
+
+          <form className="space-y-6" onSubmit={handleSubmit}>
+            <div>
+              <p className="text-sm font-medium text-gray-700 mb-2">
+                Accepted Cards
+              </p>
+              <div className="flex space-x-4 ">
+                <img
+                  src={card1}
+                  alt="Card 1"
+                  className="w-20 transition-transform transform hover:scale-110"
+                />
+                <img
+                  src={card2}
+                  alt="Card 2"
+                  className="w-16 transition-transform transform hover:scale-110"
+                />
+              </div>
+            </div>
+            {/* Promo Code Input */}
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                Promo Code
+              </label>
+              <input
+                type="text"
+                name="bonusCode"
+                value={formData.bonusCode}
+                onChange={handleInputChange}
+                placeholder="Enter promo code"
+                className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-500 transition"
+              />
+              <label className="block text-sm font-medium text-gray-700 mb-1 mt-4">
+                Amount
+              </label>
+              <input
+                type="number"
+                name="amount"
+                disabled
+                value={Math.floor(amountAfterDiscount)}
+                onChange={handleInputChange}
+                placeholder="Enter amount"
+                className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-500 transition"
+              />
+            </div>
+
+            {/* Card Element */}
+            <CardElement
+              options={{
+                style: {
+                  base: {
+                    color: "#32325d",
+                    fontFamily: '"Helvetica Neue", Helvetica, sans-serif',
+                    fontSmoothing: "antialiased",
+                    fontSize: "16px",
+                    lineHeight: "24px",
+                  },
+                  invalid: {
+                    color: "#fa755a",
+                    iconColor: "#fa755a",
+                  },
+                },
+              }}
+            />
+            {error && <div className="text-red-500 text-sm">{error}</div>}
+            <button
+              type="submit"
+              disabled={loading || createIntentLoading}
+              className={`w-full py-3 rounded-lg text-white font-semibold ${
+                loading || createIntentLoading
+                  ? "bg-gray-400 cursor-not-allowed"
+                  : "bg-green-500 hover:bg-green-600 transition"
+              }`}
+            >
+              {loading || createIntentLoading ? "Processing..." : "Pay"}
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+const SinglePayment = () => {
   return (
     <Elements stripe={stripePromise}>
       <PaymentForm />

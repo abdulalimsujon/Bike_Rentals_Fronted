@@ -230,7 +230,7 @@ const PaymentForm: React.FC = () => {
             <button
               type="submit"
               disabled={!stripe || loading || createIntentLoading}
-              className="w-full mt-8 py-3 bg-gray-800 text-white rounded-lg hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-500 transition"
+              className="w-full mt-8 py-3 bg-green-700 text-white rounded-lg hover:bg-green-300 focus:outline-none focus:ring-2 focus:ring-gray-500 transition"
             >
               {loading || createIntentLoading
                 ? "Processing..."

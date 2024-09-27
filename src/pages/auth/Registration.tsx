@@ -7,6 +7,8 @@ import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { useRegistrationMutation } from "../../redux/api/authApi/authApi";
 import { userType } from "../../Type/UserType";
+import { TErrorResponse } from "../../Type/ErrorTypes";
+import Toast from "../../utils/Toast";
 
 const Registration = () => {
   const [registration, { isLoading, isSuccess }] = useRegistrationMutation();
@@ -34,8 +36,17 @@ const Registration = () => {
       await registration(formData).unwrap(); // Send FormData to the API
       toast.success("User registered successfully");
     } catch (error) {
-      console.log(error);
-      toast.error("Something went wrong");
+      const errorResponse = error as TErrorResponse;
+
+      const errorMessages = errorResponse?.data?.errorSources
+        ?.map((err) => `${err.path}: ${err.message}`)
+        .join(", ");
+
+      Toast({
+        message:
+          errorMessages || "Login failed. Please check your credentials.",
+        status: "error",
+      });
     }
   };
 

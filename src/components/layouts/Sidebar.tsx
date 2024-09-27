@@ -11,7 +11,7 @@ const Sidebar = () => {
     <Sider
       breakpoint="lg"
       collapsedWidth="0"
-      className="bg-slate-600 dark:bg-slate-300 sm:block" // Show sidebar on sm and larger
+      className="bg-gray-300 dark:bg-slate-300 sm:block " // Show sidebar on sm and larger
       style={{
         height: "100vh",
         width: "250px",
@@ -26,7 +26,7 @@ const Sidebar = () => {
         mode="inline"
         defaultSelectedKeys={["4"]}
         items={items as ItemType<MenuItemType>[]}
-        className="bg-white dark:bg-slate text-gray-900 dark:text-gray-50 rounded-lg"
+        className="bg-gray-500 dark:bg-white text-green-300 dark:text-green-700 rounded-lg" // Correct text color and background
       />
     </Sider>
   );

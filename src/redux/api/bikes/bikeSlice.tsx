@@ -13,9 +13,15 @@ export interface Bike {
   image?: File | string;
 }
 
+type TbonusCoupons = {
+  code: string;
+  value: number;
+};
+
 interface BikeState {
   item: Bike; // This should be a single bike object
   selectItem: Bike[]; // This should be an array of Bike objects
+  bonus: TbonusCoupons;
 }
 
 const initialState: BikeState = {
@@ -32,6 +38,10 @@ const initialState: BikeState = {
     image: "",
   },
   selectItem: [], // Initialize selectItem as an empty array
+  bonus: {
+    code: "",
+    value: 0,
+  },
 };
 
 export const bikeSlice = createSlice({
@@ -49,8 +59,12 @@ export const bikeSlice = createSlice({
     setItem: (state, action: PayloadAction<Bike>) => {
       state.selectItem.push(action.payload); // Push the new item into the array
     },
+    setBonus: (state, action) => {
+      state.bonus.code = action.payload.code;
+      state.bonus.value = action.payload.value;
+    },
   },
 });
 
-export const { setModel, setBrand, setItem } = bikeSlice.actions;
+export const { setModel, setBrand, setItem, setBonus } = bikeSlice.actions;
 export default bikeSlice.reducer;

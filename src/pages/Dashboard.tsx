@@ -237,9 +237,9 @@ const Dashboard: React.FC = () => {
   return (
     <Layout className="min-h-screen dark:bg-slate-50 bg-gray-700  ">
       {/* Header */}
-      <Header className="bg-green-700 text-bold text-white mt-20">
+      <Header className="bg-green-700 text-bold text-white sticky">
         <div className="text-center">
-          Welcome to {userData?.data?.name}' Rental Bike
+          Welcome to {userData?.data?.name}' Bike Rental
         </div>
       </Header>
 

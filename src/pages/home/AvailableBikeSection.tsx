@@ -3,15 +3,22 @@ import { useGetAvailableBikeQuery } from "../../redux/api/bikes/bikeApi";
 import { TBike } from "../../Type/BikeType";
 import { useDispatch } from "react-redux";
 import { Bike, setItem } from "../../redux/api/bikes/bikeSlice";
+import { useAppSelector } from "../../redux/hooks";
+import { selectCurrentUser } from "../../redux/features/authSlice";
 
 const AvailableBikeSection = () => {
   const { data } = useGetAvailableBikeQuery(undefined);
+  const user = useAppSelector(selectCurrentUser);
   const navigate = useNavigate();
   const dispatch = useDispatch();
-
+  console.log(user);
   const handleClick = (item: Bike) => {
     dispatch(setItem(item));
-    navigate(`/login`);
+    if (user) {
+      navigate(`${user?.role}/payment`);
+    } else {
+      navigate(`/login`);
+    }
   };
 
   return (

@@ -9,3 +9,9 @@ export type ErrorTypes = {
     success: boolean;
   };
 };
+
+export interface TErrorResponse {
+  data: {
+    errorSources: { path: string; message: string }[];
+  };
+}

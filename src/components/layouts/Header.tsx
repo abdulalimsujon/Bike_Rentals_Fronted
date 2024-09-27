@@ -98,11 +98,11 @@ const CustomHeader = () => {
   ];
 
   return (
-    <Header className="fixed top-0 left-0 w-full z-50 bg-gray-800 dark:bg-gray-900 text-green-300 dark:text-white">
+    <Header className="fixed top-0 left-0 w-full z-50 dark:bg-gray-300 bg-gray-900  dark:text-white">
       <div className="container mx-auto px-2 py-4">
         <div className="flex items-center justify-between">
           {/* Drawer button placed on the left side, vertically centered */}
-          <div className="md:hidden mr-4 flex items-center">
+          <div className="md:hidden mr-4 flex items-center text-green-700 hover:text-green-900">
             <MenuOutlined
               className="text-xl cursor-pointer"
               onClick={() => setDrawerOpen(true)}
@@ -110,7 +110,7 @@ const CustomHeader = () => {
           </div>
 
           {/* Center the title/logo, vertically aligned */}
-          <h1 className="text-base md:text-xl font-semibold flex-shrink-0 text-green-300 mx-auto flex items-center">
+          <h1 className="text-base md:text-xl font-semibold flex-shrink-0 text-green-700 mx-auto flex items-center">
             Sk Bike Rentals
           </h1>
 
@@ -118,32 +118,38 @@ const CustomHeader = () => {
           <div className="flex items-center space-x-2 md:space-x-6">
             <div className="hidden md:flex items-center space-x-2 md:space-x-4">
               <NavLink
-                className="text-sm md:text-lg text-green-300 hover:text-white transition"
-                to={`/${user?.role}/all-bike`}
+                className="text-sm md:text-lg text-green-300 dark:text-green-700 hover:text-white transition"
+                to={`/`}
+              >
+                Home
+              </NavLink>
+              <NavLink
+                className="text-sm md:text-lg text-green-300 dark:text-green-700 hover:text-white transition"
+                to={`/all-bike`}
               >
                 All Bikes
               </NavLink>
               <NavLink
-                className="text-sm md:text-lg text-green-300 hover:text-white transition"
+                className="text-sm md:text-lg text-green-300 dark:text-green-700 hover:text-white transition"
                 to={`/${user?.role}/dashboard`}
               >
                 Dashboard
               </NavLink>
               <span
-                className="cursor-pointer text-sm md:text-lg text-green-300 hover:text-white transition"
+                className="cursor-pointer text-sm md:text-lg text-green-300 dark:text-green-700 hover:text-white transition"
                 onClick={handleMyRentalClick}
               >
                 My Rental
               </span>
               <span
-                className="cursor-pointer text-sm md:text-lg text-green-300 hover:text-white transition"
+                className="cursor-pointer text-sm md:text-lg text-green-300  dark:text-green-700 hover:text-white transition"
                 onClick={handleAboutClick}
               >
                 About
               </span>
             </div>
 
-            <div className="flex items-center space-x-2">
+            <div className="flex items-center space-x-2 text-green-300 dark:text-green-700">
               {/* Theme Switch */}
               <span onClick={handleThemeSwitch} className="cursor-pointer">
                 {theme === "dark" ? (

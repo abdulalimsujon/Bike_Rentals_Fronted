@@ -2,12 +2,13 @@ import { Controller } from "react-hook-form";
 import { Form, Input } from "antd";
 
 interface BRInputProps {
-  type: React.HTMLInputTypeAttribute; // Use the built-in HTML input types
+  type: React.HTMLInputTypeAttribute; // Built-in HTML input types
   name: string;
   label: string;
   className?: string;
   disabled?: boolean;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  error?: string; // Add error prop for validation messages
 }
 
 const BRInput: React.FC<BRInputProps> = ({
@@ -17,15 +18,20 @@ const BRInput: React.FC<BRInputProps> = ({
   className,
   disabled,
   onChange,
+
+  error, // Use error prop
 }) => {
   return (
     <div style={{ marginBottom: "5px" }}>
       <Controller
         name={name}
         render={({ field }) => (
-          <Form.Item label={label}>
+          <Form.Item
+            label={label}
+            validateStatus={error ? "error" : ""}
+            help={error} // Show validation error
+          >
             {type === "file" ? (
-              // Special handling for file input
               <input
                 className={className}
                 disabled={disabled}
@@ -37,7 +43,6 @@ const BRInput: React.FC<BRInputProps> = ({
                 }}
               />
             ) : (
-              // Default Input for other types
               <Input
                 className={className}
                 disabled={disabled}

@@ -74,8 +74,6 @@ const BikeDetails = () => {
       _id: bikeId, // Add bikeId to the form data
     };
 
-
-
     dispatch(rentPeriodWithBike(dataWithBikeId));
 
     // Format startTime and endTime to "YYYY-MM-DDTHH:mm:ssZ" format
@@ -91,6 +89,8 @@ const BikeDetails = () => {
     // After successful form submission, navigate to the role-based rental page
     if (user?.role) {
       navigate(`/${user.role}/payment`);
+    } else {
+      navigate(`/login`);
     }
   };
 
@@ -152,10 +152,9 @@ const BikeDetails = () => {
                 <div className="flex flex-col gap-4">
                   <CustomDatePicker name="startTime" label="Start Time" />
                   <Button
-                    type="primary"
                     htmlType="submit"
                     loading={isLoading}
-                    className="w-full"
+                    className="w-full bg-green-700"
                   >
                     Book Now
                   </Button>

@@ -10,16 +10,11 @@ import { verifyToken } from "../../utils/verifyToken";
 import { SubmitHandler } from "react-hook-form";
 import Toast from "../../utils/Toast";
 import CustomButton from "../../components/form/CustomButton";
+import { TErrorResponse } from "../../Type/ErrorTypes";
 
 interface LoginFormValues {
   email: string;
   password: string;
-}
-
-interface ErrorResponse {
-  data: {
-    errorSources: { path: string; message: string }[];
-  };
 }
 
 const Login = () => {
@@ -44,7 +39,7 @@ const Login = () => {
 
       Toast({ message: "User successfully logged in", status: "success" });
     } catch (error: any) {
-      const errorResponse = error as ErrorResponse;
+      const errorResponse = error as TErrorResponse;
 
       const errorMessages = errorResponse?.data?.errorSources
         ?.map((err) => `${err.path}: ${err.message}`)

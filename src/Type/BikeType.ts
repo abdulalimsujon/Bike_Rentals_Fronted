@@ -1,12 +1,12 @@
 export type TBike = {
   _id: string;
   brand: string;
-  pricePerHour: number | string;
+  pricePerHour: number;
   isAvailable: boolean;
   name: string;
-  cc: number | string;
+  cc: number;
   description: string;
-  year: number | string;
+  year: number;
   model: string;
   image?: File;
 };
