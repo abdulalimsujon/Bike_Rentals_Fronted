@@ -12,6 +12,7 @@ import { selectCurrentUser } from "../../redux/features/authSlice";
 import { useSingleBikeQuery } from "../../redux/api/bikes/bikeApi";
 import { useDispatch } from "react-redux";
 import { rentPeriodWithBike } from "../../redux/features/rentSlice";
+import Toast from "../../utils/Toast";
 
 dayjs.extend(utc);
 
@@ -68,29 +69,34 @@ const BikeDetails = () => {
   const onSubmit = (formData: { startTime: string }) => {
     const { startTime } = formData;
 
-    // Add bikeId to the formData
-    const dataWithBikeId = {
-      ...formData,
-      _id: bikeId, // Add bikeId to the form data
-    };
+    // Check if startTime is not provided or is an empty string
+    if (!startTime) {
+      Toast({ message: "Please specify a starting time", status: "error" });
+      return; // Exit the function early if validation fails
+    }
 
-    dispatch(rentPeriodWithBike(dataWithBikeId));
+    if (user) {
+      // Add bikeId to the formData
+      const dataWithBikeId = {
+        ...formData,
+        _id: bikeId, // Add bikeId to the form data
+      };
 
-    // Format startTime and endTime to "YYYY-MM-DDTHH:mm:ssZ" format
-    const formattedStartTime = startTime
-      ? dayjs(startTime).utc().format("YYYY-MM-DDTHH:mm:ss[Z]")
-      : null;
+      dispatch(rentPeriodWithBike(dataWithBikeId));
 
-    console.log({
-      startTime: formattedStartTime,
-      bikeId, // log the bikeId for debugging
-    });
+      // Format startTime to "YYYY-MM-DDTHH:mm:ssZ" format
+      const formattedStartTime = dayjs(startTime)
+        .utc()
+        .format("YYYY-MM-DDTHH:mm:ss[Z]");
 
-    // After successful form submission, navigate to the role-based rental page
-    if (user?.role) {
+      console.log({
+        startTime: formattedStartTime,
+        bikeId, // log the bikeId for debugging
+      });
       navigate(`/${user.role}/payment`);
     } else {
-      navigate(`/login`);
+      Toast({ message: "Please login first", status: "error" });
+      navigate("/login");
     }
   };
 

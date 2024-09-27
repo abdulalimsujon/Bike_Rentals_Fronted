@@ -1,11 +1,13 @@
 import Acordion from "../../components/form/Acordion";
 import { useState } from "react";
-import { Button, Drawer, Spin, Alert } from "antd";
+import { Button, Drawer, Alert } from "antd";
 import CustomCard from "../../components/layouts/CustomCard";
 import { useAppSelector } from "../../redux/hooks";
 import { useNavigate } from "react-router-dom";
 import { TBike } from "../../Type/BikeType";
 import { useAllBikeQuery } from "../../redux/api/bikes/bikeApi";
+//import { selectCurrentUser } from "../../redux/features/authSlice";
+import LoaderSpinner from "../../utilities/LoaderSpinner";
 
 const AllBike = () => {
   // Fetching all bikes
@@ -15,6 +17,7 @@ const AllBike = () => {
     isLoading: allBikesLoading,
   } = useAllBikeQuery([]);
   const selectedItem = useAppSelector((state) => state.bikesInfo.item);
+  // const user = useAppSelector(selectCurrentUser);
 
   const navigate = useNavigate();
 
@@ -57,11 +60,7 @@ const AllBike = () => {
 
   // Handling loading and error states
   if (allBikesLoading || filteredLoading) {
-    return (
-      <div className="flex justify-center items-center h-screen">
-        <Spin tip="Loading bikes..." />
-      </div>
-    );
+    return <LoaderSpinner></LoaderSpinner>;
   }
 
   if (allBikesError) {
@@ -78,7 +77,7 @@ const AllBike = () => {
 
   return (
     <div className="mx-4 md:mx-40">
-      <div className="mt-16">
+      <div className="mt-10">
         {/* Flexbox grid container */}
         <div className="flex flex-col md:flex-row gap-3">
           {/* Accordions visible on large screens (md and above) */}

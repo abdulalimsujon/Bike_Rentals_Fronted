@@ -11,6 +11,7 @@ import BrForm from "../../../components/form/BrForm";
 import CustomDatePicker from "../../../components/form/CustomDatePicker";
 import CustomButton from "../../../components/form/CustomButton";
 import Toast from "../../../utils/Toast";
+import LoaderSpinner from "../../../utilities/LoaderSpinner";
 
 interface BikeRental {
   bikeId: {
@@ -68,7 +69,7 @@ const ReturnBike = () => {
   } = useGetAllRentalBikeQuery(undefined);
 
   if (isLoading || allDataLoading) {
-    <Spin>loading...</Spin>;
+    return <LoaderSpinner></LoaderSpinner>;
   }
 
   console.log(data1);

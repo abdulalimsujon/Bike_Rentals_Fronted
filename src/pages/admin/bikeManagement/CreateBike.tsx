@@ -8,9 +8,40 @@ import { useNavigate } from "react-router-dom";
 import { useCreateBikeMutation } from "../../../redux/api/bikes/bikeApi";
 import { TBike } from "../../../Type/BikeType";
 import { SubmitHandler } from "react-hook-form";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+import LoaderSpinner from "../../../utilities/LoaderSpinner";
 
 const { Content } = Layout;
 const { Title } = Typography;
+
+const bikeSchema = z.object({
+  name: z.string().min(1, "Bike name is required"),
+  pricePerHour: z
+    .string()
+    .min(1, "Price per hour is required")
+    .transform((val) => parseFloat(val)) // Convert string to number
+    .refine(
+      (val) => !isNaN(val) && val > 0,
+      "Price per hour must be a positive number"
+    ),
+  cc: z
+    .string()
+    .min(1, "CC is required")
+    .transform((val) => parseFloat(val)) // Convert string to number
+    .refine((val) => !isNaN(val) && val > 0, "CC must be a positive number"),
+  year: z
+    .string()
+    .min(1, "Year is required")
+    .transform((val) => parseInt(val, 10)) // Convert string to integer
+    .refine(
+      (val) => val >= 1900 && val <= new Date().getFullYear(),
+      "Year must be a valid year"
+    ),
+  model: z.string().min(1, "Model is required"),
+  brand: z.string().min(1, "Brand is required"),
+  description: z.string().optional(),
+});
 
 const CreateBike = () => {
   const [imageFile, setImageFile] = useState<File | null>(null);
@@ -23,6 +54,9 @@ const CreateBike = () => {
       setImageFile(file);
     }
   };
+  if (isLoading) {
+    return <LoaderSpinner></LoaderSpinner>;
+  }
 
   const onSubmit: SubmitHandler<TBike> = async (data) => {
     const formData = new FormData();
@@ -54,7 +88,7 @@ const CreateBike = () => {
               Create a New Bike
             </Title>
 
-            <BrForm onSubmit={onSubmit}>
+            <BrForm onSubmit={onSubmit} resolver={zodResolver(bikeSchema)}>
               <div className="grid grid-cols-2 gap-4">
                 {" "}
                 {/* Two columns with gap */}
@@ -122,9 +156,7 @@ const CreateBike = () => {
                   type="primary"
                   htmlType="submit"
                   className="w-full  hover:bg-green-500 bg-green-700 text-white rounded-lg py-1 text-sm"
-                >
-                  {isLoading ? "Creating..." : "Create Bike"}
-                </Button>
+                ></Button>
               </div>
             </BrForm>
           </Card>

@@ -5,45 +5,66 @@ import { adminPaths } from "./admin.routes";
 import { userPaths } from "./user.routes";
 import Registration from "../pages/auth/Registration";
 import Login from "../pages/Login";
-import Home from "../pages/home";
+import About from "../pages/About"; // Import the About component
 import NotFound from "../pages/NotFound";
 import AllBike from "../pages/bike/AllBike";
 import BikeDetails from "../pages/bike/BikeDetails";
+import Home from "../pages/home";
+import ProtectedRoute from "../components/layouts/ProtectedRoute";
 
 const router = createBrowserRouter([
   {
-    path: "/all-bike",
-    element: <AllBike></AllBike>,
-  },
-  {
-    path: "bike-details/:bikeId",
-    element: <BikeDetails></BikeDetails>,
-  },
-  {
     path: "/",
-    element: <Home></Home>,
+    element: <App />, // Use App layout
+    children: [
+      {
+        path: "about", // Route for the About page
+        element: <About />, // Renders About component
+      },
+      {
+        path: "login",
+        element: <Login />,
+      },
+      {
+        path: "all-bike",
+        element: <AllBike></AllBike>,
+      },
+      {
+        path: "bike-details/:bikeId",
+        element: <BikeDetails></BikeDetails>,
+      },
+    ],
+  },
+  {
+    path: "/home",
+    element: <Home />,
   },
   {
     path: "/admin",
-    element: <App />,
+    element: (
+      <ProtectedRoute role="admin">
+        <App />{" "}
+      </ProtectedRoute>
+    ),
     children: routeGenerator(adminPaths),
   },
   {
     path: "/user",
-    element: <App />,
+    element: (
+      <ProtectedRoute role="user">
+        <App />
+      </ProtectedRoute>
+    ),
     children: routeGenerator(userPaths),
   },
   {
     path: "/registration",
-    element: <Registration></Registration>,
+    element: <Registration />,
   },
-  {
-    path: "/login",
-    element: <Login></Login>,
-  },
+
   {
     path: "*",
-    element: <NotFound></NotFound>,
+    element: <NotFound />,
   },
 ]);
 

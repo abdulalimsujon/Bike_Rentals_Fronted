@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Button, Popconfirm, Spin, Table } from "antd";
+import { Button, Popconfirm, Table } from "antd";
 import type { TableColumnsType, TableProps } from "antd";
 import { ColumnFilterItem } from "antd/es/table/interface";
 import Toast from "../../../utils/Toast";
@@ -14,6 +14,7 @@ import {
   useUpdateBikeMutation,
 } from "../../../redux/api/bikes/bikeApi";
 import { SubmitHandler } from "react-hook-form";
+import LoaderSpinner from "../../../utilities/LoaderSpinner";
 
 const ManageBike = () => {
   interface QueryParam {
@@ -55,6 +56,10 @@ const ManageBike = () => {
     Toast({ message: "bike is deleted successfully", status: "success" });
   }
 
+  if (deleteLoading || editLoading || allBikesLoading) {
+    return <LoaderSpinner></LoaderSpinner>;
+  }
+
   const onSubmit: SubmitHandler<DataType> = async (data: DataType) => {
     const brand = data?.brand || bikeInfo?.brand;
     const pricePerHour =
@@ -88,10 +93,6 @@ const ManageBike = () => {
   if (isError) {
     console.log(error);
     Toast({ message: error as string, status: "error" });
-  }
-
-  if (allBikesLoading || editLoading || deleteLoading) {
-    return <Spin>Loading...</Spin>;
   }
 
   const brands: ColumnFilterItem[] = [

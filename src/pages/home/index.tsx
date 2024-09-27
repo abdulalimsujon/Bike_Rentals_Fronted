@@ -1,5 +1,5 @@
 import CustomHeader from "../../components/layouts/Header";
-import video from "../../assets/v2.webm";
+import video from "../../assets/v2.webm"; // Ensure path is correct
 import CustomButton from "../../components/form/CustomButton";
 
 import AvailableBikeSection from "./AvailableBikeSection";
@@ -36,15 +36,17 @@ const Home = () => {
             playsInline
             className="w-full h-full object-cover"
           >
+            <source src={video} type="video/webm" />
             <source src={video} type="video/mp4" />
             Your browser does not support the video tag.
           </video>
+
           {/* Overlay for a darkened effect */}
           <div className="absolute inset-0 bg-black opacity-50"></div>
         </div>
 
         {/* Content Overlay */}
-        <div className="flex flex-col items-center justify-center h-full text-center text-green-300 dark:text-white">
+        <div className="flex flex-col items-center justify-center h-full text-center text-green-300 dark:text-white z-10">
           <h1 className="text-5xl md:text-7xl font-bold">
             Welcome to Sk Bike Rentals
           </h1>
@@ -68,10 +70,10 @@ const Home = () => {
       </div>
 
       <Testimonials />
-      <WhyChooseUs></WhyChooseUs>
-      <ContactUs></ContactUs>
-      <CouponAndDiscount></CouponAndDiscount>
-      <Footer></Footer>
+      <WhyChooseUs />
+      <ContactUs />
+      <CouponAndDiscount />
+      <Footer />
     </div>
   );
 };

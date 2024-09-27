@@ -3,6 +3,7 @@ import { Modal, Button } from "antd";
 import { CopyOutlined } from "@ant-design/icons";
 import { useDispatch } from "react-redux";
 import { setBonus } from "../../redux/api/bikes/bikeSlice";
+import CustomButton from "../../components/form/CustomButton";
 
 // List of possible discounts
 const discounts = [
@@ -48,29 +49,31 @@ const SpinWheel = () => {
   return (
     <div className="flex flex-col items-center justify-center mx-40 mt-12">
       <div className="mb-4 text-center">
-        <h1 className="text-2xl font-bold">Spin the Wheel for a Discount!</h1>
+        <h1 className="text-2xl font-bold dark:text-gray-500 text-green-300">
+          Spin the Wheel for a Discount!
+        </h1>
       </div>
 
       <div className="relative">
         <div
-          className={`w-64 h-64 rounded-full border-4 border-blue-500 ${
+          className={`w-64 h-64 rounded-full border-4 border-green-500 ${
             isSpinning ? "animate-spin" : ""
           }`}
         >
-          <div className="absolute inset-0 flex items-center justify-center text-xl font-bold">
+          <div className="absolute inset-0 flex items-center justify-center text-xl font-bold text-green-700">
             {isSpinning ? "Spinning..." : "Spin Me"}
           </div>
         </div>
 
-        <Button
+        <CustomButton
           type="primary"
           size="large"
-          className="mt-6"
+          className="mt-6 hover:bg-green-500"
           onClick={handleSpin}
           disabled={isSpinning}
         >
           {isSpinning ? "Spinning..." : "Spin Now"}
-        </Button>
+        </CustomButton>
       </div>
 
       <Modal

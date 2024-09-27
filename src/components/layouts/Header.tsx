@@ -4,7 +4,6 @@ import { FaUserCircle } from "react-icons/fa";
 import { CiDark, CiLight } from "react-icons/ci";
 import { useEffect, useState } from "react";
 import { MenuOutlined } from "@ant-design/icons";
-
 import ReusableDropdown from "../form/Dropdown";
 import { logout, selectCurrentUser } from "../../redux/features/authSlice";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
@@ -58,7 +57,7 @@ const CustomHeader = () => {
     }
   };
   const handleAboutClick = () => {
-    navigate(`/${user?.role}/about`);
+    navigate(`/about`);
   };
 
   const profileMenuItems = [
@@ -119,7 +118,7 @@ const CustomHeader = () => {
             <div className="hidden md:flex items-center space-x-2 md:space-x-4">
               <NavLink
                 className="text-sm md:text-lg text-green-300 dark:text-green-700 hover:text-white transition"
-                to={`/`}
+                to={`/home`}
               >
                 Home
               </NavLink>
@@ -131,7 +130,7 @@ const CustomHeader = () => {
               </NavLink>
               <NavLink
                 className="text-sm md:text-lg text-green-300 dark:text-green-700 hover:text-white transition"
-                to={`/${user?.role}/dashboard`}
+                to={user ? `/${user?.role}/dashboard` : "/login"}
               >
                 Dashboard
               </NavLink>
@@ -188,7 +187,7 @@ const CustomHeader = () => {
       >
         <div className="p-3 space-y-3">
           <NavLink
-            to={`/${user?.role}/all-bike`}
+            to={`/all-bike`}
             onClick={() => setDrawerOpen(false)}
             className="text-base text-green-700 hover:bg-gray-200 transition p-2 block rounded-md"
           >

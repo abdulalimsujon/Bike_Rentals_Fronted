@@ -117,98 +117,96 @@ const PaymentForm: React.FC = () => {
   }
 
   return (
-    <div className="">
-      <div className="flex justify-center items-center min-h-screen bg-gray-100 px-4">
-        <div className="max-w-md w-full bg-white shadow-md rounded-lg p-6">
-          <h3 className="text-2xl font-semibold mb-6 text-green-700 text-center">
-            Payment
-          </h3>
+    <div className="flex justify-center items-center min-h-screen dark:bg-gray-50 bg-slate-700 px-4">
+      <div className="max-w-md w-full dark:bg-gray-50 bg-slate-700 px-4 shadow-md rounded-lg p-6">
+        <h3 className="text-2xl font-semibold mb-6 text-green-700 text-center">
+          Payment
+        </h3>
 
-          {/* Bonus Code Section */}
-          {bonus && (
-            <div className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-4">
-              <p className="font-semibold">Bonus Code:</p>
-              <p>{bonus.code}</p>
-            </div>
-          )}
+        {/* Bonus Code Section */}
+        {bonus && (
+          <div className="dark:bg-gray-50 bg-slate-700  border border-green-400 text-green-700 px-4 py-3 rounded mb-4">
+            <p className="font-semibold">Bonus Code:</p>
+            <p>{bonus.code}</p>
+          </div>
+        )}
 
-          <form className="space-y-6" onSubmit={handleSubmit}>
-            <div>
-              <p className="text-sm font-medium text-gray-700 mb-2">
-                Accepted Cards
-              </p>
-              <div className="flex space-x-4 ">
-                <img
-                  src={card1}
-                  alt="Card 1"
-                  className="w-20 transition-transform transform hover:scale-110"
-                />
-                <img
-                  src={card2}
-                  alt="Card 2"
-                  className="w-16 transition-transform transform hover:scale-110"
-                />
-              </div>
-            </div>
-            {/* Promo Code Input */}
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
-                Promo Code
-              </label>
-              <input
-                type="text"
-                name="bonusCode"
-                value={formData.bonusCode}
-                onChange={handleInputChange}
-                placeholder="Enter promo code"
-                className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-500 transition"
+        <form className="space-y-6" onSubmit={handleSubmit}>
+          <div>
+            <p className="text-sm font-medium text-gray-700 mb-2">
+              Accepted Cards
+            </p>
+            <div className="flex space-x-4 ">
+              <img
+                src={card1}
+                alt="Card 1"
+                className="w-20 transition-transform transform hover:scale-110"
               />
-              <label className="block text-sm font-medium text-gray-700 mb-1 mt-4">
-                Amount
-              </label>
-              <input
-                type="number"
-                name="amount"
-                disabled
-                value={Math.floor(amountAfterDiscount)}
-                onChange={handleInputChange}
-                placeholder="Enter amount"
-                className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-500 transition"
+              <img
+                src={card2}
+                alt="Card 2"
+                className="w-16 transition-transform transform hover:scale-110"
               />
             </div>
-
-            {/* Card Element */}
-            <CardElement
-              options={{
-                style: {
-                  base: {
-                    color: "#32325d",
-                    fontFamily: '"Helvetica Neue", Helvetica, sans-serif',
-                    fontSmoothing: "antialiased",
-                    fontSize: "16px",
-                    lineHeight: "24px",
-                  },
-                  invalid: {
-                    color: "#fa755a",
-                    iconColor: "#fa755a",
-                  },
-                },
-              }}
+          </div>
+          {/* Promo Code Input */}
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              Promo Code
+            </label>
+            <input
+              type="text"
+              name="bonusCode"
+              value={formData.bonusCode}
+              onChange={handleInputChange}
+              placeholder="Enter promo code if any"
+              className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-500 transition"
             />
-            {error && <div className="text-red-500 text-sm">{error}</div>}
-            <button
-              type="submit"
-              disabled={loading || createIntentLoading}
-              className={`w-full py-3 rounded-lg text-white font-semibold ${
-                loading || createIntentLoading
-                  ? "bg-gray-400 cursor-not-allowed"
-                  : "bg-green-500 hover:bg-green-600 transition"
-              }`}
-            >
-              {loading || createIntentLoading ? "Processing..." : "Pay"}
-            </button>
-          </form>
-        </div>
+            <label className="block text-sm font-medium text-gray-700 mb-1 mt-4">
+              Amount
+            </label>
+            <input
+              type="number"
+              name="amount"
+              disabled
+              value={Math.floor(amountAfterDiscount)}
+              onChange={handleInputChange}
+              placeholder="Enter amount"
+              className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-500 transition"
+            />
+          </div>
+
+          {/* Card Element */}
+          <CardElement
+            options={{
+              style: {
+                base: {
+                  color: "#32325d",
+                  fontFamily: '"Helvetica Neue", Helvetica, sans-serif',
+                  fontSmoothing: "antialiased",
+                  fontSize: "16px",
+                  lineHeight: "24px",
+                },
+                invalid: {
+                  color: "#fa755a",
+                  iconColor: "#fa755a",
+                },
+              },
+            }}
+          />
+          {error && <div className="text-red-500 text-sm">{error}</div>}
+          <button
+            type="submit"
+            disabled={loading || createIntentLoading}
+            className={`w-full py-3 rounded-lg text-white font-semibold ${
+              loading || createIntentLoading
+                ? "bg-gray-400 cursor-not-allowed"
+                : "bg-green-500 hover:bg-green-600 transition"
+            }`}
+          >
+            {loading || createIntentLoading ? "Processing..." : "Pay"}
+          </button>
+        </form>
       </div>
     </div>
   );

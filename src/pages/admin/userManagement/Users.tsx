@@ -10,6 +10,7 @@ import { Button, Input, Space, Table, message, Modal } from "antd";
 import type { FilterDropdownProps } from "antd/es/table/interface";
 import Highlighter from "react-highlight-words";
 import { userType } from "../../../Type/UserType";
+import LoaderSpinner from "../../../utilities/LoaderSpinner";
 
 interface DataType {
   key: string;
@@ -30,7 +31,8 @@ const Users = () => {
 
   const { data: data1, refetch } = useGetAllUsersQuery(undefined); // Add refetch to update table
   const [deleteUser, { isLoading: isDeleting }] = useDeleteUserMutation();
-  const [updateUserRole] = useUpdateUserRoleMutation();
+  const [updateUserRole, { isLoading: updateLoading }] =
+    useUpdateUserRoleMutation();
 
   const data2: DataType[] = data1?.data?.map((el: userType) => ({
     key: el._id,
@@ -40,6 +42,10 @@ const Users = () => {
     role: el.role,
     address: el.address,
   }));
+
+  if (isDeleting || updateLoading) {
+    return <LoaderSpinner></LoaderSpinner>;
+  }
 
   const handleSearch = (
     selectedKeys: string[],
