@@ -11,6 +11,7 @@ import AllBike from "../pages/bike/AllBike";
 import BikeDetails from "../pages/bike/BikeDetails";
 import Home from "../pages/home";
 import ProtectedRoute from "../components/layouts/ProtectedRoute";
+import SinglePayment from "../pages/payment/SinglePayment";
 
 const router = createBrowserRouter([
   {
@@ -24,6 +25,11 @@ const router = createBrowserRouter([
       {
         path: "login",
         element: <Login />,
+      },
+
+      {
+        path: "payment",
+        element: <SinglePayment></SinglePayment>,
       },
       {
         path: "all-bike",
@@ -39,11 +45,12 @@ const router = createBrowserRouter([
     path: "/home",
     element: <Home />,
   },
+
   {
     path: "/admin",
     element: (
       <ProtectedRoute role="admin">
-        <App />{" "}
+        <App />
       </ProtectedRoute>
     ),
     children: routeGenerator(adminPaths),

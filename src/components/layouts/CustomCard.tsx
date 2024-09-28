@@ -21,7 +21,7 @@ const CustomCard = ({
         <Card
           title={
             <div className="bg-green-300 dark:bg-green-700 text-white py-2 rounded pl-3">
-              {name}
+              <small className="ml-24">{name}</small>
             </div>
           }
           bordered={false}

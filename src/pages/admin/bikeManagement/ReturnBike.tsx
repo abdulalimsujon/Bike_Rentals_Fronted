@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { useState } from "react";
 import type { TableColumnsType } from "antd";
-import { Table, Modal, Spin } from "antd";
+import { Table, Modal } from "antd";
 import {
   useGetAllRentalBikeQuery,
   useReturnBikeMutation,
@@ -31,21 +31,6 @@ interface BikeRental {
 }
 
 // Example usage:
-const rental: BikeRental = {
-  bikeId: {
-    _id: "66dddce77ae572aac95812c5",
-    name: "Tandem Bike",
-    description: "Designed for two riders, perfect for shared adventures.",
-    pricePerHour: 35,
-    isAvailable: false,
-  },
-  isReturned: false,
-  returnTime: null,
-  startTime: "2024-09-21T01:21:23.000Z",
-  totalCost: 200,
-  userId: "66e0c360eebd5f12e37cad06",
-  _id: "66ef1cc2e1fa573d78234ce4",
-};
 
 interface DataType {
   key: string;
@@ -60,7 +45,7 @@ const ReturnBike = () => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [userToUpdate, setUserToUpdate] = useState<string | null>(null);
   const [originalStartTime, setOriginalStartTime] = useState<string>(""); // Add originalStartTime state
-  const [returnBike, { isLoading }] = useReturnBikeMutation();
+  const [returnBike, { isLoading, isError, error }] = useReturnBikeMutation();
 
   const {
     data: data1,
@@ -73,7 +58,7 @@ const ReturnBike = () => {
   }
 
   console.log(data1);
-  const data2: DataType[] = data1?.data?.map((el: typeof rental) => ({
+  const data2: DataType[] = data1?.data?.map((el: BikeRental) => ({
     key: el.bikeId,
     name: el.bikeId?.name,
     startTime: el.startTime, // Format the startTime for display
@@ -91,10 +76,16 @@ const ReturnBike = () => {
       });
     }
     refetch();
-    Toast({ message: "bike return successfully", status: "success" });
+
     setIsModalVisible(false);
   };
-
+  if (isLoading) {
+    return <LoaderSpinner></LoaderSpinner>;
+  }
+  if (isError) {
+    console.log(error);
+    Toast({ message: "cannot return bike", status: "error" });
+  }
   const showReturnTimeModal = (key: string, unformattedStartTime: string) => {
     setIsModalVisible(true);
     setUserToUpdate(key);

@@ -15,7 +15,7 @@ const AvailableBikeSection = () => {
   const handleClick = (item: Bike) => {
     dispatch(setItem(item));
     if (user) {
-      navigate(`${user?.role}/payment`);
+      navigate(`/payment`);
     } else {
       navigate(`/login`);
     }

@@ -1,7 +1,6 @@
 import CustomHeader from "../../components/layouts/Header";
 import video from "../../assets/v2.webm"; // Ensure path is correct
 import CustomButton from "../../components/form/CustomButton";
-
 import AvailableBikeSection from "./AvailableBikeSection";
 import Testimonials from "./Testimonials";
 import { useRef } from "react";
@@ -68,7 +67,6 @@ const Home = () => {
       <div ref={bikeSectionRef}>
         <AvailableBikeSection />
       </div>
-
       <Testimonials />
       <WhyChooseUs />
       <ContactUs />
