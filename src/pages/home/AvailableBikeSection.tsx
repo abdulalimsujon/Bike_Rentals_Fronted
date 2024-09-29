@@ -5,10 +5,11 @@ import { useDispatch } from "react-redux";
 import { Bike, setItem } from "../../redux/api/bikes/bikeSlice";
 import { useAppSelector } from "../../redux/hooks";
 import { selectCurrentUser } from "../../redux/features/authSlice";
+import LoaderSpinner from "../../utilities/LoaderSpinner";
 
 const AvailableBikeSection = () => {
   // Fetch the available bikes
-  const { data, isLoading, isError } = useGetAvailableBikeQuery(undefined);
+  const { data, isLoading } = useGetAvailableBikeQuery(undefined);
   const user = useAppSelector(selectCurrentUser);
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -25,20 +26,7 @@ const AvailableBikeSection = () => {
 
   // Display loading state while fetching
   if (isLoading) {
-    return (
-      <div className="flex justify-center items-center h-screen">
-        <p className="text-2xl">Loading available bikes...</p>
-      </div>
-    );
-  }
-
-  // Display error state if fetching fails
-  if (isError) {
-    return (
-      <div className="flex justify-center items-center h-screen">
-        <p className="text-2xl text-red-500">Error loading available bikes.</p>
-      </div>
-    );
+    return <LoaderSpinner></LoaderSpinner>;
   }
 
   return (
