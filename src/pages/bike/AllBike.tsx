@@ -1,6 +1,6 @@
 import Acordion from "../../components/form/Acordion";
 import { useState } from "react";
-import { Button, Drawer, Alert, Checkbox, Modal } from "antd";
+import { Button, Drawer, Checkbox, Modal } from "antd";
 import CustomCard from "../../components/layouts/CustomCard";
 import { useAppSelector } from "../../redux/hooks";
 import { useNavigate } from "react-router-dom";
@@ -10,11 +10,9 @@ import LoaderSpinner from "../../utilities/LoaderSpinner";
 
 const AllBike = () => {
   // Fetching all bikes
-  const {
-    data: allBikesData,
-    error: allBikesError,
-    isLoading: allBikesLoading,
-  } = useAllBikeQuery([]);
+  const { data: allBikesData, isLoading: allBikesLoading } = useAllBikeQuery(
+    []
+  );
   const selectedItem = useAppSelector((state) => state?.bikesInfo?.item);
   const navigate = useNavigate();
 
@@ -61,18 +59,6 @@ const AllBike = () => {
   // Handling loading and error states
   if (allBikesLoading || filteredLoading) {
     return <LoaderSpinner></LoaderSpinner>;
-  }
-
-  if (allBikesError) {
-    return (
-      <div className="flex justify-center items-center h-screen">
-        <Alert
-          message="Error"
-          description="Failed to fetch bike data."
-          type="error"
-        />
-      </div>
-    );
   }
 
   // Handling bike selection for comparison

@@ -49,52 +49,46 @@ const AvailableBikeSection = () => {
         </h1>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
           {/* Render bikes if data is available */}
-          {data?.data?.length ? (
-            data.data.map((item: TBike) => {
-              const { name, brand, model, cc, image, pricePerHour } = item;
+          {data?.data?.map((item: TBike) => {
+            const { name, brand, model, cc, image, pricePerHour } = item;
 
-              return (
-                <div
-                  key={name}
-                  data-aos="fade-up"
-                  data-aos-easing="ease-in-out"
-                  className="bg-gray-50 shadow-lg rounded-lg overflow-hidden transform transition duration-300 hover:shadow-xl hover:scale-105"
-                >
-                  {/* Bike Image */}
-                  <div className="w-full h-48">
-                    <img
-                      src={image as string} // Use a placeholder if the image is missing
-                      alt={`${name} bike`}
-                      className="w-full h-full object-cover"
-                    />
-                  </div>
-
-                  {/* Bike Details */}
-                  <div className="p-6 text-center bg-base-200 m-6 rounded">
-                    <h2 className="text-2xl font-bold mb-3">{name}</h2>
-                    <p className="text-gray-600 mb-1">{brand}</p>
-                    <p className="text-gray-500">Model: {model}</p>
-                    <p className="text-gray-500">CC: {cc}cc</p>
-                    <p className="text-green-600 font-bold text-xl mt-4">
-                      ${pricePerHour}/hour
-                    </p>
-                  </div>
-
-                  {/* Rent Now Button */}
-                  <button
-                    onClick={() => handleClick(item)}
-                    className="w-full bg-green-700 text-white font-semibold py-2 rounded hover:bg-green-500 transition-colors duration-300"
-                  >
-                    Rent Now
-                  </button>
+            return (
+              <div
+                key={name}
+                data-aos="fade-up"
+                data-aos-easing="ease-in-out"
+                className="bg-gray-50 shadow-lg rounded-lg overflow-hidden transform transition duration-300 hover:shadow-xl hover:scale-105"
+              >
+                {/* Bike Image */}
+                <div className="w-full h-48">
+                  <img
+                    src={image as string} // Use a placeholder if the image is missing
+                    alt={`${name} bike`}
+                    className="w-full h-full object-cover"
+                  />
                 </div>
-              );
-            })
-          ) : (
-            <div className="col-span-3 text-center">
-              <p className="text-xl text-gray-400">No bikes available.</p>
-            </div>
-          )}
+
+                {/* Bike Details */}
+                <div className="p-6 text-center bg-base-200 m-6 rounded">
+                  <h2 className="text-2xl font-bold mb-3">{name}</h2>
+                  <p className="text-gray-600 mb-1">{brand}</p>
+                  <p className="text-gray-500">Model: {model}</p>
+                  <p className="text-gray-500">CC: {cc}cc</p>
+                  <p className="text-green-600 font-bold text-xl mt-4">
+                    ${pricePerHour}/hour
+                  </p>
+                </div>
+
+                {/* Rent Now Button */}
+                <button
+                  onClick={() => handleClick(item)}
+                  className="w-full bg-green-700 text-white font-semibold py-2 rounded hover:bg-green-500 transition-colors duration-300"
+                >
+                  Rent Now
+                </button>
+              </div>
+            );
+          })}
         </div>
       </div>
     </div>
