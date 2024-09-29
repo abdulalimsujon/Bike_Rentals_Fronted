@@ -43,8 +43,7 @@ const Registration = () => {
         .join(", ");
 
       Toast({
-        message:
-          errorMessages || "Login failed. Please check your credentials.",
+        message: errorMessages,
         status: "error",
       });
     }

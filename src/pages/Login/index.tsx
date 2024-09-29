@@ -79,9 +79,12 @@ const Login = () => {
             <div className="flex flex-col sm:flex-row justify-center items-center mt-4">
               <div className="pr-0 sm:pr-5 mb-2 sm:mb-0">
                 <span>New to Bike Rentals? </span>
-                <a className="text-red-700" href="/registration">
+                <span
+                  className="text-red-700 cursor-pointer"
+                  onClick={() => navigate("/registration")}
+                >
                   Registration
-                </a>
+                </span>
               </div>
 
               <CustomButton
