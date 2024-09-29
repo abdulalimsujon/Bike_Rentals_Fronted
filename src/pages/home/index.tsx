@@ -1,5 +1,4 @@
 import CustomHeader from "../../components/layouts/Header";
-import video from "../../assets/v2.webm"; // Ensure path is correct
 import CustomButton from "../../components/form/CustomButton";
 import AvailableBikeSection from "./AvailableBikeSection";
 import Testimonials from "./Testimonials";
@@ -8,6 +7,7 @@ import WhyChooseUs from "./WhyChooseUs";
 import ContactUs from "./ContractUs";
 import CouponAndDiscount from "./CouponAndDiscount";
 import Footer from "../../components/layouts/Footer";
+import video from "../../assests/v2.webm";
 
 const Home = () => {
   // Create a ref to target the AvailableBikeSection
@@ -27,7 +27,7 @@ const Home = () => {
         <CustomHeader />
 
         {/* Video Background */}
-        <div className="absolute top-0 left-0 w-full h-full -z-10">
+        <div className="absolute top-0 left-0 w-full h-full -z-10 ">
           <video
             autoPlay
             loop
@@ -49,7 +49,7 @@ const Home = () => {
           <h1 className="text-5xl md:text-7xl font-bold">
             Welcome to Sk Bike Rentals
           </h1>
-          <p className="mt-4 text-xl md:text-2xl">
+          <p className="mt-4 text-xl md:text-2xl" data-aos="fade-down">
             "Ride the Freedom, Rent with Ease."
           </p>
           <div className="py-20">

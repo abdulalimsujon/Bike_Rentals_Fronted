@@ -14,23 +14,23 @@ export interface userType {
   email: string;
   phone?: string; // optional field
   address?: string; // optional field
-  image: string;
+  image?: string; // optional field to avoid undefined errors
   role: string;
 }
 
 // Define props type for components
 export interface UserProps {
-  user: userType;
+  user?: userType; // User object might be undefined initially
   onSubmit?: () => void; // Optional for EditProfile
 }
 
 // Custom Profile Component with Tailwind CSS styling
 const Profile: React.FC<UserProps> = ({ user }) => {
   return (
-    <div className="max-w-3xl w-full mx-auto  shadow-lg rounded-xl p-8 dark:bg-white   bg-slate-200 ">
+    <div className="max-w-3xl w-full mx-auto shadow-lg rounded-xl p-8 dark:bg-white bg-slate-200">
       <div className="text-center">
         <div className="mx-auto w-24 h-24 bg-green-500 text-white flex items-center justify-center rounded-full">
-          {user.image ? (
+          {user?.image ? (
             <img
               src={user.image}
               alt="User"
@@ -47,9 +47,7 @@ const Profile: React.FC<UserProps> = ({ user }) => {
         <p className="text-sm text-gray-500 mt-2">
           {user?.email || "johndoe@example.com"}
         </p>
-        <p className="text-sm text-gray-500 mt-2">
-          {user?.role || "johndoe@example.com"}
-        </p>
+        <p className="text-sm text-gray-500 mt-2">{user?.role || "User"}</p>
       </div>
 
       <div className="mt-8 space-y-6">
@@ -71,9 +69,7 @@ const Profile: React.FC<UserProps> = ({ user }) => {
         </div>
         <div className="flex justify-between border-b pb-2">
           <span className="text-gray-600 font-semibold">Role:</span>
-          <span className="text-gray-800">
-            {user?.role || "1234 Main St, Springfield, USA"}
-          </span>
+          <span className="text-gray-800">{user?.role || "User"}</span>
         </div>
       </div>
     </div>
@@ -81,7 +77,7 @@ const Profile: React.FC<UserProps> = ({ user }) => {
 };
 
 interface EditProfileProps {
-  user: userType;
+  user?: userType;
   onSubmit?: () => void; // Making onSubmit optional
 }
 
@@ -235,11 +231,11 @@ const Dashboard: React.FC = () => {
   }
 
   return (
-    <Layout className="min-h-screen dark:bg-slate-50 bg-gray-700  ">
+    <Layout className="min-h-screen dark:bg-slate-50 bg-gray-700">
       {/* Header */}
       <Header className="bg-green-700 text-bold text-white sticky">
         <div className="text-center">
-          Welcome to {userData?.data?.name}' Bike Rental
+          Welcome to {userData?.data?.name}'s Bike Rental
         </div>
       </Header>
 
@@ -265,10 +261,8 @@ const Dashboard: React.FC = () => {
           </Button>
         </div>
 
-        {/* Profile content or edit form */}
-        <Content className="flex-1 w-full flex items-center justify-center">
-          {renderContent()}
-        </Content>
+        {/* Profile or Edit Form based on state */}
+        <Content>{renderContent()}</Content>
       </Layout>
     </Layout>
   );

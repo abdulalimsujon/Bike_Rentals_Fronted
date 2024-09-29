@@ -88,7 +88,7 @@ const bikeApi = baseApi.injectEndpoints({
         url: `/rentals/${userId}`,
         method: "GET",
       }),
-      providesTags: (result, error, userId) => [{ type: "Bike", id: userId }],
+      providesTags: (_result, _error, userId) => [{ type: "Bike", id: userId }],
     }),
     getAvailableBike: builder.query({
       query: () => {

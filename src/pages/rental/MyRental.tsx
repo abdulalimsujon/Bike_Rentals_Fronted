@@ -46,7 +46,7 @@ const MyRental = () => {
       title: "Bike Name",
       dataIndex: "bikeName",
       key: "bikeName",
-      render: (text: string, record: TRental, index: number) => (
+      render: (_text: string, record: TRental, _index: number) => (
         <span className="text-xs md:text-sm">
           {record.bikeId?.name || "Unknown Bike"}
         </span>
@@ -57,7 +57,7 @@ const MyRental = () => {
       title: "Start Time",
       dataIndex: "startTime",
       key: "startTime",
-      render: (text: string, record: TRental, index: number) => (
+      render: (text: string, _record: TRental, _index: number) => (
         <span className="text-xs md:text-sm">
           {new Date(text).toLocaleString()}
         </span>
@@ -68,7 +68,7 @@ const MyRental = () => {
       title: "Return Time",
       dataIndex: "returnTime",
       key: "returnTime",
-      render: (text: string, record: TRental, index: number) => (
+      render: (text: string, _record: TRental, _index: number) => (
         <span className="text-xs md:text-sm">
           {text ? new Date(text).toLocaleString() : "Ongoing"}
         </span>
@@ -79,7 +79,7 @@ const MyRental = () => {
       title: "Total Cost",
       dataIndex: "totalCost",
       key: "totalCost",
-      render: (text: string, record: TRental, index: number) => (
+      render: (text: string, _record: TRental, _index: number) => (
         <span className="text-xs md:text-sm">{text}</span>
       ),
       align: "center",
@@ -87,7 +87,7 @@ const MyRental = () => {
     {
       title: "Action",
       key: "action",
-      render: (text: string, record: TRental, index: number) => (
+      render: (_text: string, record: TRental, _index: number) => (
         <CustomButton onClick={() => handlePayment(record)}>Pay</CustomButton>
       ),
       align: "center",

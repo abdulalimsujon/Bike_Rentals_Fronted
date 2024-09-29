@@ -1,6 +1,9 @@
 const ContactUs = () => {
   return (
-    <div className="bg-slate-700 dark:bg-gray-100 py-16 max-w-full mx-auto px-4 sm:px-6 lg:px-20">
+    <div
+      className="bg-slate-700 dark:bg-gray-100 py-16 max-w-full mx-auto px-4 sm:px-6 lg:px-20"
+      data-aos="flip-left"
+    >
       <div className="container mx-auto">
         <h2 className="text-4xl font-bold text-center text-green-300 dark:text-slate-800 mb-12">
           Get In Touch
@@ -9,7 +12,7 @@ const ContactUs = () => {
           {/* Contact Form */}
           <div
             className="p-6 dark:bg-white dark:text-gray-500 bg-slate-400 text-white rounded-lg shadow-lg transform transition duration-300 hover:shadow-xl"
-            data-aos="flip-left"
+            data-aos="fade-down-right"
             data-aos-easing="ease-out-cubic"
             data-aos-duration="2000"
           >
@@ -49,8 +52,8 @@ const ContactUs = () => {
 
           {/* Contact Image */}
           <div
+            data-aos="fade-down-left"
             className="p-6 flex justify-center items-center rounded-lg shadow-lg bg-slate-400 dark:bg-white transform transition duration-300 hover:shadow-xl"
-            data-aos="zoom-out-left"
             data-aos-duration="2000"
           >
             <img

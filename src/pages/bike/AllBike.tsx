@@ -15,7 +15,7 @@ const AllBike = () => {
     error: allBikesError,
     isLoading: allBikesLoading,
   } = useAllBikeQuery([]);
-  const selectedItem = useAppSelector((state) => state.bikesInfo.item);
+  const selectedItem = useAppSelector((state) => state?.bikesInfo?.item);
   const navigate = useNavigate();
 
   const [selectedBikes, setSelectedBikes] = useState<TBike[]>([]);
@@ -49,12 +49,12 @@ const AllBike = () => {
   // Extract unique brands and models for filtering
   const brands = [
     ...new Set(
-      allBikesData?.data?.result?.map((el: TBike) => el.brand as string)
+      allBikesData?.data?.result?.map((el: TBike) => el?.brand as string)
     ),
   ] as string[];
   const models = [
     ...new Set(
-      allBikesData?.data?.result?.map((el: TBike) => el.model as string)
+      allBikesData?.data?.result?.map((el: TBike) => el?.model as string)
     ),
   ] as string[];
 
@@ -81,7 +81,7 @@ const AllBike = () => {
       setSelectedBikes((prev) => [...prev, bike]);
     } else {
       setSelectedBikes((prev) =>
-        prev.filter((selectedBike) => selectedBike._id !== bike._id)
+        prev.filter((selectedBike) => selectedBike?._id !== bike?._id)
       );
     }
   };
@@ -167,7 +167,7 @@ const AllBike = () => {
           <div className="flex-1">
             <div className="grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-1 gap-4 mt-3">
               <h1 className="mr-6 ml-6 p-3 text-center text-xl bg-slate-300">
-                Total Items: {bikeData.length}
+                Total Items: {bikeData?.length}
               </h1>
 
               {bikeData?.map((bike: TBike) => (
@@ -204,12 +204,12 @@ const AllBike = () => {
               <thead>
                 <tr className="bg-gray-100 text-left text-sm font-semibold text-gray-700">
                   <th className="px-4 py-2 border border-gray-200">Feature</th>
-                  {selectedBikes.map((bike) => (
+                  {selectedBikes?.map((bike) => (
                     <th
-                      key={bike._id}
+                      key={bike?._id}
                       className="px-4 py-2 border border-gray-200"
                     >
-                      {bike.model}
+                      {bike?.model}
                     </th>
                   ))}
                 </tr>
@@ -221,7 +221,7 @@ const AllBike = () => {
                   </td>
                   {selectedBikes.map((bike) => (
                     <td
-                      key={bike._id}
+                      key={bike?._id}
                       className="px-4 py-2 border border-gray-200"
                     >
                       {bike.brand}
@@ -232,9 +232,9 @@ const AllBike = () => {
                   <td className="px-4 py-2 border border-gray-200 font-medium">
                     Engine Capacity
                   </td>
-                  {selectedBikes.map((bike) => (
+                  {selectedBikes?.map((bike) => (
                     <td
-                      key={bike._id}
+                      key={bike?._id}
                       className="px-4 py-2 border border-gray-200"
                     >
                       {bike.cc} cc
@@ -245,7 +245,7 @@ const AllBike = () => {
                   <td className="px-4 py-2 border border-gray-200 font-medium">
                     Price
                   </td>
-                  {selectedBikes.map((bike) => (
+                  {selectedBikes?.map((bike) => (
                     <td
                       key={bike._id}
                       className="px-4 py-2 border border-gray-200"

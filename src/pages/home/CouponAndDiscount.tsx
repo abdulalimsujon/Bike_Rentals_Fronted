@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Modal, Button } from "antd";
 import { CopyOutlined } from "@ant-design/icons";
 import { useDispatch } from "react-redux";

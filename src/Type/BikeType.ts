@@ -8,7 +8,7 @@ export type TBike = {
   description: string;
   year: number;
   model: string;
-  image?: File;
+  image?: File | string;
 };
 
 export type TReturnBike = {

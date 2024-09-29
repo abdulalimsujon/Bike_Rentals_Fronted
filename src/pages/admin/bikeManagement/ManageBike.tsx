@@ -222,7 +222,7 @@ const ManageBike = () => {
     image: bike.image,
   }));
 
-  const onChange: TableProps<DataType>["onChange"] = (pagination, filters) => {
+  const onChange: TableProps<DataType>["onChange"] = (_pagination, filters) => {
     const queryParams: QueryParam[] = [];
 
     if (filters.brand) {

@@ -12,6 +12,7 @@ import BikeDetails from "../pages/bike/BikeDetails";
 import Home from "../pages/home";
 import ProtectedRoute from "../components/layouts/ProtectedRoute";
 import SinglePayment from "../pages/payment/SinglePayment";
+import Dashboard from "../pages/Dashboard";
 
 const router = createBrowserRouter([
   {
@@ -19,12 +20,12 @@ const router = createBrowserRouter([
     element: <App />, // Use App layout
     children: [
       {
-        path: "about", // Route for the About page
-        element: <About />, // Renders About component
+        index: true,
+        element: <Dashboard></Dashboard>,
       },
       {
-        path: "login",
-        element: <Login />,
+        path: "about", // Route for the About page
+        element: <About />, // Renders About component
       },
 
       {
@@ -72,6 +73,10 @@ const router = createBrowserRouter([
   {
     path: "*",
     element: <NotFound />,
+  },
+  {
+    path: "login",
+    element: <Login />,
   },
 ]);
 

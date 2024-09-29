@@ -29,7 +29,11 @@ const Users = () => {
   const searchInput = useRef<InputRef>(null);
   type DataIndex = keyof DataType;
 
-  const { data: data1, refetch } = useGetAllUsersQuery(undefined); // Add refetch to update table
+  const {
+    data: data1,
+    refetch,
+    isLoading: dataLoading,
+  } = useGetAllUsersQuery(undefined); // Add refetch to update table
   const [deleteUser, { isLoading: isDeleting }] = useDeleteUserMutation();
   const [updateUserRole, { isLoading: updateLoading }] =
     useUpdateUserRoleMutation();
@@ -43,7 +47,7 @@ const Users = () => {
     address: el.address,
   }));
 
-  if (isDeleting || updateLoading) {
+  if (isDeleting || updateLoading || dataLoading) {
     return <LoaderSpinner></LoaderSpinner>;
   }
 

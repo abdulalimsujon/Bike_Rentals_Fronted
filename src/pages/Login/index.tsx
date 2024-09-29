@@ -42,7 +42,7 @@ const Login = () => {
       const errorResponse = error as TErrorResponse;
 
       const errorMessages = errorResponse?.data?.errorSources
-        ?.map((err) => `${err.path}: ${err.message}`)
+        ?.map((err) => `${err?.path}: ${err?.message}`)
         .join(", ");
 
       Toast({

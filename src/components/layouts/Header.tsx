@@ -56,6 +56,7 @@ const CustomHeader = () => {
       navigate("/login");
     }
   };
+
   const handleAboutClick = () => {
     navigate(`/about`);
   };
@@ -97,7 +98,7 @@ const CustomHeader = () => {
   ];
 
   return (
-    <Header className="fixed top-0 left-0 w-full z-50 dark:bg-gray-300 bg-gray-900  dark:text-white">
+    <Header className="fixed top-0 left-0 w-full z-50 dark:bg-gray-300 bg-gray-900 dark:text-white">
       <div className="container mx-auto px-2 py-4">
         <div className="flex items-center justify-between">
           {/* Drawer button placed on the left side, vertically centered */}
@@ -117,19 +118,31 @@ const CustomHeader = () => {
           <div className="flex items-center space-x-2 md:space-x-6">
             <div className="hidden md:flex items-center space-x-2 md:space-x-4">
               <NavLink
-                className="text-sm md:text-lg text-green-300 dark:text-green-700 hover:text-white transition"
+                className={({ isActive }) =>
+                  `text-sm md:text-lg text-green-300 dark:text-green-700 hover:text-white transition ${
+                    isActive ? "underline" : ""
+                  }`
+                }
                 to={`/home`}
               >
                 Home
               </NavLink>
               <NavLink
-                className="text-sm md:text-lg text-green-300 dark:text-green-700 hover:text-white transition"
+                className={({ isActive }) =>
+                  `text-sm md:text-lg text-green-300 dark:text-green-700 hover:text-white transition ${
+                    isActive ? "underline" : ""
+                  }`
+                }
                 to={`/all-bike`}
               >
                 All Bikes
               </NavLink>
               <NavLink
-                className="text-sm md:text-lg text-green-300 dark:text-green-700 hover:text-white transition"
+                className={({ isActive }) =>
+                  `text-sm md:text-lg text-green-300 dark:text-green-700 hover:text-white transition ${
+                    isActive ? "underline" : ""
+                  }`
+                }
                 to={user ? `/${user?.role}/dashboard` : "/login"}
               >
                 Dashboard
@@ -141,7 +154,7 @@ const CustomHeader = () => {
                 My Rental
               </span>
               <span
-                className="cursor-pointer text-sm md:text-lg text-green-300  dark:text-green-700 hover:text-white transition"
+                className="cursor-pointer text-sm md:text-lg text-green-300 dark:text-green-700 hover:text-white transition"
                 onClick={handleAboutClick}
               >
                 About
@@ -186,6 +199,12 @@ const CustomHeader = () => {
         bodyStyle={{ padding: 0 }}
       >
         <div className="p-3 space-y-3">
+          <span
+            className="text-base text-green-700 hover:bg-gray-200 transition p-2 block rounded-md"
+            onClick={handleAboutClick}
+          >
+            About
+          </span>
           <NavLink
             to={`/all-bike`}
             onClick={() => setDrawerOpen(false)}

@@ -156,7 +156,9 @@ const CreateBike = () => {
                   type="primary"
                   htmlType="submit"
                   className="w-full  hover:bg-green-500 bg-green-700 text-white rounded-lg py-1 text-sm"
-                ></Button>
+                >
+                  Create
+                </Button>
               </div>
             </BrForm>
           </Card>

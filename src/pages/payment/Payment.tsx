@@ -7,8 +7,6 @@ import {
   useStripe,
   useElements,
 } from "@stripe/react-stripe-js";
-import card1 from "../../assets/card1.png";
-import card2 from "../../assets/card2.png";
 
 import { useCreatePaymentIntentMutation } from "../../redux/api/gatewayApi";
 import Toast from "../../utils/Toast";
@@ -176,12 +174,12 @@ const PaymentForm: React.FC = () => {
               </p>
               <div className="flex space-x-4">
                 <img
-                  src={card1}
+                  src="https://i.ibb.co.com/xLNQq3Y/card1.png"
                   alt="Card 1"
                   className="w-20 transition-transform transform hover:scale-110"
                 />
                 <img
-                  src={card2}
+                  src="https://i.ibb.co.com/YThSqw4/card2.png"
                   alt="Card 2"
                   className="w-16 transition-transform transform hover:scale-110"
                 />
