@@ -5,7 +5,7 @@ const userApi = baseApi.injectEndpoints({
     getAllUsers: builder.query({
       query: (args) => {
         return {
-          url: `users/all-user`,
+          url: `/users/all-user`,
           method: "GET",
           body: args,
         };
@@ -23,7 +23,7 @@ const userApi = baseApi.injectEndpoints({
     deleteUser: builder.mutation({
       query: (id) => {
         return {
-          url: `/users/delete-user/${id}`,
+          url: `/users/delete-user${id}`,
           method: "DELETE",
         };
       },
