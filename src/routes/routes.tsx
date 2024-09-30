@@ -12,6 +12,7 @@ import BikeDetails from "../pages/bike/BikeDetails";
 import Home from "../pages/home";
 import ProtectedRoute from "../components/layouts/ProtectedRoute";
 import SinglePayment from "../pages/payment/SinglePayment";
+import Dashboard from "../pages/Dashboard";
 
 const router = createBrowserRouter([
   {
@@ -20,7 +21,7 @@ const router = createBrowserRouter([
     children: [
       {
         index: true,
-        element: <Home></Home>,
+        element: <Dashboard></Dashboard>,
       },
       {
         path: "about", // Route for the About page
