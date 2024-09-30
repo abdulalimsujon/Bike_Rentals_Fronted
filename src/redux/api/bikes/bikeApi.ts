@@ -10,7 +10,7 @@ const bikeApi = baseApi.injectEndpoints({
         });
 
         return {
-          url: `https://bikerentalsversion2.vercel.app/api/bikes/getBike?${params.toString()}`, // Attach params to the URL
+          url: `/bikes/getBike?${params.toString()}`, // Attach params to the URL
           method: "GET",
         };
       },
