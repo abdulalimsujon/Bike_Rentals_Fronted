@@ -9,7 +9,6 @@ import { setUser } from "../../redux/features/authSlice";
 import { verifyToken } from "../../utils/verifyToken";
 import { SubmitHandler } from "react-hook-form";
 import Toast from "../../utils/Toast";
-import CustomButton from "../../components/form/CustomButton";
 import { TErrorResponse } from "../../Type/ErrorTypes";
 
 interface LoginFormValues {
@@ -54,8 +53,8 @@ const Login = () => {
 
   return (
     <div className="h-screen flex justify-center items-center bg-slate-100 overflow-hidden px-4">
-      <div className="p-6 border bg-green-200 shadow-lg rounded-lg mx-auto w-full max-w-xs sm:max-w-sm md:max-w-md">
-        <h1 className="text-center mb-4 text-xl md:text-2xl font-semibold">
+      <div className="p-6 border shadow-lg rounded-lg mx-auto w-full max-w-xs sm:max-w-sm md:max-w-md">
+        <h1 className="text-center text-3xl text-bold text-green-500 ">
           Login
         </h1>
         {isLoading ? (
@@ -68,14 +67,22 @@ const Login = () => {
               type="text"
               name="email"
               label="Email"
-              className="w-full"
+              className="w-full border-green-500"
             />
             <BRInput
               type="password"
               name="password"
               label="Password"
-              className="w-full"
+              className="w-full border-green-500"
             />
+            <div className="flex flex-col sm:flex-row justify-center items-center mt-4">
+              <button
+                className="w-full rounded-md py-2 bg-green-500 text-white hover:bg-green-600 transition-colors duration-300"
+                type="submit"
+              >
+                Login
+              </button>
+            </div>
             <div className="flex flex-col sm:flex-row justify-center items-center mt-4">
               <div className="pr-0 sm:pr-5 mb-2 sm:mb-0">
                 <span>New to Bike Rentals? </span>
@@ -86,15 +93,6 @@ const Login = () => {
                   Registration
                 </span>
               </div>
-
-              <CustomButton
-                htmlType="submit"
-                type="primary"
-                loading={isLoading}
-                className="w-full sm:w-auto"
-              >
-                Login
-              </CustomButton>
             </div>
           </BrForm>
         )}

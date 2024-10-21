@@ -34,7 +34,7 @@ const BRInput: React.FC<BRInputProps> = ({
             >
               {type === "file" ? (
                 <Input
-                  className={className}
+                  className={` focus:border-green-700 focus:ring focus:ring-green-300 focus:ring-opacity-50 ${className}`}
                   disabled={disabled}
                   type="file"
                   id={name}
@@ -45,7 +45,7 @@ const BRInput: React.FC<BRInputProps> = ({
                 />
               ) : (
                 <Input
-                  className={className}
+                  className={` focus:border-green-700  focus:ring-green-300 focus:ring-opacity-50 ${className}`}
                   disabled={disabled}
                   {...field}
                   type={type}

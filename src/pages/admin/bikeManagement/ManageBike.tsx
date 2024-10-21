@@ -186,10 +186,10 @@ const ManageBike = () => {
       title: "Actions",
       key: "actions",
       render: (_, record) => (
-        <span className="space-x-2">
+        <span className="space-x-2 flex flex-col gap-1">
           <Button
             onClick={() => handleEdit(record)}
-            className="bg-blue-500 text-white hover:bg-blue-600"
+            className="bg-green-700 text-white hover:bg-green-700"
             type="primary"
           >
             Edit
@@ -200,7 +200,7 @@ const ManageBike = () => {
             okText="Yes"
             cancelText="No"
           >
-            <Button className="bg-red-500 text-white hover:bg-red-600">
+            <Button className="bg-red-700 text-white hover:bg-red-500 pl-5">
               Delete
             </Button>
           </Popconfirm>

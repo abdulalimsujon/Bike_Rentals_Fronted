@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 import { TBike } from "../../Type/BikeType";
 import { useAllBikeQuery } from "../../redux/api/bikes/bikeApi";
 import LoaderSpinner from "../../utilities/LoaderSpinner";
+import { toast } from "react-toastify";
 
 const AllBike = () => {
   // Fetching all bikes
@@ -76,7 +77,7 @@ const AllBike = () => {
     if (selectedBikes.length >= 2) {
       setIsComparisonVisible(true);
     } else {
-      alert("Please select at least two bikes to compare.");
+      toast.error("plese select at least two bikes");
     }
   };
 
@@ -141,7 +142,7 @@ const AllBike = () => {
               />
               <Button
                 type="primary"
-                className="mt-4 w-full bg-green-700  text-white"
+                className="mt-4 w-full bg-green-700 hover:bg-green-300 text-white"
                 onClick={handleCompare}
               >
                 Compare Selected Bikes
@@ -240,7 +241,6 @@ const AllBike = () => {
                     </td>
                   ))}
                 </tr>
-                {/* Add more features here */}
               </tbody>
             </table>
           </div>

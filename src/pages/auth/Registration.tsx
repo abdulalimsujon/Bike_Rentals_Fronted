@@ -1,4 +1,4 @@
-import { Button, Spin } from "antd";
+import { Spin } from "antd";
 import BrForm from "../../components/form/BrForm";
 import BRInput from "../../components/form/BRInput";
 
@@ -68,36 +68,56 @@ const Registration = () => {
   }
 
   return (
-    <div className="flex justify-center items-center mt-16">
-      <div className="p-6 border bg-green-200">
-        <h1 className="text-center">Registration</h1>
+    <div className="flex justify-center items-center  max-h-screen pt-6 ">
+      <div className="p-6 border  rounded-md">
+        <h1 className="text-center text-3xl  text-bold text-green-500">
+          Registration
+        </h1>
         <BrForm onSubmit={onSubmit}>
-          <BRInput type="text" name="name" label="User Name" className="w-96" />
-          <BRInput type="text" name="email" label="Email" className="w-96" />
+          <BRInput
+            type="text"
+            name="name"
+            label="User Name"
+            className="w-96 border-green-500 "
+          />
+          <BRInput
+            type="text"
+            name="email"
+            label="Email"
+            className="w-96 border-green-500"
+          />
           <BRInput
             type="password"
             name="password"
             label="Password"
-            className="w-96"
+            className="w-96  border-green-500"
           />
-          <BRInput type="text" name="phone" label="Phone" className="w-96" />
+          <BRInput
+            type="text"
+            name="phone"
+            label="Phone"
+            className="w-96 border-green-500"
+          />
           <BRInput
             type="text"
             name="address"
             label="Address"
-            className="w-96"
+            className="w-96 border-green-500"
           />
           <BRInput
             type="file"
             name="image"
             label="Image"
-            className="w-96"
+            className="w-96 border-green-500"
             onChange={handleFileChange} // Handle file input changes
           />
           <div className="flex justify-center items-center w-96">
-            <Button htmlType="submit" loading={isLoading}>
+            <button
+              className="w-full rounded-md py-2   bg-green-500 hover:bg-green-300 focus:border-green-700 focus:ring focus:ring-green-500   "
+              type="submit"
+            >
               Register
-            </Button>
+            </button>
           </div>
         </BrForm>
         <div className="pr-5 text-center">

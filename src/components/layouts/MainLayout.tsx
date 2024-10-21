@@ -1,4 +1,4 @@
-import { Layout } from "antd";
+import { ConfigProvider, Layout } from "antd";
 import { Outlet } from "react-router-dom";
 import CustomHeader from "./Header";
 import { useAppSelector } from "../../redux/hooks";
@@ -41,13 +41,26 @@ const MainLayout = () => {
         {/* <Sidebar />
         </Drawer> */}{" "}
         *
-        <Content className="flex-grow dark:bg-slate-50 bg-slate-700">
-          <div className="min-h-screen px-2 py-4 sm:px-6 sm:py-8">
-            {/* Adjust padding for small devices */}
-            <Outlet /> {/* Render nested routes here */}
-            <Footer />
-          </div>
-        </Content>
+        <ConfigProvider
+          theme={{
+            token: {
+              colorPrimary: "#00b96b", // Main primary color (Bright Green)
+              colorPrimaryHover: "#007a53", // Darker Green for hover effect
+              colorPrimaryBorder: "#00b96b", // Border color for primary components
+              colorPrimaryActive: "#005f40", // Active color for primary components (used on focus)
+              borderRadius: 2,
+              colorBgContainer: "#f6ffed", // Background color for cont
+            },
+          }}
+        >
+          <Content className="flex-grow dark:bg-slate-50 bg-slate-700">
+            <div className="min-h-screen px-2 py-4 sm:px-6 sm:py-8">
+              {/* Adjust padding for small devices */}
+              <Outlet /> {/* Render nested routes here */}
+              <Footer />
+            </div>
+          </Content>
+        </ConfigProvider>
       </Layout>
     </Layout>
   );

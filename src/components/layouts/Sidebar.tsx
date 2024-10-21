@@ -11,7 +11,7 @@ const Sidebar = () => {
     <Sider
       breakpoint="lg"
       collapsedWidth="0"
-      className="bg-gray-300 dark:bg-slate-300 sm:block " // Show sidebar on sm and larger
+      className="bg-gray-500 dark:bg-slate-300 sm:block "
       style={{
         height: "100vh",
         width: "250px",

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Modal, Button } from "antd";
+import { Modal, Button, ConfigProvider } from "antd";
 import { CopyOutlined } from "@ant-design/icons";
 
 // List of possible discounts
@@ -50,7 +50,7 @@ const SpinWheel = () => {
 
       <div className="relative">
         <div
-          className={`w-64 h-64 rounded-full border-4 border-blue-500 ${
+          className={`w-64 h-64 rounded-full border-4 border-green-500 ${
             isSpinning ? "animate-spin" : ""
           }`}
         >
@@ -69,33 +69,51 @@ const SpinWheel = () => {
           {isSpinning ? "Spinning..." : "Spin Now"}
         </Button>
       </div>
-
-      <Modal
-        title="You Won a Discount!"
-        visible={modalVisible}
-        onCancel={() => setModalVisible(false)}
-        footer={[
-          <Button key="copy" icon={<CopyOutlined />} onClick={handleCopy}>
-            Copy Code
-          </Button>,
-          <Button
-            key="ok"
-            type="primary"
-            onClick={() => setModalVisible(false)}
-          >
-            OK
-          </Button>,
-        ]}
+      <ConfigProvider
+        theme={{
+          token: {
+            colorPrimary: "#00b96b", // Main primary color (Bright Green)
+            colorPrimaryHover: "#007a53", // Darker Green for hover effect
+            colorPrimaryBorder: "#00b96b", // Border color for primary components
+            colorPrimaryActive: "#005f40", // Active color for primary components (used on focus)
+            borderRadius: 2,
+            colorBgContainer: "#f6ffed", // Background color for cont
+          },
+        }}
       >
-        {spinResult && (
-          <div className="text-center">
-            <p className="text-3xl font-bold">{spinResult.label} OFF!</p>
-            <p className="text-lg mt-4">
-              Coupon Code: <strong>{spinResult.code}</strong>
-            </p>
-          </div>
-        )}
-      </Modal>
+        <Modal
+          title="You Won a Discount! please use this to pay"
+          visible={modalVisible}
+          onCancel={() => setModalVisible(false)}
+          footer={[
+            <Button
+              type="primary"
+              key="copy"
+              icon={<CopyOutlined />}
+              onClick={handleCopy}
+            >
+              Copy Code
+            </Button>,
+            <Button
+              className="hover:bg-green-700"
+              key="ok"
+              type="primary"
+              onClick={() => setModalVisible(false)}
+            >
+              OK
+            </Button>,
+          ]}
+        >
+          {spinResult && (
+            <div className="text-center">
+              <p className="text-3xl font-bold">{spinResult.label} OFF!</p>
+              <p className="text-lg mt-4">
+                Coupon Code: <strong>{spinResult.code}</strong>
+              </p>
+            </div>
+          )}
+        </Modal>
+      </ConfigProvider>
     </div>
   );
 };

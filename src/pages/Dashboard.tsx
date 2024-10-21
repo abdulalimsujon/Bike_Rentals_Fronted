@@ -7,7 +7,7 @@ import { useUpdateUserProfileMutation } from "../redux/api/userApi/userApi";
 import Toast from "../utils/Toast";
 import { useGetMeQuery } from "../redux/api/authApi/authApi";
 
-const { Header, Content } = Layout;
+const { Content } = Layout;
 
 export interface userType {
   name: string;
@@ -27,50 +27,21 @@ export interface UserProps {
 // Custom Profile Component with Tailwind CSS styling
 const Profile: React.FC<UserProps> = ({ user }) => {
   return (
-    <div className="max-w-3xl w-full mx-auto shadow-lg rounded-xl p-8 dark:bg-white bg-slate-200">
-      <div className="text-center">
-        <div className="mx-auto w-24 h-24 bg-green-500 text-white flex items-center justify-center rounded-full">
-          {user?.image ? (
-            <img
-              src={user.image}
-              alt="User"
-              className="w-full h-full object-cover rounded-full"
-            />
-          ) : (
-            <span className="text-center">No Image</span> // Display text or placeholder when no image is available
-          )}
-        </div>
-
-        <h2 className="text-2xl font-bold text-gray-800 mt-4">
-          {user?.name || "John Doe"}
-        </h2>
-        <p className="text-sm text-gray-500 mt-2">
-          {user?.email || "johndoe@example.com"}
-        </p>
-        <p className="text-sm text-gray-500 mt-2">{user?.role || "User"}</p>
+    <div className="  bg-gray-50 mx-auto border border-gray-200 p-10 w-[700px]">
+      <div className="  mx-auto object-cover mt-[-100px] pt-10">
+        <img className="w-48 h-48  " src={user?.image} alt="" />
       </div>
-
-      <div className="mt-8 space-y-6">
-        <div className="flex justify-between border-b pb-2">
-          <span className="text-gray-600 font-semibold">Full Name:</span>
-          <span className="text-gray-800">{user?.name || "John Doe"}</span>
-        </div>
-        <div className="flex justify-between border-b pb-2">
-          <span className="text-gray-600 font-semibold">Phone Number:</span>
-          <span className="text-gray-800">
-            {user?.phone || "+1 234 567 890"}
-          </span>
-        </div>
-        <div className="flex justify-between border-b pb-2">
-          <span className="text-gray-600 font-semibold">Address:</span>
-          <span className="text-gray-800">
-            {user?.address || "1234 Main St, Springfield, USA"}
-          </span>
-        </div>
-        <div className="flex justify-between border-b pb-2">
-          <span className="text-gray-600 font-semibold">Role:</span>
-          <span className="text-gray-800">{user?.role || "User"}</span>
-        </div>
+      <div className="pt-3">
+        <h1 className="w-full bg-gray-100 py-2">user Name: {user?.name}</h1>
+      </div>
+      <div className="pt-3">
+        <h1 className="w-full bg-gray-100 py-2">Email: {user?.email}</h1>
+      </div>
+      <div className="pt-3">
+        <h1 className="w-full bg-gray-100 py-2">Phone: {user?.phone}</h1>
+      </div>
+      <div className="pt-3">
+        <h1 className="w-full bg-gray-100 py-2">Adress: {user?.address}</h1>
       </div>
     </div>
   );
@@ -233,21 +204,21 @@ const Dashboard: React.FC = () => {
   return (
     <Layout className="min-h-screen dark:bg-slate-50 bg-gray-700">
       {/* Header */}
-      <Header className="bg-green-700 text-bold text-white sticky">
+      {/* <Header className="bg-green-700 text-bold text-white sticky">
         <div className="text-center">
           Welcome to {userData?.data?.name}'s Bike Rental
         </div>
-      </Header>
+      </Header> */}
 
       {/* Body */}
-      <Layout className="flex flex-col items-center justify-center p-6 dark:bg-slate-50 bg-gray-700">
+      <Layout className="flex flex-col items-center justify-center p-6 dark:bg-slate-50 bg-gray-400 mt-10">
         {/* Buttons for switching between Profile and Edit */}
         <div className="mb-8 space-x-4">
           <Button
             type={current === "profile" ? "primary" : "default"}
             icon={<UserOutlined />}
             onClick={() => handleButtonClick("profile")}
-            className="text-gray-800 bg-gray-200 hover:bg-green-600 hover:text-white focus:bg-green-600 focus:text-white transition-colors duration-300"
+            className=" text-white rounded-md hover:bg-green-300 bg-green-600 hover:text-white focus:bg-green-600 focus:text-white transition-colors duration-300"
           >
             Profile
           </Button>
@@ -255,7 +226,7 @@ const Dashboard: React.FC = () => {
             type={current === "edit" ? "primary" : "default"}
             icon={<EditOutlined />}
             onClick={() => handleButtonClick("edit")}
-            className="text-gray-800 bg-gray-200 hover:bg-green-600 hover:text-white focus:bg-green-600 focus:text-white transition-colors duration-300"
+            className=" text-white rounded-md hover:bg-green-300 bg-green-600 hover:text-white focus:bg-green-600 focus:text-white transition-colors duration-300"
           >
             Edit Profile
           </Button>

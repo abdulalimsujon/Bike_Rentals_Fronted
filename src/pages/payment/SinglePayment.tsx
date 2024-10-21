@@ -28,7 +28,7 @@ const PaymentForm: React.FC = () => {
   const stripe = useStripe();
   const elements = useElements();
   const { amount: totalCost } = useParams<{ amount: string }>();
-  console.log(totalCost);
+
   const [formData, setFormData] = useState<FormData>({
     amount: "100",
     bonusCode: "",
@@ -124,7 +124,7 @@ const PaymentForm: React.FC = () => {
         {/* Bonus Code Section */}
         {bonus && (
           <div className="dark:bg-gray-50 bg-slate-700  border border-green-400 text-green-700 px-4 py-3 rounded mb-4">
-            <p className="font-semibold">Bonus Code:</p>
+            <p className="font-semibold">Bonus Code: {formData.bonusCode}</p>
             <p>{bonus.code}</p>
           </div>
         )}

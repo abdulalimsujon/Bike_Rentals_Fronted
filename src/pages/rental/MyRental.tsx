@@ -76,7 +76,7 @@ const MyRental = () => {
       align: "center",
     },
     {
-      title: "Total Cost",
+      title: "paid",
       dataIndex: "totalCost",
       key: "totalCost",
       render: (text: string, _record: TRental, _index: number) => (
@@ -109,7 +109,7 @@ const MyRental = () => {
       <Tabs defaultActiveKey="2" centered>
         <Tabs.TabPane
           className="flex justify-center items-center p-4 border border-gray-300 rounded-md shadow-md"
-          tab={<span className="text-center">Paid</span>}
+          tab={<span className="text-center">Unpaid</span>}
           key="1"
         >
           {nonZeroCostItems.length > 0 ? (
@@ -132,7 +132,7 @@ const MyRental = () => {
         </Tabs.TabPane>
         <Tabs.TabPane
           className="flex justify-center items-center p-4 border border-gray-300 rounded-md shadow-md"
-          tab={<span className="text-center">Unpaid</span>}
+          tab={<span className="text-center">paid</span>}
           key="2"
         >
           {zeroCostItems.length > 0 ? (
