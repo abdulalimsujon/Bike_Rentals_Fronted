@@ -213,7 +213,7 @@ const CustomHeader = () => {
             All Bikes
           </NavLink>
           <NavLink
-            to={`/${user?.role}/dashboard`}
+            to={user ? `/${user?.role}/dashboard` : "/login"}
             onClick={() => setDrawerOpen(false)}
             className="text-base text-green-700 hover:bg-gray-200 transition p-2 block rounded-md"
           >

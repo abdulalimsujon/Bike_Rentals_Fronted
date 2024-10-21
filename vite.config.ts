@@ -17,20 +17,34 @@ export default defineConfig({
     },
   },
   build: {
+    // rollupOptions: {
+    //   output: {
+    //     manualChunks(id) {
+    //       if (id.includes("node_modules")) {
+    //         if (id.includes("react")) {
+    //           return "react"; // Separate React into its own chunk
+    //         }
+    //         if (id.includes("lodash")) {
+    //           return "lodash"; // Separate lodash into its own chunk
+    //         }
+    //         return "vendor"; // All other dependencies go into vendor chunk
+    //       }
+    //     },
+    //   },
+    // },
     rollupOptions: {
       output: {
         manualChunks(id) {
           if (id.includes("node_modules")) {
-            if (id.includes("react")) {
-              return "react"; // Separate React into its own chunk
-            }
-            if (id.includes("lodash")) {
-              return "lodash"; // Separate lodash into its own chunk
-            }
-            return "vendor"; // All other dependencies go into vendor chunk
+            return id
+              .toString()
+              .split("node_modules/")[1]
+              .split("/")[0]
+              .toString();
           }
         },
       },
     },
+    chunkSizeWarningLimit: 1000,
   },
 });

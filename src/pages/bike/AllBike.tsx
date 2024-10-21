@@ -121,6 +121,13 @@ const AllBike = () => {
             >
               Filter Bikes
             </Button>
+            <Button
+              type="primary"
+              className="mt-4 w-full bg-green-700  text-white"
+              onClick={handleCompare}
+            >
+              Compare Selected Bikes
+            </Button>
             <Drawer
               title="Filter Bikes"
               placement="left"

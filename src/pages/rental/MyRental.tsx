@@ -17,8 +17,8 @@ interface Bike {
 interface TRental {
   bikeId: Bike;
   isReturned: boolean;
-  returnTime: string; // ISO 8601 format
-  startTime: string; // ISO 8601 format
+  returnTime: string;
+  startTime: string;
   totalCost: number;
   userId: string;
   _id: string;
@@ -137,7 +137,7 @@ const MyRental = () => {
         >
           {zeroCostItems.length > 0 ? (
             <Table
-              className="w-full mx-40"
+              className="table-auto" // Adjusting margins based on screen size
               columns={unpaidColumns.map((col) => ({
                 ...col,
                 render: (text: string, record: TRental, index: number) => {
@@ -168,10 +168,6 @@ const MyRental = () => {
               }
               pagination={{
                 className: "bg-slate-700 dark:bg-slate-50",
-              }}
-              scroll={{
-                x: 400, // Ensure horizontal scrolling for smaller screens
-                y: 300, // Set the height limit for vertical scrolling
               }}
             />
           ) : (

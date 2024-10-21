@@ -27,21 +27,33 @@ export interface UserProps {
 // Custom Profile Component with Tailwind CSS styling
 const Profile: React.FC<UserProps> = ({ user }) => {
   return (
-    <div className="  bg-gray-50 mx-auto border border-gray-200 p-10 w-[700px]">
-      <div className="  mx-auto object-cover mt-[-100px] pt-10">
-        <img className="w-48 h-48  " src={user?.image} alt="" />
+    <div className="bg-gray-50 mx-auto border border-gray-200 p-10 w-full max-w-[700px]">
+      <div className="mx-auto object-cover -mt-24 pt-10 flex justify-center">
+        <img
+          className="w-24 h-24 sm:w-32 sm:h-32 md:w-48 md:h-48"
+          src={user?.image}
+          alt="User"
+        />
       </div>
       <div className="pt-3">
-        <h1 className="w-full bg-gray-100 py-2">user Name: {user?.name}</h1>
+        <h1 className="w-full bg-gray-100 py-2 text-center text-sm sm:text-base">
+          User Name: {user?.name}
+        </h1>
       </div>
       <div className="pt-3">
-        <h1 className="w-full bg-gray-100 py-2">Email: {user?.email}</h1>
+        <h1 className="w-full bg-gray-100 py-2 text-center text-sm sm:text-base">
+          Email: {user?.email}
+        </h1>
       </div>
       <div className="pt-3">
-        <h1 className="w-full bg-gray-100 py-2">Phone: {user?.phone}</h1>
+        <h1 className="w-full bg-gray-100 py-2 text-center text-sm sm:text-base">
+          Phone: {user?.phone}
+        </h1>
       </div>
       <div className="pt-3">
-        <h1 className="w-full bg-gray-100 py-2">Adress: {user?.address}</h1>
+        <h1 className="w-full bg-gray-100 py-2 text-center text-sm sm:text-base">
+          Address: {user?.address}
+        </h1>
       </div>
     </div>
   );
@@ -203,14 +215,6 @@ const Dashboard: React.FC = () => {
 
   return (
     <Layout className="min-h-screen dark:bg-slate-50 bg-gray-700">
-      {/* Header */}
-      {/* <Header className="bg-green-700 text-bold text-white sticky">
-        <div className="text-center">
-          Welcome to {userData?.data?.name}'s Bike Rental
-        </div>
-      </Header> */}
-
-      {/* Body */}
       <Layout className="flex flex-col items-center justify-center p-6 dark:bg-slate-50 bg-gray-400 mt-10">
         {/* Buttons for switching between Profile and Edit */}
         <div className="mb-8 space-x-4">

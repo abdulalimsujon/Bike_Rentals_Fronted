@@ -68,9 +68,11 @@ const Registration = () => {
   }
 
   return (
-    <div className="flex justify-center items-center  max-h-screen pt-6 ">
-      <div className="p-6 border  rounded-md">
-        <h1 className="text-center text-3xl  text-bold text-green-500">
+    <div className="flex justify-center items-center max-h-screen pt-6 mx-auto">
+      <div className="p-6 border rounded-md w-full max-w-sm">
+        {" "}
+        {/* Use max-w-sm for small devices */}
+        <h1 className="text-center text-3xl font-bold text-green-500">
           Registration
         </h1>
         <BrForm onSubmit={onSubmit}>
@@ -78,50 +80,52 @@ const Registration = () => {
             type="text"
             name="name"
             label="User Name"
-            className="w-96 border-green-500 "
+            className="w-full border-green-500" // Change to w-full for full-width inputs
           />
           <BRInput
             type="text"
             name="email"
             label="Email"
-            className="w-96 border-green-500"
+            className="w-full border-green-500"
           />
           <BRInput
             type="password"
             name="password"
             label="Password"
-            className="w-96  border-green-500"
+            className="w-full border-green-500"
           />
           <BRInput
             type="text"
             name="phone"
             label="Phone"
-            className="w-96 border-green-500"
+            className="w-full border-green-500"
           />
           <BRInput
             type="text"
             name="address"
             label="Address"
-            className="w-96 border-green-500"
+            className="w-full border-green-500"
           />
           <BRInput
             type="file"
             name="image"
             label="Image"
-            className="w-96 border-green-500"
+            className="w-full border-green-500"
             onChange={handleFileChange} // Handle file input changes
           />
-          <div className="flex justify-center items-center w-96">
+          <div className="flex justify-center items-center w-full">
             <button
-              className="w-full rounded-md py-2   bg-green-500 hover:bg-green-300 focus:border-green-700 focus:ring focus:ring-green-500   "
+              className="w-full rounded-md py-2 bg-green-500 hover:bg-green-300 focus:border-green-700 focus:ring focus:ring-green-500"
               type="submit"
             >
               Register
             </button>
           </div>
         </BrForm>
-        <div className="pr-5 text-center">
-          <span>Already have an account ? </span>
+        <div className="pr-5 text-center mt-4">
+          {" "}
+          {/* Added margin-top for spacing */}
+          <span>Already have an account?</span>
           <a className="text-red-700" href="/login">
             login
           </a>
