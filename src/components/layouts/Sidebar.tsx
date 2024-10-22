@@ -11,7 +11,7 @@ const Sidebar = () => {
     <Sider
       breakpoint="lg"
       collapsedWidth="0"
-      className="bg-gray-500 dark:bg-slate-300 sm:block "
+      className="bg-gray-500 dark:bg-slate-300 sm:block  z-[999]"
       style={{
         height: "100vh",
         width: "250px",

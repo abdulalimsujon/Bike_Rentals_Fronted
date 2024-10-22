@@ -140,7 +140,7 @@ const PaymentForm: React.FC = () => {
   }
 
   return (
-    <div className="container mx-auto pt-20  px-4 sm:px-6 lg:px-8 h-screen ">
+    <div className="container mx-auto pt-20  px-4 sm:px-6 lg:px-8  ">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 ">
         {/* Bike Information */}
         <div className="bg-gradient-to-r bg-green-200 dark:bg-slate-50  shadow-xl p-6 flex flex-col items-center">

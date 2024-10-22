@@ -199,6 +199,17 @@ const CustomHeader = () => {
         bodyStyle={{ padding: 0 }}
       >
         <div className="p-3 space-y-3">
+          <NavLink
+            className={({ isActive }) =>
+              ` className="text-base text-green-700 hover:bg-gray-200 transition p-2 block rounded-md" ${
+                isActive ? "underline" : ""
+              }`
+            }
+            to={`/home`}
+          >
+            Home
+          </NavLink>
+
           <span
             className="text-base text-green-700 hover:bg-gray-200 transition p-2 block rounded-md"
             onClick={handleAboutClick}

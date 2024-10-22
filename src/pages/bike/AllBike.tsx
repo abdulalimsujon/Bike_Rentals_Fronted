@@ -114,7 +114,7 @@ const AllBike = () => {
           </div>
 
           {/* Drawer and Button for small screens (below md) */}
-          <div className="md:hidden mb-4">
+          <div className="md:hidden mb-4 mx-5">
             <Button
               onClick={showDrawer}
               className="mb-4 w-full bg-green-700 text-white"
@@ -123,7 +123,7 @@ const AllBike = () => {
             </Button>
             <Button
               type="primary"
-              className="mt-4 w-full bg-green-700  text-white"
+              className="mt-4 w-full sm:w-48 bg-green-700   text-white"
               onClick={handleCompare}
             >
               Compare Selected Bikes
@@ -149,7 +149,7 @@ const AllBike = () => {
               />
               <Button
                 type="primary"
-                className="mt-4 w-full bg-green-700 hover:bg-green-300 text-white"
+                className="mt-4 w-full bg-green-700 hover:bg-green-300 text-white "
                 onClick={handleCompare}
               >
                 Compare Selected Bikes
